@@ -13,5 +13,4 @@ Imports:
     Rcpp (>= 0.12.17), 
     dplyr, 
     ggvis
-
 LinkingTo: Rcpp
