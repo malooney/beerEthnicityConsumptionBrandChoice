@@ -1,5 +1,4 @@
 
-# LA, CA
 
 # Housekeeping ----------------------------------------------------------------
 #rm(list=ls())
@@ -20,7 +19,7 @@
 
 # Load Data -------------------------------------------------------------------
 
-data_Explore <- function(data, ...){
+explore_Data <- function(data, ...){
 
 # Add volume measures ---------------------------------------------------------
 oz <- round(data.frame(oz=data$VOL_EQ.x* 288))
@@ -83,10 +82,12 @@ rm(i, j, tmp, num_Brands, tmp_chain, tmp_week, augChains, augWeeks, num_Chains,
 
 
 
-explore_Data_Complete <<- explore_Data[ , apply(explore_Data, 2, function(x) !any(is.na(x)))]
+explore_Data_Complete <- explore_Data[ , apply(explore_Data, 2, function(x) !any(is.na(x)))]
 
 Brands_CompleteData <- data.frame(Brand_Name=colnames(explore_Data_Complete[-c(1,2)]))
-Brands_CompleteData <<- dplyr::arrange(Brands_CompleteData, Brand_Name)
+Brands_CompleteData <- dplyr::arrange(Brands_CompleteData, Brand_Name)
+
+list(Brands_CompleteData=Brands_CompleteData, explore_Data_Complete=explore_Data_Complete, explore_Data=explore_Data)
 
 }
 #write.csv(explore_Data, file="LA_explore_Data.csv")
