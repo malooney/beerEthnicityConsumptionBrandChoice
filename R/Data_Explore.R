@@ -37,8 +37,8 @@ data_manip <- cbind(data, oz, total_oz, total_gal,
 rm(oz, total_gal, total_oz, dollarPerGal)
 
 # Remove zero data ------------------------------------------------------------
-data_manip <- filter(data_manip, L5 !="ALL BRAND")
-data_manip <- filter(data_manip, dollarPerGal !="Inf")
+data_manip <- dplyr::filter(data_manip, L5 !="ALL BRAND")
+data_manip <- dplyr::filter(data_manip, dollarPerGal !="Inf")
 
 
 
@@ -68,7 +68,7 @@ i=1
 j=3
 for(i in seq_along(Brands)){
 
-  tmp <- filter(data_manip, L5==Brands[i])
+  tmp <- dplyr::filter(data_manip, L5==Brands[i])
   tmp_week <- unique(tmp$WEEK)
   tmp_chain <- unique(tmp$MskdName)
   explore_Data[1:num_Weeks, j] <- ifelse(explore_Data[1:num_Weeks, 2] %in% tmp_week, explore_Data[1:52,2], NA)
@@ -84,7 +84,7 @@ rm(i, j, tmp, num_Brands, tmp_chain, tmp_week, augChains, augWeeks, num_Chains,
 explore_Data_Complete <<- explore_Data[ , apply(explore_Data, 2, function(x) !any(is.na(x)))]
 
 Brands_CompleteData <- data.frame(Brand_Name=colnames(explore_Data_Complete[-c(1,2)]))
-Brands_CompleteData <<- arrange(Brands_CompleteData, Brand_Name)
+Brands_CompleteData <<- dplyr::arrange(Brands_CompleteData, Brand_Name)
 
 }
 #write.csv(explore_Data, file="LA_explore_Data.csv")
