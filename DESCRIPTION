@@ -6,7 +6,7 @@ Author: Matthew Aaron Looney
 Maintainer: Matthew Aaron Looney <matthew.looney@icloud.com>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+License: GPL-2
 Encoding: UTF-8
 LazyData: true
 Imports: 
