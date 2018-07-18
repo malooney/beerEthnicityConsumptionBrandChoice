@@ -1,6 +1,6 @@
 # beerEthnicityConsumptionBrandChoice
 
 
-require("devtools")
+install.packages("devtools")
 
-install_github("malooney/beerEthnicityConsumptionBrandChoice")
+devtools::install_github("malooney/beerEthnicityConsumptionBrandChoice")
