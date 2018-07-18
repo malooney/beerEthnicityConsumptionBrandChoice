@@ -169,11 +169,13 @@ rm(main_beer_drug_and_groc_4_2010, mrkNames)
 
 LA_data_2010 <- LA_data[,c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56, 71:76)]
 
-write_feather(LA_data_2010, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/LA_data_2010_feather")
-
-save(LA_data_2010, file="LA_data_2010.RData")
+#write_feather(LA_data_2010, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/LA_data_2010_feather")
 
 LA_data_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/LA_data_2010_feather")
+
+#save(LA_data_2010, file="LA_data_2010.RData")
+
+devtools::use_data(LA_data_2010)
 
 #plot(table(LA_data_2010$IMPORTED_VS_DOMESTIC))
 
@@ -197,9 +199,11 @@ CHICAGO_data_2010 <- CHICAGO_data[,c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56, 7
 
 write_feather(CHICAGO_data_2010, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/CHICAGO_data_2010_feather")
 
+CHICAGO_data_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/CHICAGO_data_2010_feather")
+
 save(CHICAGO_data_2010, file="CHICAGO_data_2010.RData")
 
-CHICAGO_data_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/CHICAGO_data_2010_feather")
+devtools::use_data(CHICAGO_data_2010)
 
 #plot(table(CHICAGO_data_2010$IMPORTED_VS_DOMESTIC))
 
@@ -227,7 +231,9 @@ write_feather(DALLAS_data_2010, "/Users/malooney/Google Drive/digitalLibrary/*MS
 
 DALLAS_data_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/DALLAS_data_2010_feather")
 
-save(DALLAS_data_2010, file="DALLAS_data_2010.RData")
+#save(DALLAS_data_2010, file="DALLAS_data_2010.RData")
+
+devtools::use_data(DALLAS_data_2010)
 
 #plot(table(DALLAS_data_2010$IMPORTED_VS_DOMESTIC))
 
