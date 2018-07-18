@@ -10,8 +10,8 @@ License: What license is it under?
 Encoding: UTF-8
 LazyData: true
 Imports: 
-  Rcpp (>= 0.12.17), 
-  dplyr, 
-  ggvis
+    Rcpp (>= 0.12.17), 
+    dplyr, 
+    ggvis
 
 LinkingTo: Rcpp
