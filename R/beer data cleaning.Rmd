@@ -18,7 +18,6 @@ library(maps)
 library(feather)
 library(stringr)
 
-path <- getwd()
 
 #library(zipcode)
 #library(xlsx)
@@ -172,7 +171,7 @@ LA_data_2010 <- LA_data[,c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56, 71:76)]
 
 write_feather(LA_data_2010, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/LA_data_2010_feather")
 
-save(LA_data_2010, file="data/LA_data_2010.RData")
+save(LA_data_2010, file="LA_data_2010.RData")
 
 LA_data_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/LA_data_2010_feather")
 
@@ -197,6 +196,8 @@ rm(main_beer_drug_and_groc_4_2010, mrkNames)
 CHICAGO_data_2010 <- CHICAGO_data[,c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56, 71:76)]
 
 write_feather(CHICAGO_data_2010, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/CHICAGO_data_2010_feather")
+
+save(CHICAGO_data_2010, file="Chicago_data_2010.RData")
 
 CHICAGO_data_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/CHICAGO_data_2010_feather")
 
@@ -225,6 +226,8 @@ DALLAS_data_2010 <- DALLAS_data[,c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56, 71:
 write_feather(DALLAS_data_2010, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/DALLAS_data_2010_feather")
 
 DALLAS_data_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/DALLAS_data_2010_feather")
+
+save(DALLAS_data_2010, file="Dallas_data_2010.RData")
 
 #plot(table(DALLAS_data_2010$IMPORTED_VS_DOMESTIC))
 
