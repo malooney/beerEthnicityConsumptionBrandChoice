@@ -112,7 +112,9 @@ rm(Delivery_Stores,
 # !!!!!!!!! It is a good idea to save "main_beer_drug_and_groc_4_2010" to disk.
 # !!!!!!!!! This is the starting point for the analysis... --------------------
 
-#devtools::use_data_raw(main_beer_drug_and_groc_4_2010)
+# keep this data file in directory: data-raw
+
+#devtools::use_data(main_beer_drug_and_groc_4_2010)
 
 # Show all potiential market names --------------------------------------------
 
@@ -128,7 +130,7 @@ market1 <- "LOS ANGELES"
 
 LA_data_2010 <- filter(main_beer_drug_and_groc_4_2010, Market_Name == market1)
 
-LA_data_2010 <- LA_data[, c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56, 71:76)]
+LA_data_2010 <- LA_data_2010[, c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56, 71:76)]
 
 #devtools::use_data(LA_data_2010)
 
@@ -137,9 +139,9 @@ LA_data_2010 <- LA_data[, c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56, 71:76)]
 
 market2 <- "CHICAGO"
 
-CHICAGO_data <- filter(main_beer_drug_and_groc_4_2010, Market_Name == market2)
+CHICAGO_data_2010 <- filter(main_beer_drug_and_groc_4_2010, Market_Name == market2)
 
-CHICAGO_data_2010 <- CHICAGO_data[, c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56,
+CHICAGO_data_2010 <- CHICAGO_data_2010[, c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56,
                                      71:76)]
 
 #devtools::use_data(CHICAGO_data_2010)
@@ -149,9 +151,9 @@ CHICAGO_data_2010 <- CHICAGO_data[, c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56,
 
 market3 <- "DALLAS, TX"
 
-DALLAS_data <- filter(main_beer_drug_and_groc_4_2010, Market_Name == market3)
+DALLAS_data_2010 <- filter(main_beer_drug_and_groc_4_2010, Market_Name == market3)
 
-DALLAS_data_2010 <- DALLAS_data[,c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56,
+DALLAS_data_2010 <- DALLAS_data_2010[,c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56,
                                    71:76)]
 
 #devtools::use_data(DALLAS_data_2010)
