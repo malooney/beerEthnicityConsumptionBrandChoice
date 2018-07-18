@@ -197,7 +197,7 @@ CHICAGO_data_2010 <- CHICAGO_data[,c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56, 7
 
 write_feather(CHICAGO_data_2010, "/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/CHICAGO_data_2010_feather")
 
-save(CHICAGO_data_2010, file="Chicago_data_2010.RData")
+save(CHICAGO_data_2010, file="CHICAGO_data_2010.RData")
 
 CHICAGO_data_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/CHICAGO_data_2010_feather")
 
@@ -227,7 +227,7 @@ write_feather(DALLAS_data_2010, "/Users/malooney/Google Drive/digitalLibrary/*MS
 
 DALLAS_data_2010 <- read_feather("/Users/malooney/Google Drive/digitalLibrary/*MS_Thesis/MS_Thesis/data/DALLAS_data_2010_feather")
 
-save(DALLAS_data_2010, file="Dallas_data_2010.RData")
+save(DALLAS_data_2010, file="DALLAS_data_2010.RData")
 
 #plot(table(DALLAS_data_2010$IMPORTED_VS_DOMESTIC))
 

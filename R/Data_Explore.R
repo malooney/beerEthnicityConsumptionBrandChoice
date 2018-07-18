@@ -81,6 +81,8 @@ for(i in seq_along(Brands)){
 rm(i, j, tmp, num_Brands, tmp_chain, tmp_week, augChains, augWeeks, num_Chains,
    num_Weeks)
 
+
+
 explore_Data_Complete <<- explore_Data[ , apply(explore_Data, 2, function(x) !any(is.na(x)))]
 
 Brands_CompleteData <- data.frame(Brand_Name=colnames(explore_Data_Complete[-c(1,2)]))
