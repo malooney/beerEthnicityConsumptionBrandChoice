@@ -12,6 +12,6 @@ library(devtools)
 
 devtools::install_github("malooney/beerEthnicityConsumptionBrandChoice")
 
-library(malooney/beerEthnicityConsumptionBrandChoice)
+library(beerEthnicityConsumptionBrandChoice)
 
 ```
