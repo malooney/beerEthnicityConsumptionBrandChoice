@@ -1,5 +1,8 @@
 
 
+
+
+
 library(readr)
 library(readxl)
 library(dplyr)
@@ -71,6 +74,8 @@ beer_prod_attr_2011_edit <- cbind(beer_prod_attr_2011_edit, temp_main)
 
 
 #join main_beer_drug_and_groc_2 to prod11_beer and prod_beer_attr_2011_edit ---
+main_beer_drug_and_groc_1[,12] <- as.character(main_beer_drug_and_groc_1$upc)
+beer_prod_attr_2011_edit[,37] <- as.character(beer_prod_attr_2011_edit$upc)
 
 main_beer_drug_and_groc_2 <- left_join(x= main_beer_drug_and_groc_1,
                                        y= beer_prod_attr_2011_edit,
@@ -82,7 +87,7 @@ main_beer_drug_and_groc_3 <- left_join(x= main_beer_drug_and_groc_2,
 
 # clean up large data.frames !!!!!!! caution, removes data from memory !!!!!!!!
 
-rm(WEEK, pc_fun, upc_fun,
+rm(pc_fun, upc_fun,
    prod11_beer,
    temp, temp_main,
    beer_drug_1583_1634,
@@ -109,12 +114,17 @@ rm(Delivery_Stores,
    main_beer_drug_and_groc_3)
 
 
-# !!!!!!!!! It is a good idea to save "main_beer_drug_and_groc_4_2010" to disk.
-# !!!!!!!!! This is the starting point for the analysis... --------------------
-
+# -----------------------------------------------------------------------------
+# !!!!! It is a good idea to save "main_beer_drug_and_groc_4_2010" to disk !!!!
+# !!!!! This is the starting point for the analysis... !!!!!!!!!!!!!!!!!!!!!!!!
+# -----------------------------------------------------------------------------
 # keep this data file in directory: data-raw
 
 #devtools::use_data(main_beer_drug_and_groc_4_2010)
+
+# if needed, import "main_beer_drug_and_groc_4_2010.rda" ----------------------
+
+#load("data-raw/main_beer_drug_and_groc_4_2010.rda")
 
 # Show all potiential market names --------------------------------------------
 
