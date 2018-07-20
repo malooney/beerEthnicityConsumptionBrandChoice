@@ -8,8 +8,6 @@ install.packages("devtools")
 
 # To install the package:
 
-library(devtools)
-
 devtools::install_github("malooney/beerEthnicityConsumptionBrandChoice")
 
 library(beerEthnicityConsumptionBrandChoice)
