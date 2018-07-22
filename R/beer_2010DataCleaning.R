@@ -2,7 +2,7 @@
 
 
 
-beer_2010DataCleaning <- function(save_2010_main_data= archival,
+beer_2010DataCleaning <- function(save_2010_main_data = internal,
                                   save_2010_main_city_data = TRUE){
   startTime <- Sys.time()
 
