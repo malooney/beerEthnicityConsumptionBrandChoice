@@ -16,15 +16,23 @@ beer_2010DataCleaning <- function(save_2010_main_data = all_format,
   count <- 1
   setTxtProgressBar(pb, count)
 
+  path_local <- getwd()
+
+  dir.create(file.path(path_local,
+                       "data_beerEthnicityConsumptionBrandChoice"),
+             showWarnings = FALSE)
+
   path.pkg <- system.file(package = "beerEthnicityConsumptionBrandChoice")
 
 # import raw IRI data ---------------------------------------------------------
 
-  beer_drug_1583_1634 <- read.csv(paste(path.pkg, "/extdata/beer_drug_1583_1634",
-                                      sep = ""), sep = "", quote = "")
+  beer_drug_1583_1634 <- read.csv(
+    paste(path.pkg, "/extdata/beer_drug_1583_1634",
+          sep = ""), sep = "", quote = "")
 
-  beer_groc_1583_1634 <- read.csv(paste(path.pkg, "/extdata/beer_groc_1583_1634",
-                                      sep = ""), sep = "", quote = "")
+  beer_groc_1583_1634 <- read.csv(
+    paste(path.pkg, "/extdata/beer_groc_1583_1634",
+          sep = ""), sep = "", quote = "")
 
   Delivery_Stores <- suppressMessages(readr::read_table(
     paste(path.pkg, "/extdata/Delivery_Stores", sep = "")))
@@ -217,7 +225,7 @@ beer_2010DataCleaning <- function(save_2010_main_data = all_format,
                                           53:56, 71:76)]
 
 
-  if(save_2010_main_data == internal){
+  if(save_2010_main_data == feather){
 
     feather::write_feather(
       main_beer_drug_and_groc_4_2010,
