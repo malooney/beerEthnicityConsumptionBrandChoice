@@ -14,29 +14,29 @@ beer_2010DataCleaning <- function(save_2010_main_data = internal,
   count <- 1
   setTxtProgressBar(pb, count)
 
-  path <- system.file(package = "beerEthnicityConsumptionBrandChoice")
+  path.pkg <- system.file(package = "beerEthnicityConsumptionBrandChoice")
 
 # import raw IRI data ---------------------------------------------------------
 
-  beer_drug_1583_1634 <- read.csv(paste(path, "/extdata/beer_drug_1583_1634",
+  beer_drug_1583_1634 <- read.csv(paste(path.pkg, "/extdata/beer_drug_1583_1634",
                                       sep = ""), sep = "", quote = "")
 
-  beer_groc_1583_1634 <- read.csv(paste(path, "/extdata/beer_groc_1583_1634",
+  beer_groc_1583_1634 <- read.csv(paste(path.pkg, "/extdata/beer_groc_1583_1634",
                                       sep = ""), sep = "", quote = "")
 
   Delivery_Stores <- suppressMessages(readr::read_table(
-    paste(path, "/extdata/Delivery_Stores", sep = "")))
+    paste(path.pkg, "/extdata/Delivery_Stores", sep = "")))
 
   IRI_week_translation_2008_2017 <- readxl::read_excel(
-  paste(path, "/extdata/IRI week translation_2008_2017.xls", sep = ""),
+  paste(path.pkg, "/extdata/IRI week translation_2008_2017.xls", sep = ""),
   col_types = c("numeric", "date", "date", "skip", "skip", "skip"))
 
   beer_prod_attr_2011_edit <- suppressMessages(
-  readr::read_table(paste(path, "/extdata/beer_prod_attr_2011_edit",
+  readr::read_table(paste(path.pkg, "/extdata/beer_prod_attr_2011_edit",
                           sep = "")))
 
   prod11_beer <- readxl::read_excel(
-    paste(path, "/extdata/prod11_beer.xlsx", sep = ""))
+    paste(path.pkg, "/extdata/prod11_beer.xlsx", sep = ""))
 
   count <- 2
   setTxtProgressBar(pb, count)
