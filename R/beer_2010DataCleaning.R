@@ -253,11 +253,11 @@ beer_2010DataCleaning <- function(save_2010_main_data = all_formats,
 
   if(save_2010_main_city_data == TRUE) {
 
-    devtools::use_data(LA_data_2010, overwrite = T)
-
-    devtools::use_data(CHICAGO_data_2010, overwrite = T)
-
-    devtools::use_data(DALLAS_data_2010, overwrite = T)
+    # devtools::use_data(LA_data_2010, overwrite = T)
+    #
+    # devtools::use_data(CHICAGO_data_2010, overwrite = T)
+    #
+    # devtools::use_data(DALLAS_data_2010, overwrite = T)
 
   } else {
 
