@@ -245,7 +245,6 @@ beer_2010DataCleaning <- function(save_2010_main_data = internal,
 
     }
 
-
   count <- 10
   setTxtProgressBar(pb, count)
 
