@@ -2,12 +2,14 @@
 
 
 
-beer_2010DataCleaning <- function(save_2010_main_data = internal,
+beer_2010DataCleaning <- function(save_2010_main_data = all_format,
                                   save_2010_main_city_data = TRUE){
   startTime <- Sys.time()
 
-  internal <- "internal"
-  archival <- "archival"
+  feather <- "feather"
+  rds <- "rds"
+  csv <- "csv"
+  all_format <- "all_format"
 
   totalCount <- 10
   pb <- txtProgressBar(min = 0, max = totalCount, style = 3)
