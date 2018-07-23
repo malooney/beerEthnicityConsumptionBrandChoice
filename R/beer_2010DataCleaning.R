@@ -2,14 +2,14 @@
 
 
 
-beer_2010DataCleaning <- function(save_2010_main_data = all_format,
+beer_2010DataCleaning <- function(save_2010_main_data = all_formats,
                                   save_2010_main_city_data = TRUE){
   startTime <- Sys.time()
 
   feather <- "feather"
   rds <- "rds"
   csv <- "csv"
-  all_format <- "all_format"
+  all_formats <- "all_formats"
 
   totalCount <- 10
   pb <- txtProgressBar(min = 0, max = totalCount, style = 3)
@@ -170,13 +170,6 @@ beer_2010DataCleaning <- function(save_2010_main_data = all_format,
 # This is the starting point for the analysis...
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # -----------------------------------------------------------------------------
-# keep this data file in directory: data-raw
-
-#devtools::use_data(main_beer_drug_and_groc_4_2010)
-
-# if needed, import "main_beer_drug_and_groc_4_2010.rda" ----------------------
-
-#load("data-raw/main_beer_drug_and_groc_4_2010.rda")
 
 # Show all potiential market names --------------------------------------------
 
@@ -229,14 +222,29 @@ beer_2010DataCleaning <- function(save_2010_main_data = all_format,
 
     feather::write_feather(
       main_beer_drug_and_groc_4_2010,
-      paste(path, "/extdata/tmpData/main_beer_drug_and_groc_4_2010.feather",
-            sep = ""))
+      paste(path_local, "/data_beerEthnicityConsumptionBrandChoice/main_beer_drug_and_groc_4_2010.feather", sep = ""))
 
-    } else if(save_2010_main_data == archival){
+    } else if(save_2010_main_data == rds) {
 
-      devtools::use_data(main_beer_drug_and_groc_4_2010, overwrite = T)
+      saveRDS(main_beer_drug_and_groc_4_2010,
+              paste(path_local, "/data_beerEthnicityConsumptionBrandChoice/main_beer_drug_and_groc_4_2010.rds", sep = ""))
 
-      } else if(save_2010_main_data == FALSE) {
+      } else if(save_2010_main_data == csv) {
+
+        write.csv(main_beer_drug_and_groc_4_2010,
+                paste(path_local, "/data_beerEthnicityConsumptionBrandChoice/main_beer_drug_and_groc_4_2010.csv", sep = ""))
+
+      } else if(save_2010_main_data == all_formats) {
+
+        feather::write_feather(
+          main_beer_drug_and_groc_4_2010,
+          paste(path_local, "/data_beerEthnicityConsumptionBrandChoice/main_beer_drug_and_groc_4_2010.feather", sep = ""))
+
+        saveRDS(main_beer_drug_and_groc_4_2010,
+                paste(path_local, "/data_beerEthnicityConsumptionBrandChoice/main_beer_drug_and_groc_4_2010.rds", sep = ""))
+
+        write.csv(main_beer_drug_and_groc_4_2010,
+                  paste(path_local, "/data_beerEthnicityConsumptionBrandChoice/main_beer_drug_and_groc_4_2010.csv", sep = ""))
 
       }
 
