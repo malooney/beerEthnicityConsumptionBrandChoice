@@ -15,5 +15,6 @@ Imports:
     readr,
     readxl,
     stringr,
-    feather
+    feather,
+    devtools
 LinkingTo: Rcpp
