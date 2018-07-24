@@ -3,6 +3,7 @@
 marketData <- function(){
 
   path.local <- getwd()
+
   if(!file.exists(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/main_beer_drug_and_groc_4_2010.feather", sep=""))){
 
     stop(print("file does not exist"))
