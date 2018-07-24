@@ -3,7 +3,7 @@
 
 # Load Data -------------------------------------------------------------------
 
-explore_Data <- function(data, ...) {
+explore_marketData <- function(data, ...) {
 
 # Add volume measures ---------------------------------------------------------
 

@@ -2,8 +2,8 @@
 
 
 
-beer_2010DataCleaning <- function(save_2010_main_data = all_formats,
-                                  save_2010_main_city_data = TRUE){
+beer_2010DataCleaning <- function(save_2010_main_data = all_formats) {
+
   startTime <- Sys.time()
 
   feather <- "feather"
@@ -34,6 +34,9 @@ beer_2010DataCleaning <- function(save_2010_main_data = all_formats,
     paste(path.pkg, "/extdata/beer_groc_1583_1634",
           sep = ""), sep = "", quote = "")
 
+  count <- 2
+  setTxtProgressBar(pb, count)
+
   Delivery_Stores <- suppressMessages(readr::read_table(
     paste(path.pkg, "/extdata/Delivery_Stores", sep = "")))
 
@@ -48,7 +51,7 @@ beer_2010DataCleaning <- function(save_2010_main_data = all_formats,
   prod11_beer <- readxl::read_excel(
     paste(path.pkg, "/extdata/prod11_beer.xlsx", sep = ""))
 
-  count <- 2
+  count <- 3
   setTxtProgressBar(pb, count)
 
 # join grocery store and drug store data --------------------------------------
@@ -76,17 +79,17 @@ beer_2010DataCleaning <- function(save_2010_main_data = all_formats,
 
   temp_main <- data.frame(upc = 1:nrow(temp))
 
-  count <- 2.5
+  count <- 4.5
   setTxtProgressBar(pb, count)
 
   temp_main <- data.frame(upc = apply(temp, MARGIN = 1, upc_fun))
 
-  count <- 2.75
+  count <- 5.75
   setTxtProgressBar(pb, count)
 
   main_beer_drug_and_groc <- cbind(main_beer_drug_and_groc, temp_main)
 
-  count <- 3
+  count <- 6
   setTxtProgressBar(pb, count)
 
 
@@ -107,7 +110,7 @@ beer_2010DataCleaning <- function(save_2010_main_data = all_formats,
 
   beer_prod_attr_2011_edit <- cbind(beer_prod_attr_2011_edit, temp_main)
 
-  count <- 4
+  count <- 7
   setTxtProgressBar(pb, count)
 
 # join main_beer_drug_and_groc_2 to prod11_beer and prod_beer_attr_2011_edit --
@@ -139,7 +142,7 @@ beer_2010DataCleaning <- function(save_2010_main_data = all_formats,
      main_beer_drug_and_groc_2,
      IRI_week_translation_2008_2017)
 
-  count <- 5
+  count <- 8
   setTxtProgressBar(pb, count)
 
 
@@ -160,7 +163,7 @@ beer_2010DataCleaning <- function(save_2010_main_data = all_formats,
      unique_Delivery_stores,
      main_beer_drug_and_groc_3)
 
-  count <- 6
+  count <- 9
   setTxtProgressBar(pb, count)
 
 
@@ -171,51 +174,6 @@ beer_2010DataCleaning <- function(save_2010_main_data = all_formats,
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # -----------------------------------------------------------------------------
 
-# Show all potiential market names --------------------------------------------
-
-  mrkNames <- data.frame(Market_Name =
-                         unique(main_beer_drug_and_groc_4_2010$Market_Name))
-
-  mrkNames <- dplyr::arrange(mrkNames, Market_Name)
-
-
-# create LA Market Data -------------------------------------------------------
-
-  market1 <- "LOS ANGELES"
-
-  LA_data_2010 <- dplyr::filter(main_beer_drug_and_groc_4_2010,
-                                Market_Name == market1)
-
-  LA_data_2010 <- LA_data_2010[, c(1, 2, 7:14, 19, 21, 25:27, 30, 36, 53:56,
-                                   71:76)]
-
-  count <- 7
-  setTxtProgressBar(pb, count)
-
-
-# create Chicago Market Data --------------------------------------------------
-
-  market2 <- "CHICAGO"
-
-  CHICAGO_data_2010 <- dplyr::filter(main_beer_drug_and_groc_4_2010,
-                                     Market_Name == market2)
-
-  CHICAGO_data_2010 <- CHICAGO_data_2010[, c(1, 2, 7:14, 19, 21, 25:27, 30, 36,
-                                           53:56, 71:76)]
-
-  count <- 8
-  setTxtProgressBar(pb, count)
-
-
-# create Dallas Market Data ---------------------------------------------------
-
-  market3 <- "DALLAS, TX"
-
-  DALLAS_data_2010 <- dplyr::filter(main_beer_drug_and_groc_4_2010,
-                                    Market_Name == market3)
-
-  DALLAS_data_2010 <- DALLAS_data_2010[, c(1, 2, 7:14, 19, 21, 25:27, 30, 36,
-                                          53:56, 71:76)]
 
 
   if(save_2010_main_data == feather){
@@ -248,20 +206,20 @@ beer_2010DataCleaning <- function(save_2010_main_data = all_formats,
 
       }
 
-  count <- 9
+  count <- 9.5
   setTxtProgressBar(pb, count)
 
-  if(save_2010_main_city_data == TRUE) {
 
-    # devtools::use_data(LA_data_2010, overwrite = T)
-    #
-    # devtools::use_data(CHICAGO_data_2010, overwrite = T)
-    #
-    # devtools::use_data(DALLAS_data_2010, overwrite = T)
+# Show all potiential market names --------------------------------------------
 
-  } else {
+  mrkNames_2010 <- data.frame(Market_Name =
+                           unique(main_beer_drug_and_groc_4_2010$Market_Name))
 
-    }
+  mrkNames_2010 <- dplyr::arrange(mrkNames_2010, Market_Name)
+
+  write.csv(mrkNames_2010,
+            paste(path_local, "/data_beerEthnicityConsumptionBrandChoice/mrkNames_2010.csv", sep = ""))
+
 
   count <- 10
   setTxtProgressBar(pb, count)
