@@ -3,7 +3,7 @@
 
 # Load Data -------------------------------------------------------------------
 
-explore_marketData <- function(data, ...) {
+S3.explore_2010marketData <- function(data, ...) {
 
 # Add volume measures ---------------------------------------------------------
 

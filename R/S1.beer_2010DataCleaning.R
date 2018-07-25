@@ -2,14 +2,14 @@
 
 
 
-beer_2010DataCleaning <- function(save_2010_main_data = all_formats) {
+S1.beer_2010DataCleaning <- function(save_2010_main_data = 'all_formats') {
 
   startTime <- Sys.time()
 
-  feather <- "feather"
-  rds <- "rds"
-  csv <- "csv"
-  all_formats <- "all_formats"
+  # feather <- "feather"
+  # rds <- "rds"
+  # csv <- "csv"
+  # all_formats <- "all_formats"
 
   totalCount <- 10
   pb <- txtProgressBar(min = 0, max = totalCount, style = 3)
@@ -180,29 +180,29 @@ beer_2010DataCleaning <- function(save_2010_main_data = all_formats) {
 
     feather::write_feather(
       main_beer_drug_and_groc_4_2010,
-      paste(path_local, "/data_beerEthnicityConsumptionBrandChoice/main_beer_drug_and_groc_4_2010.feather", sep = ""))
+      paste(path_local, "/data_beerEthnicityConsumptionBrandChoice/D1.main_beer_drug_and_groc_4_2010.feather", sep = ""))
 
     } else if(save_2010_main_data == rds) {
 
       saveRDS(main_beer_drug_and_groc_4_2010,
-              paste(path_local, "/data_beerEthnicityConsumptionBrandChoice/main_beer_drug_and_groc_4_2010.rds", sep = ""))
+              paste(path_local, "/data_beerEthnicityConsumptionBrandChoice/D1.main_beer_drug_and_groc_4_2010.rds", sep = ""))
 
       } else if(save_2010_main_data == csv) {
 
         write.csv(main_beer_drug_and_groc_4_2010,
-                paste(path_local, "/data_beerEthnicityConsumptionBrandChoice/main_beer_drug_and_groc_4_2010.csv", sep = ""))
+                paste(path_local, "/data_beerEthnicityConsumptionBrandChoice/D1.main_beer_drug_and_groc_4_2010.csv", sep = ""))
 
       } else if(save_2010_main_data == all_formats) {
 
         feather::write_feather(
           main_beer_drug_and_groc_4_2010,
-          paste(path_local, "/data_beerEthnicityConsumptionBrandChoice/main_beer_drug_and_groc_4_2010.feather", sep = ""))
+          paste(path_local, "/data_beerEthnicityConsumptionBrandChoice/D1.main_beer_drug_and_groc_4_2010.feather", sep = ""))
 
         saveRDS(main_beer_drug_and_groc_4_2010,
-                paste(path_local, "/data_beerEthnicityConsumptionBrandChoice/main_beer_drug_and_groc_4_2010.rds", sep = ""))
+                paste(path_local, "/data_beerEthnicityConsumptionBrandChoice/D1.main_beer_drug_and_groc_4_2010.rds", sep = ""))
 
         write.csv(main_beer_drug_and_groc_4_2010,
-                  paste(path_local, "/data_beerEthnicityConsumptionBrandChoice/main_beer_drug_and_groc_4_2010.csv", sep = ""))
+                  paste(path_local, "/data_beerEthnicityConsumptionBrandChoice/D1.main_beer_drug_and_groc_4_2010.csv", sep = ""))
 
       }
 
@@ -217,8 +217,8 @@ beer_2010DataCleaning <- function(save_2010_main_data = all_formats) {
 
   mrkNames_2010 <- dplyr::arrange(mrkNames_2010, Market_Name)
 
-  write.csv(mrkNames_2010,
-            paste(path_local, "/data_beerEthnicityConsumptionBrandChoice/mrkNames_2010.csv", sep = ""))
+  saveRDS(mrkNames_2010,
+            paste(path_local, "/data_beerEthnicityConsumptionBrandChoice/D1.mrkNames_2010.rds", sep = ""))
 
 
   count <- 10
