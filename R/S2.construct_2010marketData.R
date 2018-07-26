@@ -56,8 +56,3 @@ S2.construct_2010marketData <- function(fileType = 'feather',
   }
 
 }
-
-
-
-
-

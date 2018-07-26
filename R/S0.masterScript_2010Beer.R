@@ -9,7 +9,7 @@ S0.masterScript <- function(S1 = TRUE,
   } else{}
 
   if(S2 == TRUE){
-    S2.marketData_2010(fileType = 'feather',
+    S2.construct_2010marketData(fileType = 'feather',
                        marketNames = c("LOS ANGELES",
                                        "CHICAGO",
                                        "DALLAS, TX"))
