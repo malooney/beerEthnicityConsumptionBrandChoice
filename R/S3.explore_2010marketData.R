@@ -3,7 +3,7 @@
 
 # Load Data -------------------------------------------------------------------
 
-S3.explore_2010marketData <- function(data, ...) {
+S3.explore_2010marketData <- function(...) {
 
 
   startTime <- Sys.time()
@@ -26,15 +26,19 @@ S3.explore_2010marketData <- function(data, ...) {
 
   } else{
 
-    D2.marketData_2010 <- readRDS("~/Google Drive/digitalLibrary/*beerEthnicityConsumptionBrandChoice/beerEthnicityConsumptionBrandChoice/data_beerEthnicityConsumptionBrandChoice/D2.marketData_2010.rds")
+    dta <- readRDS("~/Google Drive/digitalLibrary/*beerEthnicityConsumptionBrandChoice/beerEthnicityConsumptionBrandChoice/data_beerEthnicityConsumptionBrandChoice/D2.marketData_2010.rds")
 
   }
 
+  D3.explore_2010marketData <- list()
+
+  for(ii in 1:length(dta)){
+
 # Add volume measures ---------------------------------------------------------
 
-  oz <- round(data.frame(oz = data$VOL_EQ.x * 288))
+  oz <- round(data.frame(oz = dta[[ii]]$VOL_EQ.x * 288))
 
-  total_oz <- (oz * data$UNITS)
+  total_oz <- (oz * dta[[ii]]$UNITS)
 
   colnames(total_oz) <- "total_oz"
 
@@ -42,11 +46,11 @@ S3.explore_2010marketData <- function(data, ...) {
 
   colnames(total_gal) <- "total_gal"
 
-  dollarPerGal <- data$DOLLARS / total_gal
+  dollarPerGal <- dta[[ii]]$DOLLARS / total_gal
 
   colnames(dollarPerGal) <- "dollarPerGal"
 
-  data_manip <- cbind(data, oz, total_oz, total_gal, dollarPerGal)
+  data_manip <- cbind(dta[[ii]], oz, total_oz, total_gal, dollarPerGal)
 
   rm(oz, total_gal, total_oz, dollarPerGal)
 
@@ -108,7 +112,7 @@ S3.explore_2010marketData <- function(data, ...) {
 
     }
 
-  rm(i, j, tmp, num_Brands, tmp_chain, tmp_week, augChains, augWeeks,
+  rm(tmp, num_Brands, tmp_chain, tmp_week, augChains, augWeeks,
      num_Chains, num_Weeks)
 
   explore_Data_Complete <- explore_Data[, apply(explore_Data, 2,
@@ -119,7 +123,13 @@ S3.explore_2010marketData <- function(data, ...) {
 
   Brands_CompleteData <- dplyr::arrange(Brands_CompleteData, Brand_Name)
 
-  list(Brands_CompleteData = Brands_CompleteData,
+  D3.explore_2010marketData[[ii]] <- list(Brands_CompleteData = Brands_CompleteData,
        explore_Data_Complete = explore_Data_Complete,
        explore_Data = explore_Data)
+
+  ii <- i+1
+
+  }
+
+  names(D3.explore_2010marketData) <- names(dta)
 }
