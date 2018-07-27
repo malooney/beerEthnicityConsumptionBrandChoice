@@ -5,6 +5,31 @@
 
 S3.explore_2010marketData <- function(data, ...) {
 
+
+  startTime <- Sys.time()
+
+  old <- options(stringsAsFactors = FALSE)
+  on.exit(options(old), add = TRUE)
+
+  totalCount <- 5
+  pb <- txtProgressBar(min = 0, max = totalCount, style = 3)
+  count <- 1
+  setTxtProgressBar(pb, count)
+
+  path.local <- getwd()
+
+  if(!file.exists(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D2.marketData_2010.rds", sep=""))) {
+
+    stop("file does not exist in project directory. Run Script 2
+             (S2.construct_2010marketData.R) to generate the file called:
+             D2.marketData_2010.rds")
+
+  } else{
+
+    D2.marketData_2010 <- readRDS("~/Google Drive/digitalLibrary/*beerEthnicityConsumptionBrandChoice/beerEthnicityConsumptionBrandChoice/data_beerEthnicityConsumptionBrandChoice/D2.marketData_2010.rds")
+
+  }
+
 # Add volume measures ---------------------------------------------------------
 
   oz <- round(data.frame(oz = data$VOL_EQ.x * 288))
