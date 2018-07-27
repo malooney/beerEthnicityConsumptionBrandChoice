@@ -4,12 +4,12 @@
 
 S1.beer_2010DataCleaning <- function(save_2010_main_data = 'all_formats') {
 
+# Housekeeping ----------------------------------------------------------------
+
   startTime <- Sys.time()
 
-  # feather <- 'feather'
-  # rds <- 'rds'
-  # csv <- 'csv'
-  # all_formats <- 'all_formats'
+  old <- options(stringsAsFactors = FALSE)
+  on.exit(options(old), add = TRUE)
 
   totalCount <- 10
   pb <- txtProgressBar(min = 0, max = totalCount, style = 3)
@@ -73,7 +73,7 @@ S1.beer_2010DataCleaning <- function(save_2010_main_data = 'all_formats') {
 
     stringr::str_pad(x[4], 5, "left", pad =  "0"), sep = "-")
 
-    }
+  }
 
   temp <- main_beer_drug_and_groc[, 3:6]
 
@@ -115,10 +115,9 @@ S1.beer_2010DataCleaning <- function(save_2010_main_data = 'all_formats') {
 
 # join main_beer_drug_and_groc_2 to prod11_beer and prod_beer_attr_2011_edit --
 
-  main_beer_drug_and_groc_1[, 12] <- as.character(
-    main_beer_drug_and_groc_1$upc)
+  main_beer_drug_and_groc_1[, 12] <-  main_beer_drug_and_groc_1$upc
 
-  beer_prod_attr_2011_edit[, 37] <- as.character(beer_prod_attr_2011_edit$upc)
+  beer_prod_attr_2011_edit[, 37] <- beer_prod_attr_2011_edit$upc
 
   main_beer_drug_and_groc_2 <- dplyr::left_join(x = main_beer_drug_and_groc_1,
                                                 y = beer_prod_attr_2011_edit,
@@ -229,4 +228,3 @@ S1.beer_2010DataCleaning <- function(save_2010_main_data = 'all_formats') {
   endTime - startTime
 
 }
-

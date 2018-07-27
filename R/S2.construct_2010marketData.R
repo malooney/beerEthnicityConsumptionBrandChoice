@@ -5,9 +5,17 @@ S2.construct_2010marketData <- function(fileType = 'feather',
                                            "CHICAGO",
                                            "DALLAS, TX")) {
 
-  # csv = "csv"
-  # rds = "rds"
-  # feather = "feather"
+  startTime <- Sys.time()
+
+  old <- options(stringsAsFactors = FALSE)
+  on.exit(options(old), add = TRUE)
+
+  totalCount <- 5
+  pb <- txtProgressBar(min = 0, max = totalCount, style = 3)
+  count <- 1
+  setTxtProgressBar(pb, count)
+
+  marketNames <- data.frame(marketNames)
 
   path.local <- getwd()
 
@@ -33,26 +41,50 @@ S2.construct_2010marketData <- function(fileType = 'feather',
 
     }
 
-    marketData_2010 <- list()
+    count <- 2
+    setTxtProgressBar(pb, count)
 
-    for(i in seq_along(marketNames)) {
+    if(marketNames[1,1] == 'all'){
 
-    market <- marketNames[i]
+      marketNames <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D1.mrkNames_2010.rds", sep=""))
 
-    tmp <- dplyr::filter(main_beer_drug_and_groc_4_2010,
-                              Market_Name == market)
+    } else{
 
-    marketData_2010[[i]] <- tmp[, c(1, 2, 7:14, 19, 21, 25:27, 30, 36,
-                                  53:56, 71:76)]
-    i = i + 1
     }
 
-    names(marketData_2010) <- marketNames
+    count <- 3
+    setTxtProgressBar(pb, count)
+
+    marketData_2010 <- list()
+
+    for(i in 1:nrow(marketNames)) {
+
+      market <- marketNames[i,1]
+
+      tmp <- dplyr::filter(main_beer_drug_and_groc_4_2010,
+                           Market_Name == market)
+
+      marketData_2010[[i]] <- tmp[, c(1, 2, 7:14, 19, 21, 25:27, 30, 36,
+                                      53:56, 71:76)]
+      i = i + 1
+    }
+
+    count <- 4
+    setTxtProgressBar(pb, count)
+
+    names(marketData_2010) <- marketNames[,1]
 
     saveRDS(marketData_2010,
             paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D2.marketData_2010.rds", sep = ""))
 
-
   }
 
+  count <- 5
+  setTxtProgressBar(pb, count)
+
+  close(pb)
+
+  endTime <- Sys.time()
+
+  endTime - startTime
 }
