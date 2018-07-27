@@ -121,7 +121,7 @@ S3.explore_2010marketData <- function(...) {
   Brands_CompleteData_wksANDChains <- data.frame(
     Brand_Name = colnames(explore_Data_Complete[-c(1, 2)]))
 
-  Brands_CompleteData <- dplyr::arrange(Brands_CompleteData, Brand_Name)
+  Brands_CompleteData_wksANDChains <- dplyr::arrange(Brands_CompleteData_wksANDChains, Brand_Name)
 
   explore_Data_Complete_wks <- explore_Data[,
                                             apply(explore_Data[1:52,], 2,
@@ -130,15 +130,19 @@ S3.explore_2010marketData <- function(...) {
   BrandsOnly_CompleteData_wks <- data.frame(
     Brand_Name = colnames(explore_Data_Complete_wks[-c(1, 2)]))
 
+  BrandsOnly_CompleteData_wks <- dplyr::arrange(BrandsOnly_CompleteData_wks, Brand_Name)
+
+
+
   explore_2010marketData[[ii]] <- list(
 
-    BrandsOnly_CompleteData_wks <- BrandsOnly_CompleteData_wks,
+    BrandsOnly_CompleteData_wks = BrandsOnly_CompleteData_wks,
 
     explore_Data_Complete_wks = explore_Data_Complete_wks,
 
     BrandsOnly_CompleteData_wksANDChains = Brands_CompleteData_wksANDChains,
 
-    explore_Data_Complete = explore_Data_Complete,
+    explore_Data_Complete_wksANDChains = explore_Data_Complete,
 
     explore_Data = explore_Data
 
