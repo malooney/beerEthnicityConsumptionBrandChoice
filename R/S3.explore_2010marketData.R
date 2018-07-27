@@ -118,7 +118,7 @@ S3.explore_2010marketData <- function(...) {
   explore_Data_Complete <- explore_Data[, apply(explore_Data, 2,
                                                 function(x) !any(is.na(x)))]
 
-  Brands_CompleteData <- data.frame(
+  Brands_CompleteData_wksANDChains <- data.frame(
     Brand_Name = colnames(explore_Data_Complete[-c(1, 2)]))
 
   Brands_CompleteData <- dplyr::arrange(Brands_CompleteData, Brand_Name)
@@ -127,11 +127,22 @@ S3.explore_2010marketData <- function(...) {
                                             apply(explore_Data[1:52,], 2,
                                                   function(x) !any(is.na(x)))]
 
+  BrandsOnly_CompleteData_wks <- data.frame(
+    Brand_Name = colnames(explore_Data_Complete_wks[-c(1, 2)]))
+
   explore_2010marketData[[ii]] <- list(
+
+    BrandsOnly_CompleteData_wks <- BrandsOnly_CompleteData_wks,
+
     explore_Data_Complete_wks = explore_Data_Complete_wks,
-    Brands_CompleteData_wksANDChains = Brands_CompleteData,
+
+    BrandsOnly_CompleteData_wksANDChains = Brands_CompleteData_wksANDChains,
+
     explore_Data_Complete = explore_Data_Complete,
-    explore_Data = explore_Data)
+
+    explore_Data = explore_Data
+
+    )
 
   ii <- ii+1
 
