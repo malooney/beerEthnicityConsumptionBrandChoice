@@ -123,12 +123,17 @@ S3.explore_2010marketData <- function(...) {
 
   Brands_CompleteData <- dplyr::arrange(Brands_CompleteData, Brand_Name)
 
+  explore_Data_Complete_wks <- explore_Data[,
+                                            apply(explore_Data[1:52,], 2,
+                                                  function(x) !any(is.na(x)))]
+
   explore_2010marketData[[ii]] <- list(
-    Brands_CompleteData = Brands_CompleteData,
+    explore_Data_Complete_wks = explore_Data_Complete_wks,
+    Brands_CompleteData_wksANDChains = Brands_CompleteData,
     explore_Data_Complete = explore_Data_Complete,
     explore_Data = explore_Data)
 
-  ii <- i+1
+  ii <- ii+1
 
   }
 
