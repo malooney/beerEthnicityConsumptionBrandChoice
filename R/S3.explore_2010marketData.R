@@ -30,7 +30,7 @@ S3.explore_2010marketData <- function(...) {
 
   }
 
-  D3.explore_2010marketData <- list()
+  explore_2010marketData <- list()
 
   for(ii in 1:length(dta)){
 
@@ -123,13 +123,19 @@ S3.explore_2010marketData <- function(...) {
 
   Brands_CompleteData <- dplyr::arrange(Brands_CompleteData, Brand_Name)
 
-  D3.explore_2010marketData[[ii]] <- list(Brands_CompleteData = Brands_CompleteData,
-       explore_Data_Complete = explore_Data_Complete,
-       explore_Data = explore_Data)
+  explore_2010marketData[[ii]] <- list(
+    Brands_CompleteData = Brands_CompleteData,
+    explore_Data_Complete = explore_Data_Complete,
+    explore_Data = explore_Data)
 
   ii <- i+1
 
   }
 
-  names(D3.explore_2010marketData) <- names(dta)
+  names(explore_2010marketData) <- names(dta)
+
+  saveRDS(explore_2010marketData,
+          paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D3.explore_2010marketData.rds", sep = ""))
+
+
 }
