@@ -47,7 +47,9 @@ S4.allBrands_2010analysis <- function( brands= c("CHICAGO",
     allBrands_2010analysis <- dplyr::filter(freqs, Freq==length(brands))
     allBrands_2010analysis <- data.frame(allBrands_2010analysis[,1])
     colnames(allBrands_2010analysis) <- "Brand_Name"
-    D4.allBrands_2010analysis <<- allBrands_2010analysis
+
+    saveRDS(allBrands_2010analysis,
+            paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D4.allBrands_2010analysis.rds", sep = ""))
 
   }
 }

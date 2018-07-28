@@ -2,7 +2,8 @@
 
 S0.masterScript <- function(S1 = TRUE,
                             S2 = TRUE,
-                            S3 = TRUE) {
+                            S3 = TRUE,
+                            S4 = TRUE) {
 
 # Housekeeping ----------------------------------------------------------------
 
@@ -44,6 +45,17 @@ S0.masterScript <- function(S1 = TRUE,
 
   count <- 4
   setTxtProgressBar(pb, count)
+
+# S4 ---------------------------------------------------------------------------
+
+  if(S4 == TRUE){
+
+    S4.allBrands_2010analysis(brands= c("CHICAGO",
+                                      "DALLAS, TX",
+                                      "LOS ANGELES",
+                                      "SPOKANE",
+                                      "SYRACUSE"))
+  } else{}
 
   close(pb)
 
