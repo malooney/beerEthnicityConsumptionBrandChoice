@@ -26,7 +26,7 @@ S3.explore_2010marketData <- function(...) {
 
   } else{
 
-    dta <- readRDS("~/Google Drive/digitalLibrary/*beerEthnicityConsumptionBrandChoice/beerEthnicityConsumptionBrandChoice/data_beerEthnicityConsumptionBrandChoice/D2.marketData_2010.rds")
+    dta <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D2.marketData_2010.rds", sep=""))
 
   }
 
