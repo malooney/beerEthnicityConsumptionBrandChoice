@@ -2,7 +2,9 @@
 
 S4.allBrands_2010analysis <- function( brands= c("CHICAGO",
                                                  "DALLAS, TX",
-                                                 "LOS ANGELES")
+                                                 "LOS ANGELES",
+                                                 "SPOKANE",
+                                                 "SYRACUSE")
                                       ){
 
   startTime <- Sys.time()
@@ -48,8 +50,18 @@ S4.allBrands_2010analysis <- function( brands= c("CHICAGO",
     allBrands_2010analysis <- data.frame(allBrands_2010analysis[,1])
     colnames(allBrands_2010analysis) <- "Brand_Name"
 
+    allBrands_2010analysis_main <- list()
+    allBrands_2010analysis_main[[2]] <- allBrands_2010analysis
+    allBrands_2010analysis_main[[1]] <- data.frame(brands)
+    names(allBrands_2010analysis_main) <- c("Markets", "Brand_name")
+
+    allBrands_2010analysis <- allBrands_2010analysis_main
+
     saveRDS(allBrands_2010analysis,
             paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D4.allBrands_2010analysis.rds", sep = ""))
+
+    write.csv(allBrands_2010analysis[[2]],
+            paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D4.allBrands_2010analysis.csv", sep = ""))
 
   }
 }
