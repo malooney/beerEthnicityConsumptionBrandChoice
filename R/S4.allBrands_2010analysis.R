@@ -61,7 +61,10 @@ S4.allBrands_2010analysis <- function( brands= c("CHICAGO",
             paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D4.allBrands_2010analysis.rds", sep = ""))
 
     write.csv(allBrands_2010analysis[[2]],
-            paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D4.allBrands_2010analysis.csv", sep = ""))
+            paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D4.allBrands_2010analysis_Brands.csv", sep = ""), row.names = F)
+
+    write.csv(allBrands_2010analysis[[1]],
+              paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D4.allBrands_2010analysis_Markets.csv", sep = ""), row.names = F)
 
   }
 }
