@@ -18,3 +18,4 @@ Imports:
     feather,
     devtools
 LinkingTo: Rcpp
+RoxygenNote: 6.1.0

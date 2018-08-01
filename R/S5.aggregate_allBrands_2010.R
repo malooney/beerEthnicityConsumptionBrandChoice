@@ -1,8 +1,18 @@
 
+#' Add together two numbers.
+#'
+#' @param x A number.
+#' @param y A number.
+#' @return The sum of \code{x} and \code{y}.
+#' @examples
+#' add(1, 1)
+#' add(10, 1)
+#' @export
 
-S5.aggregate_allBrands_2010 <- function(Market = 'LOS ANGELES',
-                           plot = T,
-                           saveData = T){
+
+S5.aggregate_allBrands_2010 <- function( Market = 'LOS ANGELES',
+                                         plot = T,
+                                         saveData = T){
 
   startTime <- Sys.time()
 
@@ -11,7 +21,11 @@ S5.aggregate_allBrands_2010 <- function(Market = 'LOS ANGELES',
 
 # Load Data -------------------------------------------------------------------
 
-path.local <- getwd()
+  path.local <- try(rprojroot::find_rstudio_root_file(), silent=TRUE)
+
+  if(class(path.local) == 'try-error'){
+    path.local <- getwd()
+  } else{}
 
 if(!file.exists(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D4.allBrands_2010analysis_Markets.csv", sep=""))) {
 
@@ -112,6 +126,19 @@ if(plot == T){
 
   dev.off()
 
+  #par(mfrow = c(1, 2))
+  x <- selectBrands[order(selectBrands$UNITS) ,]
+
+  dotchart(x$UNITS, labels = x$Brands,
+           main = paste("Market: ", Market, "\n Total Units by Brand",
+                        sep=""), xlab = "Units")
+
+  x <- selectBrands[order(selectBrands$DOLLARS), ]
+
+  dotchart(x$DOLLARS, labels = x$Brands,
+           main =paste("Market: ", Market, " \n Total Dollars by Brand",
+                       sep=""), xlab = "Dollars")
+
 } else{}
 
 aggregateDataSummary <- data.frame(Units=selectBrands$UNITS,
@@ -120,18 +147,22 @@ aggregateDataSummary <- data.frame(Units=selectBrands$UNITS,
 
 rownames(aggregateDataSummary) <- selectBrands$Brands
 
-if(saveData==T){
+if(saveData == T){
 
   dta <- list()
 
   dta[[1]] <- prcntBrandRep
   dta[[2]] <- aggregateDataSummary
 
-  names(dta) <- c("prcntBrandRep", "aggregateDataSummary")
+  names(dta) <- c("prcntBrandRep", "aggregateDataSummary_Brand")
 
   saveRDS(dta,
           paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D5.aggregate_allBrands_2010_", gsub('[ ,]', '', Market), ".rds", sep = ""))
 
 } else{}
+
+endTime <- Sys.time()
+
+endTime - startTime
 
 }

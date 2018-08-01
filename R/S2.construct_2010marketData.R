@@ -17,7 +17,13 @@ S2.construct_2010marketData <- function(fileType = 'feather',
 
   marketNames <- data.frame(marketNames)
 
-  path.local <- getwd()
+  #path.local <- getwd()
+
+  path.local <- try(rprojroot::find_rstudio_root_file(), silent=TRUE)
+
+  if(class(path.local) == 'try-error'){
+    path.local <- getwd()
+  } else{}
 
   if(!file.exists(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D1.main_beer_drug_and_groc_4_2010.", fileType, sep=""))) {
 

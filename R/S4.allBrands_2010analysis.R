@@ -1,5 +1,7 @@
 
 
+#' @export
+
 S4.allBrands_2010analysis <- function( brands= c("CHICAGO",
                                                  "DALLAS, TX",
                                                  "LOS ANGELES",
@@ -12,7 +14,13 @@ S4.allBrands_2010analysis <- function( brands= c("CHICAGO",
   old <- options(stringsAsFactors = FALSE)
   on.exit(options(old), add = TRUE)
 
-  path.local <- getwd()
+  #path.local <- getwd()
+
+  path.local <- try(rprojroot::find_rstudio_root_file(), silent=TRUE)
+
+  if(class(path.local) == 'try-error'){
+    path.local <- getwd()
+  } else{}
 
   if(!file.exists(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D3.explore_2010marketData.rds", sep=""))) {
 

@@ -1,0 +1,28 @@
+---
+title: "labNotebook_beerEthnicityConsumptionBrandChoice"
+author: "Matthew Aaron Looney"
+date: "7/31/2018"
+output: pdf_document
+---
+
+
+
+```{r echo=F}
+
+path.local <- rprojroot::find_rstudio_root_file()
+
+source(paste(path.local, "/R/S5.aggregate_allBrands_2010.R", sep=""))
+
+
+```
+
+
+```{r echo=F, cache=T, fig.height=8, message=F, warning=F}
+
+par(mfrow= c(1, 2), ps= 8, cex= 0.50, cex.main= 1.2)
+
+S5.aggregate_allBrands_2010(Market = 'LOS ANGELES', 
+                            plot=T, 
+                            saveData=F)
+
+```

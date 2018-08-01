@@ -16,7 +16,13 @@ S3.explore_2010marketData <- function(...) {
   count <- 1
   setTxtProgressBar(pb, count)
 
-  path.local <- getwd()
+  #path.local <- getwd()
+
+  path.local <- try(rprojroot::find_rstudio_root_file(), silent=TRUE)
+
+  if(class(path.local) == 'try-error'){
+    path.local <- getwd()
+  } else{}
 
   if(!file.exists(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D2.marketData_2010.rds", sep=""))) {
 
@@ -156,6 +162,10 @@ S3.explore_2010marketData <- function(...) {
 
   saveRDS(explore_2010marketData,
           paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D3.explore_2010marketData.rds", sep = ""))
+
+  endTime <- Sys.time()
+
+  endTime - startTime
 
 
 }

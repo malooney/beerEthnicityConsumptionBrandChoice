@@ -16,7 +16,13 @@ S1.beer_2010DataCleaning <- function(save_2010_main_data = 'all_formats') {
   count <- 1
   setTxtProgressBar(pb, count)
 
-  path_local <- getwd()
+  #path_local <- getwd()
+
+  path.local <- try(rprojroot::find_rstudio_root_file(), silent=TRUE)
+
+  if(class(path.local) == 'try-error'){
+    path.local <- getwd()
+  } else{}
 
   dir.create(file.path(path_local,
                        "data_beerEthnicityConsumptionBrandChoice"),
