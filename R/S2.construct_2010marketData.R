@@ -1,23 +1,16 @@
 
+#' @export
 
-S2.construct_2010marketData <- function(fileType = 'feather',
-                            marketNames = c("LOS ANGELES",
-                                           "CHICAGO",
-                                           "DALLAS, TX")) {
+S2.construct_2010marketData <- function(input_fileType = 'feather',
+                                        marketNames = c('all'),
+                                        out_algoRunTime = T) {
 
   startTime <- Sys.time()
 
   old <- options(stringsAsFactors = FALSE)
   on.exit(options(old), add = TRUE)
 
-  totalCount <- 5
-  pb <- txtProgressBar(min = 0, max = totalCount, style = 3)
-  count <- 1
-  setTxtProgressBar(pb, count)
-
   marketNames <- data.frame(marketNames)
-
-  #path.local <- getwd()
 
   path.local <- try(rprojroot::find_rstudio_root_file(), silent=TRUE)
 
@@ -25,7 +18,7 @@ S2.construct_2010marketData <- function(fileType = 'feather',
     path.local <- getwd()
   } else{}
 
-  if(!file.exists(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D1.main_beer_drug_and_groc_4_2010.", fileType, sep=""))) {
+  if(!file.exists(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D1.main_beer_drug_and_groc_4_2010.", input_fileType, sep=""))) {
 
   stop("file does not exist in project directory. Run Script 1
              (S1.beer_2010DataCleaning) to generate the file called:
@@ -33,22 +26,19 @@ S2.construct_2010marketData <- function(fileType = 'feather',
 
   } else{
 
-    if(fileType == "csv"){
+    if(input_fileType == "csv"){
 
     main_beer_drug_and_groc_4_2010 <- suppressWarnings(read_csv(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D1.main_beer_drug_and_groc_4_2010.csv", sep=""), col_types = cols(X1 = col_skip())))
 
-    } else if(fileType == "rds") {
+    } else if(input_fileType == "rds") {
 
       main_beer_drug_and_groc_4_2010 <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D1.main_beer_drug_and_groc_4_2010.rds", sep=""))
 
-    } else if(fileType == "feather") {
+    } else if(input_fileType == "feather") {
 
       main_beer_drug_and_groc_4_2010 <- feather::read_feather(paste(path.local,"/data_beerEthnicityConsumptionBrandChoice/D1.main_beer_drug_and_groc_4_2010.feather", sep=""))
 
     }
-
-    count <- 2
-    setTxtProgressBar(pb, count)
 
     if(marketNames[1,1] == 'all'){
 
@@ -57,9 +47,6 @@ S2.construct_2010marketData <- function(fileType = 'feather',
     } else{
 
     }
-
-    count <- 3
-    setTxtProgressBar(pb, count)
 
     marketData_2010 <- list()
 
@@ -75,9 +62,6 @@ S2.construct_2010marketData <- function(fileType = 'feather',
       i = i + 1
     }
 
-    count <- 4
-    setTxtProgressBar(pb, count)
-
     names(marketData_2010) <- marketNames[,1]
 
     saveRDS(marketData_2010,
@@ -85,12 +69,12 @@ S2.construct_2010marketData <- function(fileType = 'feather',
 
   }
 
-  count <- 5
-  setTxtProgressBar(pb, count)
-
-  close(pb)
-
   endTime <- Sys.time()
 
-  endTime - startTime
+  if(out_algoRunTime == T) {
+
+    hora <- list(starttime=startTime, endTime=endTime)
+
+  } else {}
+
 }

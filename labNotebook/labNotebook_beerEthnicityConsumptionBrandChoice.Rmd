@@ -1,20 +1,110 @@
 ---
-title: "labNotebook_beerEthnicityConsumptionBrandChoice"
+title: "Lab Notebook for: \n beerEthnicityConsumptionBrandChoice"
 author: "Matthew Aaron Looney"
 date: "7/31/2018"
-output: pdf_document
+output: 
+  pdf_document: 
+    fig_caption: yes
+    toc: yes
+    toc_depth: 4
+header-includes:
+- \usepackage{graphicx}
+- \usepackage{rotating}
+- \usepackage{longtable}
+- \usepackage{amssymb,amsmath}
+- \usepackage{dcolumn}
+- \usepackage{setspace}
+- \usepackage{mathrsfs}
+- \usepackage{eso-pic,graphicx,transparent}
+fontsize: 10pt
+geometry: margin = 1.25in
 ---
 
 \newpage
   
-```{r echo=F}
+```{r echo=F, warning=F, message=F}
 
+library(stargazer)
 library(beerEthnicityConsumptionBrandChoice)
 
 path.local <- rprojroot::find_rstudio_root_file()
 
 ```
   
+# S1.beer_2010DataCleaning - Process raw beer data
+
+```{r echo=F, cache=T, message=F, warning=F}
+
+
+hora <- S1.beer_2010DataCleaning(save_2010_main_data = 'all_formats',
+                                 out_algoRunTime = T)
+
+```
+  
+\begin{verbatim}
+Algorithm name: S1.beer_2010DataCleaning(save_2010_main_data = 'all_formats',
+                                         out_algoRunTime = T)
+\end{verbatim}
+                            
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).   
+\newpage
+
+# S2.construct_2010marketData - Partition the cleaned data by city
+
+```{r echo=F, cache=T, message=F, warning=F}
+
+
+hora <- S2.construct_2010marketData(input_fileType = 'feather',
+                                    marketNames = c('all'),
+                                    out_algoRunTime = T)
+
+```
+  
+\begin{verbatim}
+Algorithm name: S2.construct_2010marketData(input_fileType = 'feather',
+                                            marketNames = c('all'),
+                                            out_algoRunTime = T)
+\end{verbatim}
+                            
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).   
+\newpage
+
+#S3.explore_2010marketData - Explore the completeness of the data
+
+This algorithm takes city level data and determines, by brand, if there are any weeks over a 52 week period (one year) that a brand is missing in the data. If there are missing weeks in the data it is impossible to tell if there were no sales of a particular brand during that week or if the brand was not offered for sale. All we can see is that the week is missing data. Further, this algorithm determines the completeness of the data at the chain level. The same problem occurs when evaluating missing data at the chain level. It is not possible to say why the data is missing, simply that the data is missing.  
+
+The output of the algorithm presents a data file called: D3.explore_2010marketData.rds
+
+This files contains information on missingness in the data by city / brand / week / chain.
+
+Several data frames are contained in the list. 
+
+  * BrandsOnly_CompleteData_wks: contains a list of brands with complete data over all 52 weeks.
+  
+  * explore_Data_Complete_wks: contains the raw data.frame for the brands with complete data over all 52 weeks.
+  
+  * Brands_CompleteData_wksANDChains: contains a list of brands with complete data over all 52 weeks and complete data over all chains in the city. The number of chains is variable depending on the city.
+  
+  * explore_Data_Complete_wksANDChains: contains the raw data.frame for the brands with complete data over all 52 weeks and chains with complete data over all chains.
+  
+  * explore_Data: contains the complete raw data.frame used to obtain the above filtered results.
+
+```{r echo=F, cache=T, message=F, warning=F}
+
+
+hora <- S3.explore_2010marketData(out_algoRunTime = T)
+
+```
+  
+\begin{verbatim}
+Algorithm name: S3.explore_2010marketData(out_algoRunTime = T) 
+\end{verbatim}
+                            
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).   
+\newpage
+
+# S4.allBrands_2010analysis - 
+
 ```{r echo=F, cache=T, message=F, warning=F}
 
 hora <- S4.allBrands_2010analysis( brands= c("CHICAGO", 
@@ -29,153 +119,250 @@ hora <- S4.allBrands_2010analysis( brands= c("CHICAGO",
 ```
   
 \begin{verbatim}
-Algorithm name: S4.allBrands_2010analysis( brands= c("CHICAGO", 
-                                                     "DALLAS, TX", 
-                                                     "LOS ANGELES", 
-                                                     "SPOKANE", 
-                                                     "SYRACUSE", 
-                                                     "HOUSTON"), 
-                                            out_algoRunTime = T
-                                           )  
+Algorithm name: S4.allBrands_2010analysis(brands= c("CHICAGO", 
+                                                    "DALLAS, TX", 
+                                                    "LOS ANGELES", 
+                                                    "SPOKANE", 
+                                                    "SYRACUSE", 
+                                                    "HOUSTON"), 
+                                          out_algoRunTime = T
+                                          )  
 \end{verbatim}
                             
 Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).   
 \newpage
+
+# S5.aggregate_allBrands_2010 - 
+
+## CHICAGO
   
 ```{r echo=F, cache=T, message=F, warning=F, fig.height=8, fig.width=9}
 
 par(mfrow= c(1, 2), ps= 8, cex= 0.75, cex.main= 1.25)
 
 hora <- S5.aggregate_allBrands_2010(Market = 'CHICAGO', 
-                            figurePlot = T,
-                            screenPlot = T,
-                            saveData = T, 
-                            out_algoRunTime = T)
+                                    figurePlot = T,
+                                    screenPlot = T,
+                                    saveData = T, 
+                                    out_algoRunTime = T)
+Market <- "CHICAGO"
+
+dta <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D5.aggregate_allBrands_2010_", gsub('[ ,]', '', Market), ".rds", sep = ""))
 
 ```
   
 \begin{verbatim}
 Algorithm name: S5.aggregate_allBrands_2010(Market = 'CHICAGO', 
-                            figurePlot = T,
-                            screenPlot = T,
-                            saveData = T, 
-                            out_algoRunTime = T)  
+                                            figurePlot = T,
+                                            screenPlot = T,
+                                            saveData = T, 
+                                            out_algoRunTime = T)  
 \end{verbatim}
                             
 Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).   
+  
+Considering the brands of interest in this study, the percent of brands represented over all brands contained in the data for the CHICAGO market is `r dta[[1]] `%.
+
+```{r echo=F, cache=T, message=F, warning=F, results='asis'}
+
+stargazer(dta[[2]], header=F, type="latex", summary= F, rownames= T, 
+          font.size = "scriptsize", title="Aggregate Data for CHICAGO", 
+          notes = "")
+
+```
+
 \newpage
+
+## DALLAS, TX
   
 ```{r echo=F, cache=T, message=F, warning=F, fig.height=8, fig.width=9}
 
 par(mfrow= c(1, 2), ps= 8, cex= 0.75, cex.main= 1.25)
 
 hora <- S5.aggregate_allBrands_2010(Market = 'DALLAS, TX', 
-                            figurePlot = T,
-                            screenPlot = T,
-                            saveData = T, 
-                            out_algoRunTime = T)
+                                    figurePlot = T,
+                                    screenPlot = T,
+                                    saveData = T, 
+                                    out_algoRunTime = T)
+Market <- "DALLAS, TX"
+
+dta <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D5.aggregate_allBrands_2010_", gsub('[ ,]', '', Market), ".rds", sep = ""))
 
 ```
   
 \begin{verbatim}
 Algorithm name: S5.aggregate_allBrands_2010(Market = 'DALLAS, TX', 
-                            figurePlot = T,
-                            screenPlot = T,
-                            saveData = T, 
-                            out_algoRunTime = T)  
+                                            figurePlot = T,
+                                            screenPlot = T,
+                                            saveData = T, 
+                                            out_algoRunTime = T)  
 \end{verbatim}
                             
-Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).  
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).     
+Considering the brands of interest in this study, the percent of brands represented over all brands contained in the data for the DALLAS, TX market is `r dta[[1]] `%.
+
+```{r echo=F, cache=T, message=F, warning=F, results='asis'}
+
+stargazer(dta[[2]], header=F, type="latex", summary= F, rownames= T, 
+          font.size = "scriptsize", title="Aggregate Data for DALLAS, TX", 
+          notes = "")
+
+```
+
 \newpage
+
+## LOS ANGELES
 
 ```{r echo=F, cache=T, message=F, warning=F, fig.height=8, fig.width=9}
 
 par(mfrow= c(1, 2), ps= 8, cex= 0.75, cex.main= 1.25)
 
 hora <- S5.aggregate_allBrands_2010(Market = 'LOS ANGELES', 
-                            figurePlot = T,
-                            screenPlot = T,
-                            saveData = T, 
-                            out_algoRunTime = T)
+                                    figurePlot = T,
+                                    screenPlot = T,
+                                    saveData = T, 
+                                    out_algoRunTime = T)
+Market <- "LOS ANGELES"
+
+dta <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D5.aggregate_allBrands_2010_", gsub('[ ,]', '', Market), ".rds", sep = ""))
 
 ```
   
 \begin{verbatim}
 Algorithm name: S5.aggregate_allBrands_2010(Market = 'LOS ANGELES', 
-                            figurePlot = T,
-                            screenPlot = T,
-                            saveData = T, 
-                            out_algoRunTime = T)  
+                                            figurePlot = T,
+                                            screenPlot = T,
+                                            saveData = T, 
+                                            out_algoRunTime = T)  
 \end{verbatim}
                             
-Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).  
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).    
+Considering the brands of interest in this study, the percent of brands represented over all brands contained in the data for the LOS ANGELES market is `r dta[[1]] `%.
+
+```{r echo=F, cache=T, message=F, warning=F, results='asis'}
+
+stargazer(dta[[2]], header=F, type="latex", summary= F, rownames= T, 
+          font.size = "scriptsize", title="Aggregate Data for LOS ANGELES", 
+          notes = "")
+
+```
+
 \newpage
+
+## SPOKANE
   
 ```{r echo=F, cache=T, message=F, warning=F, fig.height=8, fig.width=9}
 
 par(mfrow= c(1, 2), ps= 8, cex= 0.75, cex.main= 1.25)
 
 hora <- S5.aggregate_allBrands_2010(Market = 'SPOKANE', 
-                            figurePlot = T,
-                            screenPlot = T,
-                            saveData = T, 
-                            out_algoRunTime = T)
+                                    figurePlot = T,
+                                    screenPlot = T,
+                                    saveData = T, 
+                                    out_algoRunTime = T)
+
+Market <- "SPOKANE"
+
+dta <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D5.aggregate_allBrands_2010_", gsub('[ ,]', '', Market), ".rds", sep = ""))
 
 ```
   
 \begin{verbatim}
 Algorithm name: S5.aggregate_allBrands_2010(Market = 'SPOKANE', 
-                            figurePlot = T,
-                            screenPlot = T,
-                            saveData = T, 
-                            out_algoRunTime = T)  
+                                            figurePlot = T,
+                                            screenPlot = T,
+                                            saveData = T, 
+                                            out_algoRunTime = T)  
 \end{verbatim}
                             
-Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).  
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).   
+Considering the brands of interest in this study, the percent of brands represented over all brands contained in the data for the SPOKANE market is `r dta[[1]] `%.
+
+```{r echo=F, cache=T, message=F, warning=F, results='asis'}
+
+stargazer(dta[[2]], header=F, type="latex", summary= F, rownames= T, 
+          font.size = "scriptsize", title="Aggregate Data for SPOKANE", 
+          notes = "")
+
+```
+
 \newpage
+
+## SYRACUSE
   
 ```{r echo=F, cache=T, message=F, warning=F, fig.height=8, fig.width=9}
 
 par(mfrow= c(1, 2), ps= 8, cex= 0.75, cex.main= 1.25)
 
 hora <- S5.aggregate_allBrands_2010(Market = 'SYRACUSE', 
-                            figurePlot = T,
-                            screenPlot = T,
-                            saveData = T, 
-                            out_algoRunTime = T)
+                                    figurePlot = T,
+                                    screenPlot = T,
+                                    saveData = T, 
+                                    out_algoRunTime = T)
 
+Market <- "SYRACUSE"
+
+dta <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D5.aggregate_allBrands_2010_", gsub('[ ,]', '', Market), ".rds", sep = ""))
 ```
   
 \begin{verbatim}
 Algorithm name: S5.aggregate_allBrands_2010(Market = 'SYRACUSE', 
-                            figurePlot = T,
-                            screenPlot = T,
-                            saveData = T, 
-                            out_algoRunTime = T)  
+                                            figurePlot = T,
+                                            screenPlot = T,
+                                            saveData = T, 
+                                            out_algoRunTime = T)  
 \end{verbatim}
                             
 Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).  
+Considering the brands of interest in this study, the percent of brands represented over all brands contained in the data for the SYRACUSE market is `r dta[[1]] `%.
+
+```{r echo=F, cache=T, message=F, warning=F, results='asis'}
+
+stargazer(dta[[2]], header=F, type="latex", summary= F, rownames= T, 
+          font.size = "scriptsize", title="Aggregate Data for SYRACUSE", 
+          notes = "")
+
+```
+
 \newpage
+
+## HOUSTON
   
 ```{r echo=F, cache=T, message=F, warning=F, fig.height=8, fig.width=9}
 
 par(mfrow= c(1, 2), ps= 8, cex= 0.75, cex.main= 1.25)
 
 hora <- S5.aggregate_allBrands_2010(Market = 'HOUSTON', 
-                            figurePlot = T,
-                            screenPlot = T,
-                            saveData = T, 
-                            out_algoRunTime = T)
+                                    figurePlot = T,
+                                    screenPlot = T,
+                                    saveData = T, 
+                                    out_algoRunTime = T)
+
+Market <- "HOUSTON"
+
+dta <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D5.aggregate_allBrands_2010_", gsub('[ ,]', '', Market), ".rds", sep = ""))
 
 ```
   
 \begin{verbatim}
 Algorithm name: S5.aggregate_allBrands_2010(Market = 'HOUSTON', 
-                            figurePlot = T,
-                            screenPlot = T,
-                            saveData = T, 
-                            out_algoRunTime = T)  
+                                                      figurePlot = T,
+                                                      screenPlot = T,
+                                                      saveData = T, 
+                                                      out_algoRunTime = T)  
 \end{verbatim}
                             
-Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).  
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).
+
+Considering the brands of interest in this study, the percent of brands represented over all brands contained in the data for the HOUSTON market is `r dta[[1]] `%.
+
+```{r echo=F, cache=T, message=F, warning=F, results='asis'}
+
+stargazer(dta[[2]], header=F, type="latex", summary= F, rownames= T, 
+          font.size = "scriptsize", title="Aggregate Data for Houston", 
+          notes = "")
+
+```
+
+
 \newpage

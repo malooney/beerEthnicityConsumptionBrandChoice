@@ -28,8 +28,8 @@ S0.masterScript <- function(S1 = TRUE,
 # S2 ---------------------------------------------------------------------------
 
   if(S2 == TRUE){
-    S2.construct_2010marketData(fileType = 'feather',
-                       marketNames = 'all')
+    S2.construct_2010marketData(input_fileType = 'feather',
+                                marketNames = 'all')
   } else{}
 
     count <- 3

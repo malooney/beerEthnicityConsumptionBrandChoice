@@ -1,22 +1,15 @@
 
-
+#' @export
 
 # Load Data -------------------------------------------------------------------
 
-S3.explore_2010marketData <- function(...) {
+S3.explore_2010marketData <- function(out_algoRunTime = T) {
 
 
   startTime <- Sys.time()
 
   old <- options(stringsAsFactors = FALSE)
   on.exit(options(old), add = TRUE)
-
-  totalCount <- 5
-  pb <- txtProgressBar(min = 0, max = totalCount, style = 3)
-  count <- 1
-  setTxtProgressBar(pb, count)
-
-  #path.local <- getwd()
 
   path.local <- try(rprojroot::find_rstudio_root_file(), silent=TRUE)
 
@@ -165,7 +158,10 @@ S3.explore_2010marketData <- function(...) {
 
   endTime <- Sys.time()
 
-  endTime - startTime
+  if(out_algoRunTime == T) {
 
+    hora <- list(starttime=startTime, endTime=endTime)
+
+  } else {}
 
 }

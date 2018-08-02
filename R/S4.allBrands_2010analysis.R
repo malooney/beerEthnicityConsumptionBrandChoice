@@ -16,8 +16,6 @@ S4.allBrands_2010analysis <- function( brands= c("CHICAGO",
   old <- options(stringsAsFactors = FALSE)
   on.exit(options(old), add = TRUE)
 
-  #path.local <- getwd()
-
   path.local <- try(rprojroot::find_rstudio_root_file(), silent=TRUE)
 
   if(class(path.local) == 'try-error'){
@@ -85,5 +83,6 @@ S4.allBrands_2010analysis <- function( brands= c("CHICAGO",
     hora <- list(starttime=startTime, endTime=endTime)
 
   } else {}
+
 }
 
