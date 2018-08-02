@@ -11,8 +11,10 @@
 
 
 S5.aggregate_allBrands_2010 <- function( Market = 'LOS ANGELES',
-                                         plot = T,
-                                         saveData = T){
+                                         screenPlot = T,
+                                         figurePlot = T,
+                                         saveData = T,
+                                         out_algoRunTime = T){
 
   startTime <- Sys.time()
 
@@ -104,7 +106,7 @@ selectBrands <- subset(uniqueBrands, Brands %in%
 prcntBrandRep <- (sum(selectBrands[, 2]) / sum(uniqueBrands$UNITS)) * 100
 
 
-if(plot == T){
+if(figurePlot == T){
 
   dir.create(file.path(path.local,
                        "data_beerEthnicityConsumptionBrandChoice/plots"),
@@ -116,17 +118,20 @@ if(plot == T){
   x <- selectBrands[order(selectBrands$UNITS) ,]
   dotchart(x$UNITS, labels = x$Brands,
          cex=.7,
-         main = paste("Market: ", Market, " - Total Units by Brand", sep=""),
+         main = paste("Market: ", Market, "\n Total Units by Brand", sep=""),
          xlab = "Units")
   x <- selectBrands[order(selectBrands$DOLLARS), ]
   dotchart(x$DOLLARS, labels = x$Brands,
          cex = 0.7,
-         main =paste("Market: ", Market, " - Total Dollars by Brand", sep=""),
+         main =paste("Market: ", Market, "\n Total Dollars by Brand", sep=""),
          xlab = "Dollars")
 
   dev.off()
 
-  #par(mfrow = c(1, 2))
+} else {}
+
+  if(screenPlot == T){
+
   x <- selectBrands[order(selectBrands$UNITS) ,]
 
   dotchart(x$UNITS, labels = x$Brands,
@@ -163,6 +168,11 @@ if(saveData == T){
 
 endTime <- Sys.time()
 
-endTime - startTime
+if(out_algoRunTime == T) {
+
+  hora <- list(starttime=startTime, endTime=endTime)
+
+} else {}
+
 
 }

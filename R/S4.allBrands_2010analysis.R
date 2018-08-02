@@ -6,7 +6,9 @@ S4.allBrands_2010analysis <- function( brands= c("CHICAGO",
                                                  "DALLAS, TX",
                                                  "LOS ANGELES",
                                                  "SPOKANE",
-                                                 "SYRACUSE")
+                                                 "SYRACUSE",
+                                                 "HOUSTON"),
+                                       out_algoRunTime = T
                                       ){
 
   startTime <- Sys.time()
@@ -75,5 +77,13 @@ S4.allBrands_2010analysis <- function( brands= c("CHICAGO",
               paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D4.allBrands_2010analysis_Markets.csv", sep = ""), row.names = F)
 
   }
+
+  endTime <- Sys.time()
+
+  if(out_algoRunTime == T) {
+
+    hora <- list(starttime=startTime, endTime=endTime)
+
+  } else {}
 }
 

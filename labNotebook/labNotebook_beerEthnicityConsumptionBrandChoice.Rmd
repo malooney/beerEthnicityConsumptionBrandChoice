@@ -5,24 +5,177 @@ date: "7/31/2018"
 output: pdf_document
 ---
 
-
-
+\newpage
+  
 ```{r echo=F}
+
+library(beerEthnicityConsumptionBrandChoice)
 
 path.local <- rprojroot::find_rstudio_root_file()
 
-source(paste(path.local, "/R/S5.aggregate_allBrands_2010.R", sep=""))
+```
+  
+```{r echo=F, cache=T, message=F, warning=F}
 
+hora <- S4.allBrands_2010analysis( brands= c("CHICAGO", 
+                                             "DALLAS, TX", 
+                                             "LOS ANGELES", 
+                                             "SPOKANE", 
+                                             "SYRACUSE", 
+                                             "HOUSTON"), 
+                                    out_algoRunTime = T
+                                  )
 
 ```
+  
+\begin{verbatim}
+Algorithm name: S4.allBrands_2010analysis( brands= c("CHICAGO", 
+                                                     "DALLAS, TX", 
+                                                     "LOS ANGELES", 
+                                                     "SPOKANE", 
+                                                     "SYRACUSE", 
+                                                     "HOUSTON"), 
+                                            out_algoRunTime = T
+                                           )  
+\end{verbatim}
+                            
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).   
+\newpage
+  
+```{r echo=F, cache=T, message=F, warning=F, fig.height=8, fig.width=9}
 
+par(mfrow= c(1, 2), ps= 8, cex= 0.75, cex.main= 1.25)
 
-```{r echo=F, cache=T, fig.height=8, message=F, warning=F}
-
-par(mfrow= c(1, 2), ps= 8, cex= 0.50, cex.main= 1.2)
-
-S5.aggregate_allBrands_2010(Market = 'LOS ANGELES', 
-                            plot=T, 
-                            saveData=F)
+hora <- S5.aggregate_allBrands_2010(Market = 'CHICAGO', 
+                            figurePlot = T,
+                            screenPlot = T,
+                            saveData = T, 
+                            out_algoRunTime = T)
 
 ```
+  
+\begin{verbatim}
+Algorithm name: S5.aggregate_allBrands_2010(Market = 'CHICAGO', 
+                            figurePlot = T,
+                            screenPlot = T,
+                            saveData = T, 
+                            out_algoRunTime = T)  
+\end{verbatim}
+                            
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).   
+\newpage
+  
+```{r echo=F, cache=T, message=F, warning=F, fig.height=8, fig.width=9}
+
+par(mfrow= c(1, 2), ps= 8, cex= 0.75, cex.main= 1.25)
+
+hora <- S5.aggregate_allBrands_2010(Market = 'DALLAS, TX', 
+                            figurePlot = T,
+                            screenPlot = T,
+                            saveData = T, 
+                            out_algoRunTime = T)
+
+```
+  
+\begin{verbatim}
+Algorithm name: S5.aggregate_allBrands_2010(Market = 'DALLAS, TX', 
+                            figurePlot = T,
+                            screenPlot = T,
+                            saveData = T, 
+                            out_algoRunTime = T)  
+\end{verbatim}
+                            
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).  
+\newpage
+
+```{r echo=F, cache=T, message=F, warning=F, fig.height=8, fig.width=9}
+
+par(mfrow= c(1, 2), ps= 8, cex= 0.75, cex.main= 1.25)
+
+hora <- S5.aggregate_allBrands_2010(Market = 'LOS ANGELES', 
+                            figurePlot = T,
+                            screenPlot = T,
+                            saveData = T, 
+                            out_algoRunTime = T)
+
+```
+  
+\begin{verbatim}
+Algorithm name: S5.aggregate_allBrands_2010(Market = 'LOS ANGELES', 
+                            figurePlot = T,
+                            screenPlot = T,
+                            saveData = T, 
+                            out_algoRunTime = T)  
+\end{verbatim}
+                            
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).  
+\newpage
+  
+```{r echo=F, cache=T, message=F, warning=F, fig.height=8, fig.width=9}
+
+par(mfrow= c(1, 2), ps= 8, cex= 0.75, cex.main= 1.25)
+
+hora <- S5.aggregate_allBrands_2010(Market = 'SPOKANE', 
+                            figurePlot = T,
+                            screenPlot = T,
+                            saveData = T, 
+                            out_algoRunTime = T)
+
+```
+  
+\begin{verbatim}
+Algorithm name: S5.aggregate_allBrands_2010(Market = 'SPOKANE', 
+                            figurePlot = T,
+                            screenPlot = T,
+                            saveData = T, 
+                            out_algoRunTime = T)  
+\end{verbatim}
+                            
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).  
+\newpage
+  
+```{r echo=F, cache=T, message=F, warning=F, fig.height=8, fig.width=9}
+
+par(mfrow= c(1, 2), ps= 8, cex= 0.75, cex.main= 1.25)
+
+hora <- S5.aggregate_allBrands_2010(Market = 'SYRACUSE', 
+                            figurePlot = T,
+                            screenPlot = T,
+                            saveData = T, 
+                            out_algoRunTime = T)
+
+```
+  
+\begin{verbatim}
+Algorithm name: S5.aggregate_allBrands_2010(Market = 'SYRACUSE', 
+                            figurePlot = T,
+                            screenPlot = T,
+                            saveData = T, 
+                            out_algoRunTime = T)  
+\end{verbatim}
+                            
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).  
+\newpage
+  
+```{r echo=F, cache=T, message=F, warning=F, fig.height=8, fig.width=9}
+
+par(mfrow= c(1, 2), ps= 8, cex= 0.75, cex.main= 1.25)
+
+hora <- S5.aggregate_allBrands_2010(Market = 'HOUSTON', 
+                            figurePlot = T,
+                            screenPlot = T,
+                            saveData = T, 
+                            out_algoRunTime = T)
+
+```
+  
+\begin{verbatim}
+Algorithm name: S5.aggregate_allBrands_2010(Market = 'HOUSTON', 
+                            figurePlot = T,
+                            screenPlot = T,
+                            saveData = T, 
+                            out_algoRunTime = T)  
+\end{verbatim}
+                            
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).  
+\newpage
