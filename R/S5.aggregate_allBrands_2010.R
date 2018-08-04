@@ -9,12 +9,11 @@
 #' add(10, 1)
 #' @export
 
-
 S5.aggregate_allBrands_2010 <- function( Market = 'LOS ANGELES',
                                          screenPlot = T,
                                          figurePlot = T,
                                          saveData = T,
-                                         out_algoRunTime = T){
+                                         out_algoRunTime = T ){
 
   startTime <- Sys.time()
 
@@ -89,22 +88,78 @@ dta_manip <- dplyr::filter(dta_manip, dollarPerGal !="Inf")
 # Explore Brands, Firms, and percenatges of Brands by Firms -------------------
 uniqueBrands <- dta_manip
 colnames(uniqueBrands)[20] <- "Brands"
+colnames(uniqueBrands)[19] <- "Firms"
+colnames(uniqueBrands)[18] <- "Conglomerates"
+colnames(dta_manip)[20] <- "Brands"
+colnames(dta_manip)[19] <- "Firms"
+colnames(dta_manip)[18] <- "Conglomerates"
+
 uniqueBrands_U <- aggregate(UNITS ~ Brands, uniqueBrands, sum)
+uniqueFirms_U <- aggregate(UNITS ~ Firms, uniqueBrands, sum)
+uniqueConglomerates_U <- aggregate(UNITS ~ Conglomerates, uniqueBrands, sum)
+
 uniqueBrands_Dol <- aggregate(DOLLARS ~ Brands, uniqueBrands, sum)
+uniqueFirms_Dol <- aggregate(DOLLARS ~ Firms, uniqueBrands, sum)
+uniqueConglomerates_Dol <- aggregate(DOLLARS ~ Conglomerates, uniqueBrands, sum)
+
 uniqueBrands_TotGal <- aggregate(total_gal ~ Brands, uniqueBrands, sum)
+uniqueFirms_TotGal <- aggregate(total_gal ~ Firms, uniqueBrands, sum)
+uniqueConglomerates_TotGal <- aggregate(total_gal ~ Conglomerates,
+                                        uniqueBrands, sum)
+
 uniqueBrands <- dplyr::full_join(uniqueBrands_U, uniqueBrands_Dol,
                                  by = "Brands")
+uniqueFirms <- dplyr::full_join(uniqueFirms_U, uniqueFirms_Dol,
+                                 by = "Firms")
+uniqueConglomerates <- dplyr::full_join(uniqueConglomerates_U,
+                                        uniqueConglomerates_Dol,
+                                        by = "Conglomerates")
+
 uniqueBrands <- dplyr::full_join(uniqueBrands, uniqueBrands_TotGal,
                                  by = "Brands")
-uniqueBrands <- dplyr::arrange(uniqueBrands, desc(UNITS))
+uniqueFirms <- dplyr::full_join(uniqueFirms, uniqueFirms_TotGal,
+                                 by = "Firms")
+uniqueConglomerates <- dplyr::full_join(uniqueConglomerates,
+                                        uniqueConglomerates_TotGal,
+                                        by = "Conglomerates")
 
-rm(uniqueBrands_Dol, uniqueBrands_U, uniqueBrands_TotGal)
+uniqueBrands <- dplyr::arrange(uniqueBrands, desc(UNITS))
+uniqueFirms <- dplyr::arrange(uniqueFirms, desc(UNITS))
+uniqueConglomerates <- dplyr::arrange(uniqueConglomerates, desc(UNITS))
+
+#rm(uniqueBrands_Dol, uniqueBrands_U, uniqueBrands_TotGal)
 
 selectBrands <- subset(uniqueBrands, Brands %in%
                          D4.allBrands_2010analysis_Brands[,1])
+selectFirms <- subset(dta_manip, Brands %in%
+                        D4.allBrands_2010analysis_Brands[,1])
+selectFirms <- subset(uniqueFirms, Firms %in%
+                        unique(selectFirms$Firms))
+selectConglomerates <- subset(dta_manip, Brands %in%
+                        D4.allBrands_2010analysis_Brands[,1])
+selectConglomerates <- subset(uniqueConglomerates, Conglomerates %in%
+                        unique(selectConglomerates$Conglomerates))
 
-prcntBrandRep <- (sum(selectBrands[, 2]) / sum(uniqueBrands$UNITS)) * 100
+prcntBrandRep_units <- (sum(selectBrands[, 2]) /
+                          sum(uniqueBrands$UNITS)) * 100
+prcntFirmRep_units <- (sum(selectFirms[, 2]) /
+                          sum(uniqueFirms$UNITS)) * 100
+prcntConglomerateRep_units <- (sum(selectConglomerates[, 2]) /
+                         sum(uniqueConglomerates$UNITS)) * 100
 
+prcntBrandRep_dol <- (sum(selectBrands[, 3]) /
+                        sum(uniqueBrands$DOLLARS)) * 100
+prcntFirmRep_dol <- (sum(selectFirms[, 3]) /
+                        sum(uniqueFirms$DOLLARS)) * 100
+prcntConglomerateRep_dol <- (sum(selectConglomerates[, 3]) /
+                       sum(uniqueConglomerates$DOLLARS)) * 100
+
+prcntBrandRep_gal <- (sum(selectBrands[, 4]) /
+                        sum(uniqueBrands$total_gal)) * 100
+prcntFirmRep_gal <- (sum(selectFirms[, 4]) /
+                        sum(uniqueFirms$total_gal)) * 100
+prcntConglomerateRep_gal <- (sum(selectConglomerates[, 4]) /
+                       sum(uniqueConglomerates$total_gal)) * 100
 
 if(figurePlot == T){
 
@@ -146,20 +201,53 @@ if(figurePlot == T){
 
 } else{}
 
-aggregateDataSummary <- data.frame(Units=selectBrands$UNITS,
-                                   Dollars=selectBrands$DOLLARS,
-                                   Total_Gallons=selectBrands$total_gal)
+aggregateDataSummaryBrands <- data.frame(Units = selectBrands$UNITS,
+                                   Dollars = selectBrands$DOLLARS,
+                                   Total_Gallons = selectBrands$total_gal)
 
-rownames(aggregateDataSummary) <- selectBrands$Brands
+rownames(aggregateDataSummaryBrands) <- selectBrands$Brands
+
+aggregateDataSummaryFirms <- data.frame(Units = selectFirms$UNITS,
+                                         Dollars = selectFirms$DOLLARS,
+                                         Total_Gallons = selectFirms$total_gal)
+
+rownames(aggregateDataSummaryFirms) <- selectFirms$Firms
+
+aggregateDataSummaryConglomerates <- data.frame(Units =
+                                                  selectConglomerates$UNITS,
+                                        Dollars =
+                                          selectConglomerates$DOLLARS,
+                                        Total_Gallons =
+                                          selectConglomerates$total_gal)
+
+rownames(aggregateDataSummaryConglomerates) <- selectConglomerates$Conglomerates
 
 if(saveData == T){
 
-  dta <- list()
+  dta <- list(aggregateBrands=NA, aggregateFirms=NA, aggregateConglomerates=NA)
 
-  dta[[1]] <- prcntBrandRep
-  dta[[2]] <- aggregateDataSummary
+  dta[[1]] <- list(prcntBrandRep_units=prcntBrandRep_units,
+                   prcntBrandRep_dol=prcntBrandRep_dol,
+                   prcntBrandRep_gal=prcntBrandRep_gal,
+                   aggregateDataSummaryBrands=aggregateDataSummaryBrands,
+                   aggregateDataSummaryBrandsAll=uniqueBrands)
 
-  names(dta) <- c("prcntBrandRep", "aggregateDataSummary_Brand")
+  dta[[2]] <- list(prcntFirmRep_units=prcntFirmRep_units,
+                   prcntFirmRep_dol=prcntFirmRep_dol,
+                   prcntFirmRep_gal=prcntFirmRep_gal,
+                   aggregateDataSummaryFirms=aggregateDataSummaryFirms,
+                   aggregateDataSummaryFirmsAll=uniqueFirms)
+
+  dta[[3]] <- list(prcntConglomerateRep_units=prcntConglomerateRep_units,
+                   prcntFConglomerateRep_dol=prcntConglomerateRep_dol,
+                   prcntConglomerateRep_gal=prcntConglomerateRep_gal,
+                   aggregateDataSummaryConglomerates=
+                     aggregateDataSummaryConglomerates,
+                   aggregateDataSummaryConglomeratesAll=uniqueConglomerates)
+
+
+
+
 
   saveRDS(dta,
           paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D5.aggregate_allBrands_2010_", gsub('[ ,]', '', Market), ".rds", sep = ""))
@@ -173,6 +261,5 @@ if(out_algoRunTime == T) {
   hora <- list(starttime=startTime, endTime=endTime)
 
 } else {}
-
 
 }

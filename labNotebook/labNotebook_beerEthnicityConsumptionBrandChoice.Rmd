@@ -35,7 +35,6 @@ path.local <- rprojroot::find_rstudio_root_file()
 
 ```{r echo=F, cache=T, message=F, warning=F}
 
-
 hora <- S1.beer_2010DataCleaning(save_2010_main_data = 'all_formats',
                                  out_algoRunTime = T)
 
@@ -52,7 +51,6 @@ Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).
 # S2.construct_2010marketData - Partition the cleaned data by city
 
 ```{r echo=F, cache=T, message=F, warning=F}
-
 
 hora <- S2.construct_2010marketData(input_fileType = 'feather',
                                     marketNames = c('all'),
@@ -90,7 +88,6 @@ Several data frames are contained in the list.
   * explore_Data: contains the complete raw data.frame used to obtain the above filtered results.
 
 ```{r echo=F, cache=T, message=F, warning=F}
-
 
 hora <- S3.explore_2010marketData(out_algoRunTime = T)
 
@@ -145,6 +142,7 @@ hora <- S5.aggregate_allBrands_2010(Market = 'CHICAGO',
                                     screenPlot = T,
                                     saveData = T, 
                                     out_algoRunTime = T)
+
 Market <- "CHICAGO"
 
 dta <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D5.aggregate_allBrands_2010_", gsub('[ ,]', '', Market), ".rds", sep = ""))
@@ -161,7 +159,11 @@ Algorithm name: S5.aggregate_allBrands_2010(Market = 'CHICAGO',
                             
 Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).   
   
-Considering the brands of interest in this study, the percent of brands represented over all brands contained in the data for the CHICAGO market is `r dta[[1]] `%.
+prcntBrandRep_units: `r dta[[1]] `%.  
+  
+prcntBrandRep_dol: `r dta[[2]] `%.  
+  
+prcntBrandRep_gal: `r dta[[3]] `%.  
 
 ```{r echo=F, cache=T, message=F, warning=F, results='asis'}
 
@@ -184,6 +186,7 @@ hora <- S5.aggregate_allBrands_2010(Market = 'DALLAS, TX',
                                     screenPlot = T,
                                     saveData = T, 
                                     out_algoRunTime = T)
+
 Market <- "DALLAS, TX"
 
 dta <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D5.aggregate_allBrands_2010_", gsub('[ ,]', '', Market), ".rds", sep = ""))
@@ -198,8 +201,13 @@ Algorithm name: S5.aggregate_allBrands_2010(Market = 'DALLAS, TX',
                                             out_algoRunTime = T)  
 \end{verbatim}
                             
-Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).     
-Considering the brands of interest in this study, the percent of brands represented over all brands contained in the data for the DALLAS, TX market is `r dta[[1]] `%.
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).  
+  
+prcntBrandRep_units: `r dta[[1]] `%.  
+  
+prcntBrandRep_dol: `r dta[[2]] `%.  
+  
+prcntBrandRep_gal: `r dta[[3]] `%.  
 
 ```{r echo=F, cache=T, message=F, warning=F, results='asis'}
 
@@ -222,6 +230,7 @@ hora <- S5.aggregate_allBrands_2010(Market = 'LOS ANGELES',
                                     screenPlot = T,
                                     saveData = T, 
                                     out_algoRunTime = T)
+
 Market <- "LOS ANGELES"
 
 dta <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D5.aggregate_allBrands_2010_", gsub('[ ,]', '', Market), ".rds", sep = ""))
@@ -236,8 +245,13 @@ Algorithm name: S5.aggregate_allBrands_2010(Market = 'LOS ANGELES',
                                             out_algoRunTime = T)  
 \end{verbatim}
                             
-Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).    
-Considering the brands of interest in this study, the percent of brands represented over all brands contained in the data for the LOS ANGELES market is `r dta[[1]] `%.
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).  
+  
+prcntBrandRep_units: `r dta[[1]] `%.  
+  
+prcntBrandRep_dol: `r dta[[2]] `%.  
+  
+prcntBrandRep_gal: `r dta[[3]] `%.  
 
 ```{r echo=F, cache=T, message=F, warning=F, results='asis'}
 
@@ -275,8 +289,13 @@ Algorithm name: S5.aggregate_allBrands_2010(Market = 'SPOKANE',
                                             out_algoRunTime = T)  
 \end{verbatim}
                             
-Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).   
-Considering the brands of interest in this study, the percent of brands represented over all brands contained in the data for the SPOKANE market is `r dta[[1]] `%.
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).  
+  
+prcntBrandRep_units: `r dta[[1]] `%.  
+  
+prcntBrandRep_dol: `r dta[[2]] `%.  
+  
+prcntBrandRep_gal: `r dta[[3]] `%.  
 
 ```{r echo=F, cache=T, message=F, warning=F, results='asis'}
 
@@ -314,7 +333,12 @@ Algorithm name: S5.aggregate_allBrands_2010(Market = 'SYRACUSE',
 \end{verbatim}
                             
 Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).  
-Considering the brands of interest in this study, the percent of brands represented over all brands contained in the data for the SYRACUSE market is `r dta[[1]] `%.
+  
+prcntBrandRep_units: `r dta[[1]] `%.  
+  
+prcntBrandRep_dol: `r dta[[2]] `%.  
+  
+prcntBrandRep_gal: `r dta[[3]] `%.  
 
 ```{r echo=F, cache=T, message=F, warning=F, results='asis'}
 
@@ -352,9 +376,13 @@ Algorithm name: S5.aggregate_allBrands_2010(Market = 'HOUSTON',
                                                       out_algoRunTime = T)  
 \end{verbatim}
                             
-Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).
-
-Considering the brands of interest in this study, the percent of brands represented over all brands contained in the data for the HOUSTON market is `r dta[[1]] `%.
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).  
+  
+prcntBrandRep_units: `r dta[[1]] `%.  
+  
+prcntBrandRep_dol: `r dta[[2]] `%.  
+  
+prcntBrandRep_gal: `r dta[[3]] `%.  
 
 ```{r echo=F, cache=T, message=F, warning=F, results='asis'}
 
