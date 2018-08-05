@@ -3,3 +3,5 @@ stargazer
 beerEthnicityConsumptionBrandChoice
 bindrcpp
 xtable
+knitr
+kableExtra
