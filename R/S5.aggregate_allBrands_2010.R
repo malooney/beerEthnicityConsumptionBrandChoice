@@ -9,7 +9,7 @@
 #' add(10, 1)
 #' @export
 
-S5.aggregate_allBrands_2010 <- function( Market = 'LOS ANGELES',
+S5.aggregate_allBrands_2010 <- function( Market = 'CHICAGO',
                                          screenPlot = T,
                                          figurePlot = T,
                                          saveData = T,
@@ -199,28 +199,13 @@ if(figurePlot == T){
            main =paste("Market: ", Market, " \n Total Dollars by Brand",
                        sep=""), xlab = "Dollars")
 
-} else{}
+  } else{}
 
-aggregateDataSummaryBrands <- data.frame(Units = selectBrands$UNITS,
-                                   Dollars = selectBrands$DOLLARS,
-                                   Total_Gallons = selectBrands$total_gal)
+aggregateDataSummaryBrands <- selectBrands
 
-rownames(aggregateDataSummaryBrands) <- selectBrands$Brands
+aggregateDataSummaryFirms <- selectFirms
 
-aggregateDataSummaryFirms <- data.frame(Units = selectFirms$UNITS,
-                                         Dollars = selectFirms$DOLLARS,
-                                         Total_Gallons = selectFirms$total_gal)
-
-rownames(aggregateDataSummaryFirms) <- selectFirms$Firms
-
-aggregateDataSummaryConglomerates <- data.frame(Units =
-                                                  selectConglomerates$UNITS,
-                                        Dollars =
-                                          selectConglomerates$DOLLARS,
-                                        Total_Gallons =
-                                          selectConglomerates$total_gal)
-
-rownames(aggregateDataSummaryConglomerates) <- selectConglomerates$Conglomerates
+aggregateDataSummaryConglomerates <- selectConglomerates
 
 if(saveData == T){
 
