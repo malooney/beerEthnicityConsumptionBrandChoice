@@ -9,7 +9,7 @@ output:
     toc_depth: 4
 header-includes:
 - \usepackage{graphicx}
-- \usepackage{rotating}
+- \usepackage{rotating, float, caption}
 - \usepackage{longtable}
 - \usepackage{amssymb,amsmath}
 - \usepackage{dcolumn}
@@ -132,7 +132,13 @@ Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).
 
 # S5.aggregate_allBrands_2010 - 
 
-## City: CHICAGO
+\newpage
+
+## City Data:
+
+\newpage
+
+### CHICAGO
   
 ```{r echo=F, cache=T, message=F, warning=F, fig.height=8, fig.width=9}
 
@@ -153,7 +159,7 @@ dta <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D5.a
 \begin{verbatim}
 Algorithm name: S5.aggregate_allBrands_2010(Market = 'CHICAGO', 
                                             figurePlot = T,
-                                            screenPlot = T,
+                                            screenPlot = F,
                                             saveData = T, 
                                             out_algoRunTime = T)  
 \end{verbatim}
@@ -179,14 +185,13 @@ prcntConglomerateRep_dol: `r dta[[3]][2] `%.
 prcntConglomerateRep_gal: `r dta[[3]][3] `%.
   
   
-\newpage
-  
 ```{r echo=F, cache=F, message=F, warning=F, results='asis'}
 
  knitr::kable(
    dta[["aggregateConglomerates"]][["aggregateDataSummaryConglomerates"]], 
    caption="Aggregate Conglomerate Data for CHICAGO", 
    booktabs = T, 
+   longtable=T, 
    linesep = "") %>%
 kableExtra::kable_styling(latex_options = c("striped", "hold_position"), 
                           full_width = NULL) %>%
@@ -195,12 +200,12 @@ kableExtra::footnote(general="Aggregate Conglomerate Data for CHICAGO")
 
 ```
   
-  
 ```{r echo=F, cache=F, message=F, warning=F, results='asis'}
 
 knitr::kable(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]], 
              caption="Aggregate Firm Data for CHICAGO", 
              booktabs = T, 
+             longtable=T,  
              linesep = "") %>%
 kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
                           full_width = NULL) %>%
@@ -209,7 +214,6 @@ kableExtra::footnote(general=c(paste("Number of firms: ", nrow(dta[["aggregateFi
 
 ```
   
-  
 ```{r echo=F, cache=F, message=F, warning=F, results='asis'}
 
 knitr::kable(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]], 
@@ -217,7 +221,7 @@ knitr::kable(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]],
              booktabs = T, 
              longtable=T, 
              linesep = "") %>%
-kableExtra::kable_styling(latex_options = "striped", 
+kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
                           full_width = NULL) %>%
 kableExtra::footnote(general="Aggregate Brand Data for CHICAGO")
 
@@ -225,20 +229,7 @@ kableExtra::footnote(general="Aggregate Brand Data for CHICAGO")
 
 \newpage
 
-\begin{sidewaysfigure}
-\begin{center}
-\includegraphics [height=20cm]{`r paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/plots/plot.aggregateData_CHICAGO.pdf", sep="") `}
-\caption{Plot of Aggregate Data for Chicago}
-\end{center}
-\end{sidewaysfigure}
-
-
-
-
-
-
-
-## City: DALLAS, TX
+### DALLAS, TX
 
 ```{r echo=F, cache=T, message=F, warning=F, fig.height=8, fig.width=9}
 
@@ -284,15 +275,13 @@ prcntConglomerateRep_dol: `r dta[[3]][2] `%.
 
 prcntConglomerateRep_gal: `r dta[[3]][3] `%.
   
-  
-\newpage
-  
 ```{r echo=F, cache=T, message=F, warning=F, results='asis'}
 
  knitr::kable(
    dta[["aggregateConglomerates"]][["aggregateDataSummaryConglomerates"]], 
    caption="Aggregate Conglomerate Data for DALLAS, TX", 
-   booktabs = T, 
+   booktabs = T,
+   longtable=T,
    linesep = "") %>%
 kableExtra::kable_styling(latex_options = c("striped", "hold_position"), 
                           full_width = NULL) %>%
@@ -300,12 +289,12 @@ kableExtra::footnote(general="Aggregate Conglomerate Data for DALLAS, TX")
 
 ```
   
-  
 ```{r echo=F, cache=F, message=F, warning=F, results='asis'}
 
 knitr::kable(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]], 
              caption="Aggregate Firm Data for DALLAS, TX", 
              booktabs = T, 
+             longtable=T,
              linesep = "") %>%
 kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
                           full_width = NULL) %>%
@@ -314,7 +303,6 @@ kableExtra::footnote(general=c(paste("Number of firms: ", nrow(dta[["aggregateFi
 
 ```
   
-  
 ```{r echo=F, cache=F, message=F, warning=F, results='asis'}
 
 knitr::kable(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]], 
@@ -322,7 +310,7 @@ knitr::kable(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]],
              booktabs = T, 
              longtable=T, 
              linesep = "") %>%
-kableExtra::kable_styling(latex_options = "striped", 
+kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
                           full_width = NULL) %>%
 kableExtra::footnote(general="Aggregate Brand Data for DALLAS, TX")
 
@@ -330,11 +318,446 @@ kableExtra::footnote(general="Aggregate Brand Data for DALLAS, TX")
 
 \newpage
 
-\begin{sidewaysfigure}
-\begin{center}
-\includegraphics [height=20cm]{`r paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/plots/plot.aggregateData_DALLASTX.pdf", sep="") `}
-\caption{Plot of Aggregate Data for Dallas, TX}
-\end{center}
-\end{sidewaysfigure}
+### LOS ANGELES
+
+```{r echo=F, cache=T, message=F, warning=F, fig.height=8, fig.width=9}
+
+par(mfrow= c(1, 2), ps= 8, cex= 0.75, cex.main= 1.25)
+
+hora <- S5.aggregate_allBrands_2010(Market = 'LOS ANGELES',
+                                    figurePlot = T,
+                                    screenPlot = F,
+                                    saveData = T,
+                                    out_algoRunTime = T)
+
+Market <- "LOS ANGELES"
+
+dta <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D5.aggregate_allBrands_2010_", gsub('[ ,]', '', Market), ".rds", sep = ""))
+
+```
+
+\begin{verbatim}
+Algorithm name: S5.aggregate_allBrands_2010(Market = 'LOS ANGELES',
+                                            figurePlot = T,
+                                            screenPlot = F,
+                                            saveData = T,
+                                            out_algoRunTime = T)
+\end{verbatim}
+
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).
+  
+  
+prcntBrandRep_units: `r dta[[1]][1] `%.
+
+prcntBrandRep_dol: `r dta[[1]][2] `%.
+
+prcntBrandRep_gal: `r dta[[1]][3] `%.
+
+prcntFirmRep_units: `r dta[[2]][1] `%.
+
+prcntFirmRep_dol: `r dta[[2]][2] `%.
+
+prcntFirmRep_gal: `r dta[[2]][3] `%.
+
+prcntConglomerateRep_units: `r dta[[3]][1] `%.
+
+prcntConglomerateRep_dol: `r dta[[3]][2] `%.
+
+prcntConglomerateRep_gal: `r dta[[3]][3] `%.
+  
+```{r echo=F, cache=T, message=F, warning=F, results='asis'}
+
+ knitr::kable(
+   dta[["aggregateConglomerates"]][["aggregateDataSummaryConglomerates"]], 
+   caption="Aggregate Conglomerate Data for LOS ANGELES", 
+   booktabs = T, 
+   longtable=T,
+   linesep = "") %>%
+kableExtra::kable_styling(latex_options = c("striped", "hold_position"), 
+                          full_width = NULL) %>%
+kableExtra::footnote(general="Aggregate Conglomerate Data for LOS ANGELES")
+
+```
+  
+```{r echo=F, cache=F, message=F, warning=F, results='asis'}
+
+knitr::kable(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]], 
+             caption="Aggregate Firm Data for LOS ANGELES", 
+             booktabs = T, 
+             longtable=T,
+             linesep = "") %>%
+kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
+                          full_width = NULL) %>%
+kableExtra::footnote(general=c(paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]])), 
+                                   "Aggregate Firm Data for LOS ANGELES", sep=""))
+
+```
+  
+```{r echo=F, cache=F, message=F, warning=F, results='asis'}
+
+knitr::kable(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]], 
+             caption="Aggregate Brand Data for LOS ANGELES", 
+             booktabs = T, 
+             longtable=T, 
+             linesep = "") %>%
+kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
+                          full_width = NULL) %>%
+kableExtra::footnote(general="Aggregate Brand Data for LOS ANGELES")
+
+```
+  
+\newpage
+
+### SPOKANE
+  
+```{r echo=F, cache=T, message=F, warning=F, fig.height=8, fig.width=9}
+
+par(mfrow= c(1, 2), ps= 8, cex= 0.75, cex.main= 1.25)
+
+hora <- S5.aggregate_allBrands_2010(Market = 'SPOKANE',
+                                    figurePlot = T,
+                                    screenPlot = F,
+                                    saveData = T,
+                                    out_algoRunTime = T)
+
+Market <- "SPOKANE"
+
+dta <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D5.aggregate_allBrands_2010_", gsub('[ ,]', '', Market), ".rds", sep = ""))
+
+```
+
+\begin{verbatim}
+Algorithm name: S5.aggregate_allBrands_2010(Market = 'SPOKANE',
+                                            figurePlot = T,
+                                            screenPlot = F,
+                                            saveData = T,
+                                            out_algoRunTime = T)
+\end{verbatim}
+
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).
+  
+  
+prcntBrandRep_units: `r dta[[1]][1] `%.
+
+prcntBrandRep_dol: `r dta[[1]][2] `%.
+
+prcntBrandRep_gal: `r dta[[1]][3] `%.
+
+prcntFirmRep_units: `r dta[[2]][1] `%.
+
+prcntFirmRep_dol: `r dta[[2]][2] `%.
+
+prcntFirmRep_gal: `r dta[[2]][3] `%.
+
+prcntConglomerateRep_units: `r dta[[3]][1] `%.
+
+prcntConglomerateRep_dol: `r dta[[3]][2] `%.
+
+prcntConglomerateRep_gal: `r dta[[3]][3] `%.
+  
+```{r echo=F, cache=T, message=F, warning=F, results='asis'}
+
+ knitr::kable(
+   dta[["aggregateConglomerates"]][["aggregateDataSummaryConglomerates"]], 
+   caption="Aggregate Conglomerate Data for SPOKANE", 
+   booktabs = T, 
+   longtable=T,
+   linesep = "") %>%
+kableExtra::kable_styling(latex_options = c("striped", "hold_position"), 
+                          full_width = NULL) %>%
+kableExtra::footnote(general="Aggregate Conglomerate Data for SPOKANE")
+
+```
+  
+```{r echo=F, cache=F, message=F, warning=F, results='asis'}
+
+knitr::kable(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]], 
+             caption="Aggregate Firm Data for SPOKANE", 
+             booktabs = T,
+             longtable=T,
+             linesep = "") %>%
+kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
+                          full_width = NULL) %>%
+kableExtra::footnote(general=c(paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]])), 
+                                   "Aggregate Firm Data for SPOKANE", sep=""))
+
+```
+  
+```{r echo=F, cache=F, message=F, warning=F, results='asis'}
+
+knitr::kable(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]], 
+             caption="Aggregate Brand Data for SPOKANE", 
+             booktabs = T, 
+             longtable=T, 
+             linesep = "") %>%
+kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
+                          full_width = NULL) %>%
+kableExtra::footnote(general="Aggregate Brand Data for SPOKANE")
+
+```
 
 \newpage
+
+### SYRACUSE
+
+```{r echo=F, cache=T, message=F, warning=F, fig.height=8, fig.width=9}
+
+par(mfrow= c(1, 2), ps= 8, cex= 0.75, cex.main= 1.25)
+
+hora <- S5.aggregate_allBrands_2010(Market = 'SYRACUSE',
+                                    figurePlot = T,
+                                    screenPlot = F,
+                                    saveData = T,
+                                    out_algoRunTime = T)
+
+Market <- "SYRACUSE"
+
+dta <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D5.aggregate_allBrands_2010_", gsub('[ ,]', '', Market), ".rds", sep = ""))
+```
+
+\begin{verbatim}
+Algorithm name: S5.aggregate_allBrands_2010(Market = 'SYRACUSE',
+                                            figurePlot = T,
+                                            screenPlot = F,
+                                            saveData = T,
+                                            out_algoRunTime = T)
+\end{verbatim}
+
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).
+  
+  
+prcntBrandRep_units: `r dta[[1]][1] `%.
+
+prcntBrandRep_dol: `r dta[[1]][2] `%.
+
+prcntBrandRep_gal: `r dta[[1]][3] `%.
+
+prcntFirmRep_units: `r dta[[2]][1] `%.
+
+prcntFirmRep_dol: `r dta[[2]][2] `%.
+
+prcntFirmRep_gal: `r dta[[2]][3] `%.
+
+prcntConglomerateRep_units: `r dta[[3]][1] `%.
+
+prcntConglomerateRep_dol: `r dta[[3]][2] `%.
+
+prcntConglomerateRep_gal: `r dta[[3]][3] `%.
+  
+```{r echo=F, cache=T, message=F, warning=F, results='asis'}
+
+ knitr::kable(
+   dta[["aggregateConglomerates"]][["aggregateDataSummaryConglomerates"]], 
+   caption="Aggregate Conglomerate Data for SYRACUSE", 
+   booktabs = T, 
+   longtable=T,
+   linesep = "") %>%
+kableExtra::kable_styling(latex_options = c("striped", "hold_position"), 
+                          full_width = NULL) %>%
+kableExtra::footnote(general="Aggregate Conglomerate Data for SYRACUSE")
+
+```
+  
+```{r echo=F, cache=F, message=F, warning=F, results='asis'}
+
+knitr::kable(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]], 
+             caption="Aggregate Firm Data for SYRACUSE", 
+             booktabs = T,
+             longtable=T,
+             linesep = "") %>%
+kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
+                          full_width = NULL) %>%
+kableExtra::footnote(general=c(paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]])), 
+                                   "Aggregate Firm Data for SYRACUSE", sep=""))
+
+```
+  
+```{r echo=F, cache=F, message=F, warning=F, results='asis'}
+
+knitr::kable(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]], 
+             caption="Aggregate Brand Data for SYRACUSE", 
+             booktabs = T, 
+             longtable=T, 
+             linesep = "") %>%
+kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
+                          full_width = NULL) %>%
+kableExtra::footnote(general="Aggregate Brand Data for SYRACUSE")
+
+```
+
+\newpage
+
+### HOUSTON
+
+```{r echo=F, cache=T, message=F, warning=F, fig.height=8, fig.width=9}
+
+par(mfrow= c(1, 2), ps= 8, cex= 0.75, cex.main= 1.25)
+
+hora <- S5.aggregate_allBrands_2010(Market = 'HOUSTON',
+                                    figurePlot = T,
+                                    screenPlot = F,
+                                    saveData = T,
+                                    out_algoRunTime = T)
+
+Market <- "HOUSTON"
+
+dta <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D5.aggregate_allBrands_2010_", gsub('[ ,]', '', Market), ".rds", sep = ""))
+
+```
+
+\begin{verbatim}
+Algorithm name: S5.aggregate_allBrands_2010(Market = 'HOUSTON',
+                                            figurePlot = T,
+                                            screenPlot = F,
+                                            saveData = T,
+                                            out_algoRunTime = T)
+\end{verbatim}
+
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).   
+  
+prcntBrandRep_units: `r dta[[1]][1] `%.  
+  
+prcntBrandRep_dol: `r dta[[1]][2] `%.  
+  
+prcntBrandRep_gal: `r dta[[1]][3] `%.  
+  
+prcntFirmRep_units: `r dta[[2]][1] `%.  
+  
+prcntFirmRep_dol: `r dta[[2]][2] `%.  
+  
+prcntFirmRep_gal: `r dta[[2]][3] `%.  
+  
+prcntConglomerateRep_units: `r dta[[3]][1] `%.  
+  
+prcntConglomerateRep_dol: `r dta[[3]][2] `%.  
+  
+prcntConglomerateRep_gal: `r dta[[3]][3] `%.  
+  
+```{r echo=F, cache=T, message=F, warning=F, results='asis'}
+
+ knitr::kable(
+   dta[["aggregateConglomerates"]][["aggregateDataSummaryConglomerates"]], 
+   caption="Aggregate Conglomerate Data for HOUSTON", 
+   booktabs = T, 
+   longtable=T,
+   linesep = "") %>%
+kableExtra::kable_styling(latex_options = c("striped", "hold_position"), 
+                          full_width = NULL) %>%
+kableExtra::footnote(general="Aggregate Conglomerate Data for HOUSTON")
+
+```
+  
+```{r echo=F, cache=F, message=F, warning=F, results='asis'}
+
+knitr::kable(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]], 
+             caption="Aggregate Firm Data for HOUSTON", 
+             booktabs = T,
+             longtable=T,
+             linesep = "") %>%
+kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
+                          full_width = NULL) %>%
+kableExtra::footnote(general=c(paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]])), 
+                                   "Aggregate Firm Data for HOUSTON", sep=""))
+
+```
+  
+```{r echo=F, cache=F, message=F, warning=F, results='asis'}
+
+knitr::kable(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]], 
+             caption="Aggregate Brand Data for HOUSTON", 
+             booktabs = T, 
+             longtable=T, 
+             linesep = "") %>%
+kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
+                          full_width = NULL) %>%
+kableExtra::footnote(general="Aggregate Brand Data for HOUSTON")
+
+```
+
+\newpage
+  
+## Plots:
+  
+\newpage  
+
+### CHICAGO
+
+\mbox{}
+\begin{center}
+\begin{sideways}
+\begin{minipage}{1.25\linewidth}
+\includegraphics{`r paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/plots/plot.aggregateData_CHICAGO.pdf", sep="") `}
+\captionof{figure}{Plot of Aggregate Data for CHICAGO}
+\end{minipage}
+\end{sideways}
+\end{center}
+
+\newpage  
+  
+### DALLAS, TX
+
+\mbox{}
+\begin{center}
+\begin{sideways}
+\begin{minipage}{1.25\linewidth}
+\includegraphics{`r paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/plots/plot.aggregateData_DALLASTX.pdf", sep="") `}
+\captionof{figure}{Plot of Aggregate Data for DALLAS, TX}
+\end{minipage}
+\end{sideways}
+\end{center}
+
+\newpage
+
+### LOS ANGELES
+
+\mbox{}
+\begin{center}
+\begin{sideways}
+\begin{minipage}{1.25\linewidth}
+\includegraphics{`r paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/plots/plot.aggregateData_LOSANGELES.pdf", sep="") `}
+\captionof{figure}{Plot of Aggregate Data for LOS ANGELES}
+\end{minipage}
+\end{sideways}
+\end{center}
+
+\newpage
+  
+### SPOKANE
+
+\mbox{}
+\begin{center}
+\begin{sideways}
+\begin{minipage}{1.25\linewidth}
+\includegraphics{`r paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/plots/plot.aggregateData_SPOKANE.pdf", sep="") `}
+\captionof{figure}{Plot of Aggregate Data for SPOKANE}
+\end{minipage}
+\end{sideways}
+\end{center}
+
+\newpage
+  
+### SYRACUSE
+
+\mbox{}
+\begin{center}
+\begin{sideways}
+\begin{minipage}{1.25\linewidth}
+\includegraphics{`r paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/plots/plot.aggregateData_SYRACUSE.pdf", sep="") `}
+\captionof{figure}{Plot of Aggregate Data for SYRACUSE}
+\end{minipage}
+\end{sideways}
+\end{center}
+
+\newpage
+  
+### HOUSTON
+
+\mbox{}
+\begin{center}
+\begin{sideways}
+\begin{minipage}{1.25\linewidth}
+\includegraphics{`r paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/plots/plot.aggregateData_HOUSTON.pdf", sep="") `}
+\captionof{figure}{Plot of Aggregate Data for HOUSTON}
+\end{minipage}
+\end{sideways}
+\end{center}
