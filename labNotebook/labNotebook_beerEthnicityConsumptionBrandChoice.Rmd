@@ -827,9 +827,7 @@ Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).
 
 ```{r echo=F, cache=T, message=F, warning=F}
 
-D6.treeStudy_2010_CHICAGO <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D6.treeStudy_2010_CHICAGO.rds", sep=""))
-
-print(D6.treeStudy_2010_CHICAGO, limit=NULL)
+S7.printHierarchyTree(fileName='D6.treeStudy_2010_CHICAGO.rds')
 
 
 ```
