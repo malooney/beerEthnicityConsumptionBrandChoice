@@ -19,3 +19,4 @@ Imports:
     devtools
 LinkingTo: Rcpp
 RoxygenNote: 6.1.0
+Suggests: data.tree

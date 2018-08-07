@@ -30,6 +30,9 @@ library(beerEthnicityConsumptionBrandChoice)
 
 path.local <- rprojroot::find_rstudio_root_file()
 
+#devtools::document()
+#devtools::use_package("data.tree", "Suggests")
+
 ```
   
 # S1.beer_2010DataCleaning - Process raw beer data
@@ -195,7 +198,10 @@ prcntConglomerateRep_gal: `r dta[[3]][3] `%.
    linesep = "") %>%
 kableExtra::kable_styling(latex_options = c("striped", "hold_position"), 
                           full_width = NULL) %>%
-kableExtra::footnote(general="Aggregate Conglomerate Data for CHICAGO")
+kableExtra::footnote(general=c(
+  paste("Number of Conglomerates: ", nrow(dta[["aggregateConglomerates"]][["aggregateDataSummaryConglomerates"]]), sep=""), 
+  paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]]), sep=""), 
+  paste("Number of Brands: ", nrow(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]]), sep="")))
 
 
 ```
@@ -209,8 +215,10 @@ knitr::kable(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]],
              linesep = "") %>%
 kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
                           full_width = NULL) %>%
-kableExtra::footnote(general=c(paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]])), 
-                                   "Aggregate Firm Data for CHICAGO", sep=""))
+kableExtra::footnote(general=c(
+  paste("Number of Conglomerates: ", nrow(dta[["aggregateConglomerates"]][["aggregateDataSummaryConglomerates"]]), sep=""), 
+  paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]]), sep=""), 
+  paste("Number of Brands: ", nrow(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]]), sep="")))
 
 ```
   
@@ -223,7 +231,10 @@ knitr::kable(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]],
              linesep = "") %>%
 kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
                           full_width = NULL) %>%
-kableExtra::footnote(general="Aggregate Brand Data for CHICAGO")
+kableExtra::footnote(general=c(
+  paste("Number of Conglomerates: ", nrow(dta[["aggregateConglomerates"]][["aggregateDataSummaryConglomerates"]]), sep=""), 
+  paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]]), sep=""), 
+  paste("Number of Brands: ", nrow(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]]), sep="")))
 
 ```
 
@@ -285,7 +296,10 @@ prcntConglomerateRep_gal: `r dta[[3]][3] `%.
    linesep = "") %>%
 kableExtra::kable_styling(latex_options = c("striped", "hold_position"), 
                           full_width = NULL) %>%
-kableExtra::footnote(general="Aggregate Conglomerate Data for DALLAS, TX")
+kableExtra::footnote(general=c(
+  paste("Number of Conglomerates: ", nrow(dta[["aggregateConglomerates"]][["aggregateDataSummaryConglomerates"]]), sep=""), 
+  paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]]), sep=""), 
+  paste("Number of Brands: ", nrow(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]]), sep="")))
 
 ```
   
@@ -298,8 +312,10 @@ knitr::kable(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]],
              linesep = "") %>%
 kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
                           full_width = NULL) %>%
-kableExtra::footnote(general=c(paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]])), 
-                                   "Aggregate Firm Data for DALLAS, TX", sep=""))
+kableExtra::footnote(general=c(
+  paste("Number of Conglomerates: ", nrow(dta[["aggregateConglomerates"]][["aggregateDataSummaryConglomerates"]]), sep=""), 
+  paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]]), sep=""), 
+  paste("Number of Brands: ", nrow(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]]), sep="")))
 
 ```
   
@@ -312,7 +328,10 @@ knitr::kable(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]],
              linesep = "") %>%
 kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
                           full_width = NULL) %>%
-kableExtra::footnote(general="Aggregate Brand Data for DALLAS, TX")
+kableExtra::footnote(general=c(
+  paste("Number of Conglomerates: ", nrow(dta[["aggregateConglomerates"]][["aggregateDataSummaryConglomerates"]]), sep=""), 
+  paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]]), sep=""), 
+  paste("Number of Brands: ", nrow(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]]), sep="")))
 
 ```
 
@@ -375,7 +394,10 @@ prcntConglomerateRep_gal: `r dta[[3]][3] `%.
    linesep = "") %>%
 kableExtra::kable_styling(latex_options = c("striped", "hold_position"), 
                           full_width = NULL) %>%
-kableExtra::footnote(general="Aggregate Conglomerate Data for LOS ANGELES")
+kableExtra::footnote(general=c(
+  paste("Number of Conglomerates: ", nrow(dta[["aggregateConglomerates"]][["aggregateDataSummaryConglomerates"]]), sep=""), 
+  paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]]), sep=""), 
+  paste("Number of Brands: ", nrow(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]]), sep="")))
 
 ```
   
@@ -388,8 +410,10 @@ knitr::kable(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]],
              linesep = "") %>%
 kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
                           full_width = NULL) %>%
-kableExtra::footnote(general=c(paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]])), 
-                                   "Aggregate Firm Data for LOS ANGELES", sep=""))
+kableExtra::footnote(general=c(
+  paste("Number of Conglomerates: ", nrow(dta[["aggregateConglomerates"]][["aggregateDataSummaryConglomerates"]]), sep=""), 
+  paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]]), sep=""), 
+  paste("Number of Brands: ", nrow(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]]), sep="")))
 
 ```
   
@@ -402,7 +426,10 @@ knitr::kable(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]],
              linesep = "") %>%
 kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
                           full_width = NULL) %>%
-kableExtra::footnote(general="Aggregate Brand Data for LOS ANGELES")
+kableExtra::footnote(general=c(
+  paste("Number of Conglomerates: ", nrow(dta[["aggregateConglomerates"]][["aggregateDataSummaryConglomerates"]]), sep=""), 
+  paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]]), sep=""), 
+  paste("Number of Brands: ", nrow(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]]), sep="")))
 
 ```
   
@@ -465,7 +492,10 @@ prcntConglomerateRep_gal: `r dta[[3]][3] `%.
    linesep = "") %>%
 kableExtra::kable_styling(latex_options = c("striped", "hold_position"), 
                           full_width = NULL) %>%
-kableExtra::footnote(general="Aggregate Conglomerate Data for SPOKANE")
+kableExtra::footnote(general=c(
+  paste("Number of Conglomerates: ", nrow(dta[["aggregateConglomerates"]][["aggregateDataSummaryConglomerates"]]), sep=""), 
+  paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]]), sep=""), 
+  paste("Number of Brands: ", nrow(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]]), sep="")))
 
 ```
   
@@ -478,8 +508,10 @@ knitr::kable(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]],
              linesep = "") %>%
 kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
                           full_width = NULL) %>%
-kableExtra::footnote(general=c(paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]])), 
-                                   "Aggregate Firm Data for SPOKANE", sep=""))
+kableExtra::footnote(general=c(
+  paste("Number of Conglomerates: ", nrow(dta[["aggregateConglomerates"]][["aggregateDataSummaryConglomerates"]]), sep=""), 
+  paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]]), sep=""), 
+  paste("Number of Brands: ", nrow(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]]), sep="")))
 
 ```
   
@@ -492,7 +524,10 @@ knitr::kable(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]],
              linesep = "") %>%
 kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
                           full_width = NULL) %>%
-kableExtra::footnote(general="Aggregate Brand Data for SPOKANE")
+kableExtra::footnote(general=c(
+  paste("Number of Conglomerates: ", nrow(dta[["aggregateConglomerates"]][["aggregateDataSummaryConglomerates"]]), sep=""), 
+  paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]]), sep=""), 
+  paste("Number of Brands: ", nrow(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]]), sep="")))
 
 ```
 
@@ -554,7 +589,10 @@ prcntConglomerateRep_gal: `r dta[[3]][3] `%.
    linesep = "") %>%
 kableExtra::kable_styling(latex_options = c("striped", "hold_position"), 
                           full_width = NULL) %>%
-kableExtra::footnote(general="Aggregate Conglomerate Data for SYRACUSE")
+kableExtra::footnote(general=c(
+  paste("Number of Conglomerates: ", nrow(dta[["aggregateConglomerates"]][["aggregateDataSummaryConglomerates"]]), sep=""), 
+  paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]]), sep=""), 
+  paste("Number of Brands: ", nrow(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]]), sep="")))
 
 ```
   
@@ -567,8 +605,10 @@ knitr::kable(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]],
              linesep = "") %>%
 kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
                           full_width = NULL) %>%
-kableExtra::footnote(general=c(paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]])), 
-                                   "Aggregate Firm Data for SYRACUSE", sep=""))
+kableExtra::footnote(general=c(
+  paste("Number of Conglomerates: ", nrow(dta[["aggregateConglomerates"]][["aggregateDataSummaryConglomerates"]]), sep=""), 
+  paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]]), sep=""), 
+  paste("Number of Brands: ", nrow(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]]), sep="")))
 
 ```
   
@@ -581,7 +621,10 @@ knitr::kable(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]],
              linesep = "") %>%
 kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
                           full_width = NULL) %>%
-kableExtra::footnote(general="Aggregate Brand Data for SYRACUSE")
+kableExtra::footnote(general=c(
+  paste("Number of Conglomerates: ", nrow(dta[["aggregateConglomerates"]][["aggregateDataSummaryConglomerates"]]), sep=""), 
+  paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]]), sep=""), 
+  paste("Number of Brands: ", nrow(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]]), sep="")))
 
 ```
 
@@ -643,7 +686,10 @@ prcntConglomerateRep_gal: `r dta[[3]][3] `%.
    linesep = "") %>%
 kableExtra::kable_styling(latex_options = c("striped", "hold_position"), 
                           full_width = NULL) %>%
-kableExtra::footnote(general="Aggregate Conglomerate Data for HOUSTON")
+kableExtra::footnote(general=c(
+  paste("Number of Conglomerates: ", nrow(dta[["aggregateConglomerates"]][["aggregateDataSummaryConglomerates"]]), sep=""), 
+  paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]]), sep=""), 
+  paste("Number of Brands: ", nrow(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]]), sep="")))
 
 ```
   
@@ -656,8 +702,10 @@ knitr::kable(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]],
              linesep = "") %>%
 kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
                           full_width = NULL) %>%
-kableExtra::footnote(general=c(paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]])), 
-                                   "Aggregate Firm Data for HOUSTON", sep=""))
+kableExtra::footnote(general=c(
+  paste("Number of Conglomerates: ", nrow(dta[["aggregateConglomerates"]][["aggregateDataSummaryConglomerates"]]), sep=""), 
+  paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]]), sep=""), 
+  paste("Number of Brands: ", nrow(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]]), sep="")))
 
 ```
   
@@ -670,7 +718,10 @@ knitr::kable(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]],
              linesep = "") %>%
 kableExtra::kable_styling(latex_options = c("striped", "hold_position"),
                           full_width = NULL) %>%
-kableExtra::footnote(general="Aggregate Brand Data for HOUSTON")
+kableExtra::footnote(general=c(
+  paste("Number of Conglomerates: ", nrow(dta[["aggregateConglomerates"]][["aggregateDataSummaryConglomerates"]]), sep=""), 
+  paste("Number of firms: ", nrow(dta[["aggregateFirms"]][["aggregateDataSummaryFirms"]]), sep=""), 
+  paste("Number of Brands: ", nrow(dta[["aggregateBrands"]][["aggregateDataSummaryBrands"]]), sep="")))
 
 ```
 
@@ -761,3 +812,26 @@ kableExtra::footnote(general="Aggregate Brand Data for HOUSTON")
 \end{minipage}
 \end{sideways}
 \end{center}
+
+\newpage
+
+# S6.hierarchyTree - Data Trees
+
+```{r echo=F, cache=T, message=F, warning=F}
+
+hora <- S6.hierarchyTree()
+
+```
+
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).
+
+```{r echo=F, cache=T, message=F, warning=F}
+
+D6.treeStudy_2010_CHICAGO <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D6.treeStudy_2010_CHICAGO.rds", sep=""))
+
+print(D6.treeStudy_2010_CHICAGO, limit=NULL)
+
+
+```
+
+

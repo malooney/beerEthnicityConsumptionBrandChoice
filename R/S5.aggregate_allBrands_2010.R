@@ -231,9 +231,6 @@ if(saveData == T){
                    aggregateDataSummaryConglomeratesAll=uniqueConglomerates)
 
 
-
-
-
   saveRDS(dta,
           paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D5.aggregate_allBrands_2010_", gsub('[ ,]', '', Market), ".rds", sep = ""))
 

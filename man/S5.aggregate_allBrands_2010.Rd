@@ -4,7 +4,7 @@
 \alias{S5.aggregate_allBrands_2010}
 \title{Add together two numbers.}
 \usage{
-S5.aggregate_allBrands_2010(Market = "LOS ANGELES", screenPlot = T,
+S5.aggregate_allBrands_2010(Market = "CHICAGO", screenPlot = T,
   figurePlot = T, saveData = T, out_algoRunTime = T)
 }
 \arguments{
