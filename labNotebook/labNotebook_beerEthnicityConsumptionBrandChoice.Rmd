@@ -819,9 +819,42 @@ kableExtra::footnote(general=c(
 
 ```{r echo=F, cache=T, message=F, warning=F}
 
-hora <- S6.hierarchyTree()
+hora <- S6.hierarchyTree(Market = NULL,
+                         saveMarketHierarchy = F,
+                         saveAllBrandHierarchy = T,
+                         out_algoRunTime = T )
 
 ```
+
+\begin{verbatim}
+Algorithm name: S6.hierarchyTree(Market = NULL,
+                                 saveMarketHierarchy = F,
+                                 saveAllBrandHierarchy = T,
+                                 out_algoRunTime = T )
+\end{verbatim}
+
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).
+
+
+## City Data: 
+
+### CHICAGO
+
+```{r echo=F, cache=T, message=F, warning=F}
+
+hora <- S6.hierarchyTree(Market = 'CHICAGO',
+                         saveMarketHierarchy = T,
+                         saveAllBrandHierarchy = F,
+                         out_algoRunTime = T )
+
+```
+
+\begin{verbatim}
+Algorithm name: S6.hierarchyTree(Market = 'CHICAGO',
+                                 saveMarketHierarchy = T,
+                                 saveAllBrandHierarchy = F,
+                                 out_algoRunTime = T )
+\end{verbatim}
 
 Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).
 
@@ -829,7 +862,138 @@ Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).
 
 S7.printHierarchyTree(fileName='D6.treeStudy_2010_CHICAGO.rds')
 
+```
+
+### DALLAS, TX
+
+```{r echo=F, cache=T, message=F, warning=F}
+
+hora <- S6.hierarchyTree(Market = 'DALLAS, TX',
+                         saveMarketHierarchy = T,
+                         saveAllBrandHierarchy = F,
+                         out_algoRunTime = T )
 
 ```
+
+\begin{verbatim}
+Algorithm name: S6.hierarchyTree(Market = 'DALLAS, TX',
+                                 saveMarketHierarchy = T,
+                                 saveAllBrandHierarchy = F,
+                                 out_algoRunTime = T )
+\end{verbatim}
+
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).
+
+```{r echo=F, cache=T, message=F, warning=F}
+
+S7.printHierarchyTree(fileName='D6.treeStudy_2010_DALLASTX.rds')
+
+```
+
+### LOS ANGELES
+
+```{r echo=F, cache=T, message=F, warning=F}
+
+hora <- S6.hierarchyTree(Market = 'LOS ANGELES',
+                         saveMarketHierarchy = T,
+                         saveAllBrandHierarchy = F,
+                         out_algoRunTime = T )
+
+```
+
+\begin{verbatim}
+Algorithm name: S6.hierarchyTree(Market = 'LOS ANGELES',
+                                 saveMarketHierarchy = T,
+                                 saveAllBrandHierarchy = F,
+                                 out_algoRunTime = T )
+\end{verbatim}
+
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).
+
+```{r echo=F, cache=T, message=F, warning=F}
+
+S7.printHierarchyTree(fileName='D6.treeStudy_2010_LOSANGELES.rds')
+
+```
+
+### SPOKANE
+
+```{r echo=F, cache=T, message=F, warning=F}
+
+hora <- S6.hierarchyTree(Market = 'SPOKANE',
+                         saveMarketHierarchy = T,
+                         saveAllBrandHierarchy = F,
+                         out_algoRunTime = T )
+
+```
+
+\begin{verbatim}
+Algorithm name: S6.hierarchyTree(Market = 'SPOKANE',
+                                 saveMarketHierarchy = T,
+                                 saveAllBrandHierarchy = F,
+                                 out_algoRunTime = T )
+\end{verbatim}
+
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).
+
+```{r echo=F, cache=T, message=F, warning=F}
+
+S7.printHierarchyTree(fileName='D6.treeStudy_2010_SPOKANE.rds')
+
+```
+
+### SYRACUSE
+
+```{r echo=F, cache=T, message=F, warning=F}
+
+hora <- S6.hierarchyTree(Market = 'SYRACUSE',
+                         saveMarketHierarchy = T,
+                         saveAllBrandHierarchy = F,
+                         out_algoRunTime = T )
+
+```
+
+\begin{verbatim}
+Algorithm name: S6.hierarchyTree(Market = 'SYRACUSE',
+                                 saveMarketHierarchy = T,
+                                 saveAllBrandHierarchy = F,
+                                 out_algoRunTime = T )
+\end{verbatim}
+
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).
+
+```{r echo=F, cache=T, message=F, warning=F}
+
+S7.printHierarchyTree(fileName='D6.treeStudy_2010_SYRACUSE.rds')
+
+```
+
+### HOUSTON
+
+```{r echo=F, cache=T, message=F, warning=F}
+
+hora <- S6.hierarchyTree(Market = 'HOUSTON',
+                         saveMarketHierarchy = T,
+                         saveAllBrandHierarchy = F,
+                         out_algoRunTime = T )
+
+```
+
+\begin{verbatim}
+Algorithm name: S6.hierarchyTree(Market = 'HOUSTON',
+                                 saveMarketHierarchy = T,
+                                 saveAllBrandHierarchy = F,
+                                 out_algoRunTime = T )
+\end{verbatim}
+
+Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).
+
+```{r echo=F, cache=T, message=F, warning=F}
+
+S7.printHierarchyTree(fileName='D6.treeStudy_2010_HOUSTON.rds')
+
+```
+
+
 
 
