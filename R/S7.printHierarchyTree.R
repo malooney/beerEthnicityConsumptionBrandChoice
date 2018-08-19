@@ -1,7 +1,5 @@
 
-
 #' @export
-
 
 S7.printHierarchyTree <- function(fileName='D6.treeStudy_2010_CHICAGO.rds'){
 

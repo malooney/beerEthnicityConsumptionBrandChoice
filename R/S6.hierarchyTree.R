@@ -1,7 +1,6 @@
 
 #' @export
 
-
 S6.hierarchyTree <- function(Market = 'CHICAGO',
                              saveMarketHierarchy = T,
                              saveAllBrandHierarchy = T,
