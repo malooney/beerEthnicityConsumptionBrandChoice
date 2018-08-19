@@ -78,6 +78,7 @@ S8.generate_aggregate_data_frame <- function(nWeeks = 52,
   } else{}
 
   tmp <- dplyr::filter(data_2010_manip, L5 %in% unqBrands)
+
   tmp_main <- data.frame()
   n <- 1
   nn <- n+1
@@ -89,10 +90,12 @@ S8.generate_aggregate_data_frame <- function(nWeeks = 52,
         j <- 1 # brand
 
         for(j in seq_along(unqBrands)){
+          tmp2_all <- dplyr::filter(tmp1, L5==unqBrands[j])
           tmp2 <- dplyr::filter(tmp1, L5==unqBrands[j] & PR==0)
-          w_dollar <- sum(tmp2$dollarPerGal)
-          W <- tmp2$dollarPerGal/w_dollar
-          W_mean <- sum(W*tmp2$dollarPerGal)
+
+          w_dollar <- sum(tmp2_all$dollarPerGal)
+          W <- tmp2_all$dollarPerGal/w_dollar
+          W_mean <- sum(W*tmp2_all$dollarPerGal)
 
           tmp2_pr <- dplyr::filter(tmp1, L5==unqBrands[j] & PR==1)
           w_dollar_pr <- sum(tmp2_pr$dollarPerGal)
@@ -100,33 +103,34 @@ S8.generate_aggregate_data_frame <- function(nWeeks = 52,
           W_mean_pr <- sum(W_pr * tmp2_pr$dollarPerGal)
 
           tmp_main[n, 01] <- ii # cdid_week
-          tmp_main[nn, 01] <- ii # cdid_week
+          #tmp_main[nn, 01] <- ii # cdid_week
           tmp_main[n, 02] <- i
-          tmp_main[nn, 02] <- i
+          #tmp_main[nn, 02] <- i
           tmp_main[n, 03] <- NA#unqChain[k] # chain
-          tmp_main[nn, 03] <- NA#unqChain[k] # chain
-          tmp_main[n, 04] <- tmp2$WEEK[1]
-          tmp_main[nn, 04] <- tmp2$WEEK[1]
-          tmp_main[n, 05] <- as.character(tmp2$`Calendar week starting on`[1])
-          tmp_main[nn, 05] <- as.character(tmp2$`Calendar week starting on`[1])
-          tmp_main[n, 06] <- as.character(tmp2$`Calendar week ending on`[1])
-          tmp_main[nn, 06] <- as.character(tmp2$`Calendar week ending on`[1])
+          #tmp_main[nn, 03] <- NA#unqChain[k] # chain
+          tmp_main[n, 04] <- tmp2_all$WEEK[1]
+          #tmp_main[nn, 04] <- tmp2$WEEK[1]
+          tmp_main[n, 05] <- as.character(tmp2_all$`Calendar week starting on`[1])
+          #tmp_main[nn, 05] <- as.character(tmp2$`Calendar week starting on`[1])
+          tmp_main[n, 06] <- as.character(tmp2_all$`Calendar week ending on`[1])
+          #tmp_main[nn, 06] <- as.character(tmp2$`Calendar week ending on`[1])
           tmp_main[n, 07] <- unqBrands[j] # brand
-          tmp_main[nn, 07] <- paste(unqBrands[j], "_pr", sep="") # brand
-          tmp_main[n, 08] <- tmp2$L3[1] # Conglomerate
-          tmp_main[nn, 08] <- tmp2$L3[1] # Conglomerate
-          tmp_main[n, 09] <- tmp2$L4[1] # Firm
-          tmp_main[nn, 09] <- tmp2$L4[1] # Firm
-          tmp_main[n, 10] <- sum(tmp2$total_gal) # total gallons
-          tmp_main[nn, 10] <- sum(tmp2_pr$total_gal) # total gallons
-          tmp_main[n, 11] <- mean(tmp2$dollarPerGal) # mean price1 ($/gal)
-          tmp_main[nn, 11] <- mean(tmp2_pr$dollarPerGal) # mean price1 ($/gal)
+          #tmp_main[nn, 07] <- paste(unqBrands[j], "_pr", sep="") # brand
+          tmp_main[n, 08] <- tmp2_all$L3[1] # Conglomerate
+          #tmp_main[nn, 08] <- tmp2$L3[1] # Conglomerate
+          tmp_main[n, 09] <- tmp2_all$L4[1] # Firm
+          #tmp_main[nn, 09] <- tmp2$L4[1] # Firm
+          tmp_main[n, 10] <- sum(tmp2_all$total_gal) # total gallons
+          #tmp_main[nn, 10] <- sum(tmp2_pr$total_gal) # total gallons
+          tmp_main[n, 11] <- mean(tmp2_all$dollarPerGal) # mean price1 ($/gal)
+          #tmp_main[nn, 11] <- mean(tmp2_pr$dollarPerGal) # mean price1 ($/gal)
           tmp_main[n, 12] <- W_mean # weighted mean price2 ($/gal)
-          tmp_main[nn, 12] <- W_mean_pr # weighted mean price2 ($/gal)
-          tmp_main[n, 13] <- sum(tmp2$total_gal)/N # share
-          tmp_main[nn, 13] <- sum(tmp2_pr$total_gal)/N # share
+          #tmp_main[nn, 12] <- W_mean_pr # weighted mean price2 ($/gal)
+          tmp_main[n, 13] <- sum(tmp2_pr$total_gal) / sum(tmp2_all$total_gal)
+          tmp_main[n, 14] <- sum(tmp2_all$total_gal)/N # share
+          #tmp_main[nn, 13] <- sum(tmp2_pr$total_gal)/N # share
 
-          n <- n+2
+          n <- n+1
           nn <- n+1
           j <- j+1
         }
@@ -137,9 +141,9 @@ S8.generate_aggregate_data_frame <- function(nWeeks = 52,
   colnames(tmp_main) <- c("cdid", "sub_cdid", "Chain", "week",
                           "week_start", "week_end", "Brand", "Conglomerate",
                           "Firm",  "total_gallons", "p1_mean", "p2_Wmean",
-                          "share")
+                          "prct_PR", "share")
 
-  nbrn <- nrow(Beer_Characteristics_Master_List) * 2
+  nbrn <- nrow(Beer_Characteristics_Master_List)
 
   constant <- data.frame("constant"= rep(1, times= nmkt* nbrn))
 
@@ -161,37 +165,37 @@ S8.generate_aggregate_data_frame <- function(nWeeks = 52,
 
   aggregate_data <- cbind(tmp_main, outshr)
 
-  tmp_char <- data.frame(matrix(ncol=ncol(Beer_Characteristics_Master_List)))
-  n <- 1
-  nn <- 2
+  # tmp_char <- data.frame(matrix(ncol=ncol(Beer_Characteristics_Master_List)))
+  # n <- 1
+  # nn <- 2
+  #
+  # for(i in 1:nrow(Beer_Characteristics_Master_List)){
+  #
+  #   tmp_char[n, ] <- Beer_Characteristics_Master_List[i, ]
+  #
+  #   tmp_char[nn, 1] <- paste(Beer_Characteristics_Master_List[i, 1], "_pr",
+  #                           sep="")
+  #
+  #   tmp_char[nn, -1] <- Beer_Characteristics_Master_List[i, -1]
+  #
+  #   n <- n+2
+  #   nn <- n+1
+  #
+  # }
+  #colnames(tmp_char) <- names(Beer_Characteristics_Master_List)
 
-  for(i in 1:nrow(Beer_Characteristics_Master_List)){
-
-    tmp_char[n, ] <- Beer_Characteristics_Master_List[i, ]
-
-    tmp_char[nn, 1] <- paste(Beer_Characteristics_Master_List[i, 1], "_pr",
-                            sep="")
-
-    tmp_char[nn, -1] <- Beer_Characteristics_Master_List[i, -1]
-
-    n <- n+2
-    nn <- n+1
-
-  }
-  colnames(tmp_char) <- names(Beer_Characteristics_Master_List)
-
-  brandDummy <- diag(nrow(tmp_char))
+  brandDummy <- diag(nrow(Beer_Characteristics_Master_List))
   colnames(brandDummy) <- chartr(" ", "_",
-                                 tmp_char$Brand_Name)
+                                 Beer_Characteristics_Master_List$Brand_Name)
 
-  Beer_Characteristics_Master_List <- cbind(tmp_char,
+  Beer_Characteristics_Master_List <- cbind(Beer_Characteristics_Master_List,
                                             brandDummy)
 
   aggregate_data <- dplyr::left_join(aggregate_data,
                               Beer_Characteristics_Master_List,
                               by= c("Brand" = "Brand_Name"))
 
-  aggregate_data$share[aggregate_data$share <=0] <- 0.000000000001
+  #aggregate_data$share[aggregate_data$share <=0] <- 0.000000000001
 
   if(saveAggregate_data_frame == T){
 
