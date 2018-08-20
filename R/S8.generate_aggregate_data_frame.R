@@ -83,7 +83,17 @@ S8.generate_aggregate_data_frame <- function(nWeeks = 52,
   } else if(city=="SPOKANE"){
     N <- (155143)* (24.8/52)
     marketSize <- "N <- (155143)* (24.8/52)"
-  }
+
+  } else if(city=="SYRACUSE"){
+    N <- (103268)* (22.4/52)
+    marketSize <- "N <- (103268)* (22.4/52)"
+
+  } else if(city=="HOUSTON"){
+    N <- (1497533)* (34.4/52)
+    marketSize <- "N <- (1497533)* (34.4/52)"
+
+  } else {}
+
 
   tmp <- dplyr::filter(data_2010_manip, L5 %in% unqBrands)
 
@@ -99,11 +109,14 @@ S8.generate_aggregate_data_frame <- function(nWeeks = 52,
 
         for(j in seq_along(unqBrands)){
           tmp2_all <- dplyr::filter(tmp1, L5==unqBrands[j])
-          tmp2 <- dplyr::filter(tmp1, L5==unqBrands[j] & PR==0)
-
           w_dollar <- sum(tmp2_all$dollarPerGal)
           W <- tmp2_all$dollarPerGal/w_dollar
           W_mean <- sum(W*tmp2_all$dollarPerGal)
+
+          tmp2_non_pr <- dplyr::filter(tmp1, L5==unqBrands[j] & PR==0)
+          w_dollar_non_pr <- sum(tmp2_non_pr$dollarPerGal)
+          W_non_pr <- tmp2_non_pr$dollarPerGal/w_dollar_non_pr
+          W_mean_non_pr <- sum(W_non_pr*tmp2_non_pr$dollarPerGal)
 
           tmp2_pr <- dplyr::filter(tmp1, L5==unqBrands[j] & PR==1)
           w_dollar_pr <- sum(tmp2_pr$dollarPerGal)
@@ -135,8 +148,10 @@ S8.generate_aggregate_data_frame <- function(nWeeks = 52,
           tmp_main[n, 12] <- W_mean # weighted mean price2 ($/gal)
           #tmp_main[nn, 12] <- W_mean_pr # weighted mean price2 ($/gal)
           tmp_main[n, 13] <- sum(tmp2_pr$total_gal) / sum(tmp2_all$total_gal)
-          tmp_main[n, 14] <- sum(tmp2_all$total_gal)/N # share
           #tmp_main[nn, 13] <- sum(tmp2_pr$total_gal)/N # share
+          tmp_main[n, 14] <- sum(tmp2_all$total_gal)/N # share
+          tmp_main[n, 15] <- W_mean_non_pr
+
 
           n <- n+1
           nn <- n+1
@@ -149,7 +164,7 @@ S8.generate_aggregate_data_frame <- function(nWeeks = 52,
   colnames(tmp_main) <- c("cdid", "sub_cdid", "Chain", "week",
                           "week_start", "week_end", "Brand", "Conglomerate",
                           "Firm",  "total_gallons", "p1_mean", "p2_Wmean",
-                          "prct_PR", "share")
+                          "prct_PR", "share", "p2_Wmean_non_pr")
 
   nbrn <- nrow(Beer_Characteristics_Master_List)
 
