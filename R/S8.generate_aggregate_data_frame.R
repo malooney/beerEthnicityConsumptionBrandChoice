@@ -65,17 +65,25 @@ S8.generate_aggregate_data_frame <- function(nWeeks = 52,
   data_2010_manip <- dplyr::filter(data_2010_manip, dollarPerGal !="Inf")
 
   unqWeek <- unique(data_2010_manip$WEEK)
+  unqWeek <- unqWeek[order(unqWeek)]
   unqBrands <- Beer_Characteristics_Master_List$Brand_Name
 
   if(city=="LOS ANGELES"){
     N <- (2798161)* (25.5/52)
+    marketSize <- "N <- (2798161)* (25.5/52)"
 
   } else if(city=="CHICAGO") {
     N <- (1996235)* (29.1/52)
+    marketSize <- "N <- (1996235)* (29.1/52)"
 
   } else if(city=="DALLAS, TX"){
     N <- (849924)* (34.4/52)
-  } else{}
+    marketSize <- "N <- (849924)* (34.4/52)"
+
+  } else if(city=="SPOKANE"){
+    N <- (155143)* (24.8/52)
+    marketSize <- "N <- (155143)* (24.8/52)"
+  }
 
   tmp <- dplyr::filter(data_2010_manip, L5 %in% unqBrands)
 
@@ -196,6 +204,8 @@ S8.generate_aggregate_data_frame <- function(nWeeks = 52,
                               by= c("Brand" = "Brand_Name"))
 
   #aggregate_data$share[aggregate_data$share <=0] <- 0.000000000001
+
+  aggregate_data <- list(aggregate_data=aggregate_data, marketSize=list(N=N, marketSize=marketSize))
 
   if(saveAggregate_data_frame == T){
 
