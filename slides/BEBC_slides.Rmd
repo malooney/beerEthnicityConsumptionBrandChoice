@@ -1,0 +1,448 @@
+---
+title: "Does Ethnicity Influence Beer Consumption and Brand Choice"
+subtitle: "A Multinomial Logit Approach"
+author: Matthew Aaron Looney
+institute: |
+  | Department of Agricultural and Applied Economics
+  | Texas Tech University
+date: "October 16, 2018"
+output:
+  beamer_presentation:
+    fig_caption: no
+    fig_width: 8 
+    fig_height: 4
+    fonttheme: structurebold
+    theme: Montpellier
+    toc: no
+  ioslides_presentation: default
+  slidy_presentation: default
+  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+cat("\014")
+rm(list=ls())
+
+library(AER)
+library(ggplot2)
+library(ggthemes)
+library(stargazer)
+
+path.local <- rprojroot::find_rstudio_root_file()
+
+```
+
+## Outline
+
+\begin{itemize}
+  \item Introduction and Background
+  \begin{itemize}
+    \item The Beer Industry
+    \item Changing Demographics
+    \item Data
+  \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+  \item The Empirical Model
+  \begin{itemize}
+    \item Multinomial Logit
+    \item Instrumental Variables
+    \item The IIA Property
+      \begin{itemize}
+        \item Implications on Elasticities
+      \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+  \item Empirical Results
+\end{itemize}
+
+\begin{itemize}
+  \item Conclusion and Future Work
+\end{itemize}
+
+# Introduction and Background
+
+## Goals of this Research
+
+### Use a Discrete Choice Behavior Model to:
+
+\begin{itemize}
+  \item Explore how the Demographic Composition of a Market (City) may Influence Beer Consumption and Brand Choice.
+  \begin{itemize}
+    \item Do markets with high Hispanic populations prefer to consume beer produced by Mexican firms over beer produced by U.S. firms? 
+    \item Do markets with high non-Hispanic populations prefer to consume beer produced by U.S. firms over beer produced by Mexican firms? 
+  \end{itemize}
+\end{itemize}
+
+
+## The Beer Industry
+
+### One of the Largest Consumer Product Sectors in America is the Beer Industry.
+
+
+* As a whole, this industry represents more than \$350 billion dollars of total economic impact.^[Based on data from 2016 in a study by John Dunham & Associates.]
+
+
+## The Beer Industry
+
+### In 2017, the U.S. beer industry shipped (sold) 207.4 million barrels of beer – equivalent to more than 2.9 billion cases of 24-12 ounce servings.^[U.S. Alcohol and Tobacco Tax and Trade Bureau (TTB) and U.S. Commerce Department, 2018]
+
+* Putting this into perspective:
+    * In 2017 65 billion gallons of beer sold
+    * Same year, 5.45 billion gallons of milk sold in the US^[Source: Statista] 
+
+
+
+## The Beer Industry
+
+### In 2017, 83 percent of all beer was domestically produced, and 17 percent was imported from more than 100 different countries around the world.^[TTB and U.S. Commerce, 2018]
+
+
+## The Beer Industry
+
+### Based on beer shipment data and U.S. Census population statistics, U.S. consumers 21 years and older consumed, on average, 26.9 gallons of beer and cider per person during 2017.^[National Beer Wholesalers Association (NBWA) Industry Affairs, 2018]
+
+
+## The Beer Industry
+
+### The industry structure has changed significantly over the past 30 years. In 1983, there were 49 breweries. At the end of 2016 there were 5,096 reporting brewers, and by the end of CY 2017 the most recent data show there were 8,863 TTB permitted breweries in the United States.
+
+A quick glance at this trend would suggest the beer industry has moved from a highly concentrated to a highly diverse industry.
+
+
+## The Beer Industry
+
+### Market Share of Brewers from 2007 to 2017
+
+The $CR_4$ has moved from 87.2% in 2007 to 78.6% in 2017.^[The Concentration Ratios $CR_n$ is a measure of market concentration and market power. The $CR_n$ has become a standard tools of competition economists and competition authorities to assess the competitive health of a market industry]
+
+By most accounts the decrease in the $CR_4$ suggests the beer industry is moving toward a more competitive environment. With the introduction of many small craft brewers the market share shift from the largest firms has been small but noticeable. 
+
+
+## The Beer Industry
+
+### Market Share of Brewers from 2007 to 2017
+
+| Brewer/Importer        | 2007 Share | 2017 Share |
+|------------------------|------------|------------|
+| Anheuser-Busch Inbev   | 48.3%      | 41.6%      |
+| MillerCoors, LLC       | 29.4%      | 24.3%      |
+| Constellation	         | 5.4%	      | 8.9%       |
+| Heineken USA	         | 4.1%	      | 3.8%       |
+| Pabst Brewing	         | 2.8%	      | 2.3%       |
+| Other Domestic/Imports | 10%        | 19%        |
+|                                                  |
+| Total	                 | 100%	      | 100%       |
+
+Source: Beer Marketer’s Insights, 2018
+
+
+## The Beer Industry
+
+### Consumer Preference (Source: Gallup Poll, 2017)
+
+```{r}
+
+drinks <- data.frame(CP_years= c(2001:2017), 
+                     beer_prct=c(0.46, 0.44, 0.42, 0.39, 0.39, 0.41, 0.40, 
+                                 0.42, 0.40, 0.41, 0.36, 0.39, 0.36, 0.41, 
+                                 0.42, 0.43, 0.40), 
+                     wine_prct=c(0.31, 0.30, 0.33, 0.33, 0.36, 0.33, 0.34, 
+                                 0.31, 0.34, 0.32, 0.35, 0.35, 0.35, 0.31, 
+                                 0.34, 0.32, 0.30), 
+               spirits_prct=c(0.18, 0.22, 0.22, 0.24, 0.21, 0.23, 0.22, 0.23,
+                              0.21, 0.21, 0.23, 0.22, 0.23, 0.23, 0.21, 0.20,
+                              0.26))
+
+drinks_plot <- data.frame(year=rep(drinks$CP_years, 3))
+drinks_plot$value <- c(drinks$beer_prct, drinks$wine_prct,
+                               drinks$spirits_prct)
+drinks_plot$variable <- factor(c(rep("beer", 17), rep("wine", 17), rep("spirits", 17)))
+
+
+ggplot(data=drinks_plot, 
+             aes(x=year, y=value, 
+                 group=variable,
+                 color=variable)) +
+geom_line() +
+ geom_point() +
+theme_economist() +
+xlab("Year") +
+ylab("Percent") +
+scale_x_continuous(breaks=drinks$CP_years) +
+theme(legend.position="top") +
+theme(legend.title=element_blank())
+
+```
+
+
+## Changing Demographics
+
+### By the year 2055 the United States will no longer have a single racial or ethnic majority.^[Pew Research Center, (Cohn and Caumont 2016)]
+
+
+## Changing Demographics
+
+### Growth in the Hispanic and Asian populations is predicted to almost triple over the next 40 years. By 2055, the breakdown is estimated to be 47% White, 29% Hispanic, 9% Asian, and 13% Black.^[World Population Review, 2018]
+
+
+## Changing Demographics
+
+\begin{center}
+U.S. Population
+\end{center}
+
+|            | 1960 (%) | 2005 (%) | 2055 (%) |
+|:-----------|---------:|---------:|---------:|
+| White      | 85       | 67       | 47       |
+| Hispanic   | 3.5      | 14       | 29       |
+| Black      | 11       | 13       | 13       |
+| Asian      | 0.6      | 5        | 9        |
+
+Source: Pew research Center Projections
+
+
+## Changing Demographics
+
+
+| City            | population > 21 | Hispanic (%) | Mexican (%) |
+|-----------------|----------------:|-------------:|------------:|
+| Los Angeles, CA | 2,798,161       | 48.5         | 31.9        |
+| Chicago, IL     | 1,996,235       | 28.9         | 21.4        |
+| Dallas, TX      |   849,924       | 42.4         | 36.7        |
+| Houston, TX     | 1,497,533       | 43.8         | 32.1        |
+| Syracuse, NY    |   103,268       |  8.3         |  0.7        |
+| Spokane, WA     |   155,143       |  5.0         |  3.4        |
+
+Source: 2010 Census Data
+
+
+## Data
+
+* Information Resources, Inc. (IRI) brand level data
+
+* 50 Brands of beer representing ~85% gallons sold in a city
+
+* 5 Firms 
+    * AB Inbev, MillerCoors, Constellation, Heineken, Diageo
+    
+* Weekly data (52 weeks)
+
+* 6 Cities
+    * Los Angeles, Chicago, Dallas, Houston, Syracuse, Spokane
+
+## Data
+
+* Brands are aggregated by gallons sold in a 1 week period
+
+* Construction of shares:
+    * sum over gallons of beer sold by brand across weeks divided by market size
+    * market size = City pop>21 X per capita beer consumption per week
+    
+* Beer characteristics:  
+    * price = US dollars per gallon  
+    * prct_PR = percent brand on price reduction (>5%) (I$_{[0,1]}$)
+    * ABV = alcohol by volume  
+    * Calories_oz = calories per ounce
+    * Carbs_oz = carbohydrates per ounce
+    * USA = US produced beer (I$_{[0,1]}$)
+    * Mexico = Mexican produced beer (I$_{[0,1]}$)
+
+
+## Data
+
+```{r echo=FALSE, fig.width=0.025, tab.cap = NULL, message=FALSE, warning=FALSE, results='asis'}
+
+beerLA.data <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/beerLA.data.rds", sep=""))
+
+beerLA.data <- beerLA.data[, c(9:11, 62:65, 68,69)]
+
+names(beerLA.data)[1] <- "price"
+
+stargazer(beerLA.data, 
+          digits = 3, header = F, font.size="scriptsize", flip=F, 
+          omit.summary.stat = c("p25", "p75"), 
+          title="Summary Statistics - Los Angeles", 
+          notes=c("price = weighted mean average price", 
+                  "share = share of brand", 
+                  "outshr = share of the outside good", 
+                  "prct PR = percent brand on price reduction", 
+                  "ABV = alcohol by volume"))
+
+
+```
+
+## Data
+
+```{r echo=FALSE, tab.cap = NULL, message=FALSE, warning=FALSE, results='asis'}
+
+beerSpokane.data <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/beerSpokane.data.rds", sep=""))
+
+beerSpokane.data <- beerSpokane.data[, c(9:11, 62:65, 68,69)]
+
+names(beerSpokane.data)[1] <- "price"
+                        
+stargazer(beerSpokane.data, 
+          digits = 3, header = F, font.size="scriptsize", flip=F, 
+          omit.summary.stat = c("p25", "p75"), 
+          title="Summary Statistics - Spokane", 
+          notes=c("price = weighted mean average price", 
+                  "share = share of brand", 
+                  "outshr = share of the outside good", 
+                  "prct PR = percent brand on price reduction", 
+                  "ABV = alcohol by volume"))
+
+```
+
+
+# The Empirical Model
+
+## A Riduculously Short History
+
+* Discrete choice behavior modeling can be traced back to the American psychologist L. L. Thurstone who developed the concept of the Law of Comparative Judgment (1927).
+
+* Marshak (1960) re-framed Thurstone contributions in terms of utility and developed what is now called the Random Utility Model (RUM).
+
+* Lancaster (1966) developed the theoretical framework for projecting consumer choice onto a set of product characteristics.
+
+
+## A Riduculously Short History
+
+* McFadden (1973) built on the RUM by showing that the utility of an individual $i$ making decision $j$, from a finite set of choices, will equal $U_{ij}$ iff $U_{ij}>U_{ik}$, $\forall$ $k \neq j$.
+
+* However, $U_{ij}$ can only be known up to an econometrically observable point. In other words, $U_{ij}=V_{ij}+\varepsilon_{ij}$, where $V_{ij}$ is the deterministic part of the utility and $\varepsilon_{ij}$ is an unobservable econometric error term.  
+
+
+## Multinomial Logit
+
+\begin{equation}
+{s_j} = \frac{{\exp ({\delta _j})}}{{\sum\limits_{k = 0}^J {\exp ({\delta _k})} }}
+\end{equation}
+
+where, $\delta_j=x_j\beta-\alpha p_j+\varepsilon_{ij}$
+
+
+## Multinomial Logit
+
+\begin{equation}
+\log \frac{{{s_{j}}}}{{{s_{0}}}} = x_j\beta-\alpha p_j+\varepsilon_{ij}
+\end{equation}
+
+where,  
+  
+$s_{j}$ is the share of brand $j$  
+$s_0$ is the share of the outside good(s).  
+$x_{j}$ is a vector of brand $j$ characteristics  
+$\beta$ and $\alpha$ are the parameters to be estimated
+  
+## Instrumental Variables
+
+* By normalizing the outside good (k=0 in eq. 1) and assuming the relationship between observed and predicted shares are invertible (Berry, 1994) we obtain the following linear-in-log difference form:
+
+\begin{equation}
+\log ({s_{j}}) - \log ({s_0}) = {x_{j}}\beta  - \alpha {p_{j}} + {\varepsilon _{ij}}
+\end{equation}
+
+* We can now employ a standard linear instrumental variables technique to deal with any endogeneity issues.
+
+## The IIA Property
+
+* If we assume our error terms are distributed iid Extreme Value Type 1, as we have, then the ratio of the probabilities of any two alternatives are independent of all other alternatives in the choice set, a rather awkward result!
+
+\begin{equation}
+\frac{{{s _{j}}}}{{{s _{m}}}} = \frac{{\exp ({\delta _{j}})/\sum\limits_{k = 0}^J {\exp ({\delta _{k}})} }}{{\exp ({\delta _{m}})/\sum\limits_{k = 0}^J {\exp ({\delta _{k}})} }} = \frac{{\exp ({\delta _{j}})}}{{\exp ({\delta _{m}})}} = \exp ({\delta _{j}} - {\delta _{m}})
+\end{equation}
+
+## The IIA Property
+
+* The implication of the IIA property can be seen most clearly when we consider the cross-price elasticities.
+
+\begin{equation}
+\begin{split}
+\mathop {{\varepsilon _{jm}}}\limits_{\scriptstyle j \ne m \hfill \atop 
+  \scriptstyle m \in k \hfill}   =   \frac{{\partial {s_j}}}{{\partial {p_m}}}\frac{{{p_m}}}{{{s_j}}} &= \left[ {\frac{0}{{1 + \Sigma \exp ({\delta _k})}} + \frac{{ - \exp ({\delta _j})}}{{1 + \Sigma \exp ({\delta _k})}}\left( { - \alpha \exp ({\delta _k})} \right)} \right]\frac{{{p_m}}}{{{s_j}}} \hfill \\
+   &= \alpha {s_j}{s_m}\frac{{{p_m}}}{{{s_j}}} \hfill \\
+   &= \alpha {s_m}{p_m} \hfill \\ 
+\end{split}
+\end{equation}
+
+# Empirical Results
+
+
+## Regression Results
+
+\begin{figure}[]
+\centering
+\includegraphics [width=50cm]{/Users/malooney/Google Drive/digitalLibrary/*beerEthnicityConsumptionBrandChoice/beerEthnicityConsumptionBrandChoice/slides/ML_Logit.pdf}
+\end{figure}
+
+
+## Regression Results
+
+\begin{figure}[]
+\centering
+\includegraphics [width=50cm]{/Users/malooney/Google Drive/digitalLibrary/*beerEthnicityConsumptionBrandChoice/beerEthnicityConsumptionBrandChoice/slides/IV_ML_Logit.pdf}
+\end{figure}
+
+
+## Regression Results
+
+\begin{figure}[]
+\centering
+\includegraphics [width=50cm]{/Users/malooney/Google Drive/digitalLibrary/*beerEthnicityConsumptionBrandChoice/beerEthnicityConsumptionBrandChoice/slides/ownElas_LA.pdf}
+\end{figure}
+
+
+## Regression Results
+
+\begin{figure}[]
+\centering
+\includegraphics [width=50cm]{/Users/malooney/Google Drive/digitalLibrary/*beerEthnicityConsumptionBrandChoice/beerEthnicityConsumptionBrandChoice/slides/elas_LA.pdf}
+\end{figure}
+
+
+## Regression Results
+
+\begin{figure}[]
+\centering
+\includegraphics [width=50cm]{/Users/malooney/Google Drive/digitalLibrary/*beerEthnicityConsumptionBrandChoice/beerEthnicityConsumptionBrandChoice/slides/ownElas_Spokane.pdf}
+\end{figure}
+
+
+# Conclusion and Future Work
+
+
+## Conclusion
+
+* The goal of this research was to explore how the demographic composition of a market (City) may influence beer consumption and brand choice.
+
+* The results indicate that markets with high Hispanic populations have a higher utility for Mexican produced beer over domestically produced beer.
+
+* Further, the results suggest that markets with low Hispanic populations have a higher utility for domestically produced beer.
+
+* The estimated price coefficient and own price elasticities are in agreement with other studies that have looked at beer.
+
+* Understanding how consumer demands change based on ethnic composition have important implications for how firms respond to the changing demographic landscape.
+
+
+## Future Work
+
+* The price elasticity matrix is severely restricted using the multinomial logit.
+
+* Incorporate consumer heterogeneity into the modeling framework to uncover higher fidelity estimates. This will provide better insight into how different types of consumers are making different choices.
+
+* Expand the study to include more cities across time.
+
+* Utilize a random coefficients logit model to help deal with the lack of consumer heterogeneity and severely restricted elasticity matrix.
+
+
+
+
+
+
+

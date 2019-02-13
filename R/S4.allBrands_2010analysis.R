@@ -2,7 +2,7 @@
 
 #' @export
 
-S4.allBrands_2010analysis <- function( brands= c("CHICAGO",
+S4.allBrands_2010analysis <- function( city= c("CHICAGO",
                                                  "DALLAS, TX",
                                                  "LOS ANGELES",
                                                  "SPOKANE",
@@ -36,16 +36,16 @@ S4.allBrands_2010analysis <- function( brands= c("CHICAGO",
 
   allBrands_2010analysis <- data.frame()
 
-  tmp <- dta[brands]
+  tmp <- dta[city]
 
-  if(length(brands) == 1){
+  if(length(city) == 1){
 
     allBrands_2010analysis <- data.frame(unlist(tmp[[1]][1], use.names = F))
     colnames(allBrands_2010analysis) <- "Brand_Name"
 
   } else{
 
-    for(i in 1:length(brands)){
+    for(i in 1:length(city)){
 
       tmp1 <- data.frame(unlist(tmp[[i]][1], use.names = F))
       allBrands_2010analysis <- rbind(allBrands_2010analysis, tmp1)
@@ -54,14 +54,19 @@ S4.allBrands_2010analysis <- function( brands= c("CHICAGO",
 
     freqs <- data.frame(table(allBrands_2010analysis))
 
-    allBrands_2010analysis <- dplyr::filter(freqs, Freq==length(brands))
+    allBrandsAllMarkets <- data.frame(brand=freqs$allBrands_2010analysis)
+
+    allBrands_2010analysis <- dplyr::filter(freqs, Freq==length(city))
     allBrands_2010analysis <- data.frame(allBrands_2010analysis[,1])
     colnames(allBrands_2010analysis) <- "Brand_Name"
 
     allBrands_2010analysis_main <- list()
+    allBrands_2010analysis_main[[3]] <- allBrandsAllMarkets
     allBrands_2010analysis_main[[2]] <- allBrands_2010analysis
-    allBrands_2010analysis_main[[1]] <- data.frame(brands)
-    names(allBrands_2010analysis_main) <- c("Markets", "Brand_name")
+    allBrands_2010analysis_main[[1]] <- data.frame("Markets"=city)
+    names(allBrands_2010analysis_main) <- c("Markets",
+                                            "Brand_name",
+                                            "allBrandsAllMarkets")
 
     allBrands_2010analysis <- allBrands_2010analysis_main
 

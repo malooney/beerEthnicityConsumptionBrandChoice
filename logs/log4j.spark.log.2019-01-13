@@ -1,0 +1,44 @@
+19/01/13 16:07:42 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/01/13 16:07:43 INFO SparkContext: Running Spark version 2.3.2
+19/01/13 16:07:43 INFO SparkContext: Submitted application: sparklyr
+19/01/13 16:07:43 INFO SecurityManager: Changing view acls to: malooney
+19/01/13 16:07:43 INFO SecurityManager: Changing modify acls to: malooney
+19/01/13 16:07:43 INFO SecurityManager: Changing view acls groups to: 
+19/01/13 16:07:43 INFO SecurityManager: Changing modify acls groups to: 
+19/01/13 16:07:43 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users  with view permissions: Set(malooney); groups with view permissions: Set(); users  with modify permissions: Set(malooney); groups with modify permissions: Set()
+19/01/13 16:07:43 INFO Utils: Successfully started service 'sparkDriver' on port 51665.
+19/01/13 16:07:43 INFO SparkEnv: Registering MapOutputTracker
+19/01/13 16:07:43 INFO SparkEnv: Registering BlockManagerMaster
+19/01/13 16:07:43 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+19/01/13 16:07:43 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+19/01/13 16:07:43 INFO DiskBlockManager: Created local directory at /private/var/folders/2b/j4qbc5qd0t3bttw9zbbv95q80000gn/T/blockmgr-52cc9d2f-632e-441c-9077-c5598f935a45
+19/01/13 16:07:43 INFO MemoryStore: MemoryStore started with capacity 366.3 MB
+19/01/13 16:07:43 INFO SparkEnv: Registering OutputCommitCoordinator
+19/01/13 16:07:43 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+19/01/13 16:07:43 INFO SparkUI: Bound SparkUI to 127.0.0.1, and started at http://localhost:4040
+19/01/13 16:07:43 INFO SparkContext: Added JAR file:/Library/Frameworks/R.framework/Versions/3.5/Resources/library/sparklyr/java/sparklyr-2.3-2.11.jar at spark://localhost:51665/jars/sparklyr-2.3-2.11.jar with timestamp 1547417263794
+19/01/13 16:07:43 INFO Executor: Starting executor ID driver on host localhost
+19/01/13 16:07:43 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 51666.
+19/01/13 16:07:43 INFO NettyBlockTransferService: Server created on localhost:51666
+19/01/13 16:07:43 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+19/01/13 16:07:43 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, localhost, 51666, None)
+19/01/13 16:07:43 INFO BlockManagerMasterEndpoint: Registering block manager localhost:51666 with 366.3 MB RAM, BlockManagerId(driver, localhost, 51666, None)
+19/01/13 16:07:43 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, localhost, 51666, None)
+19/01/13 16:07:43 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, localhost, 51666, None)
+19/01/13 16:07:44 WARN SparkContext: Using an existing SparkContext; some configuration may not take effect.
+19/01/13 16:07:44 INFO SharedState: loading hive config file: file:/Users/malooney/spark/spark-2.3.2-bin-hadoop2.7/conf/hive-site.xml
+19/01/13 16:07:44 INFO SharedState: Setting hive.metastore.warehouse.dir ('null') to the value of spark.sql.warehouse.dir ('file:/Users/malooney/Google%20Drive/digitalLibrary/*beerEthnicityConsumptionBrandChoice/beerEthnicityConsumptionBrandChoice/spark-warehouse').
+19/01/13 16:07:44 INFO SharedState: Warehouse path is 'file:/Users/malooney/Google%20Drive/digitalLibrary/*beerEthnicityConsumptionBrandChoice/beerEthnicityConsumptionBrandChoice/spark-warehouse'.
+19/01/13 16:07:44 INFO StateStoreCoordinatorRef: Registered StateStoreCoordinator endpoint
+19/01/13 16:07:47 INFO CodeGenerator: Code generated in 174.471306 ms
+19/01/13 21:09:07 INFO SparkContext: Invoking stop() from shutdown hook
+19/01/13 21:09:07 INFO SparkUI: Stopped Spark web UI at http://localhost:4040
+19/01/13 21:09:07 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!
+19/01/13 21:09:07 INFO MemoryStore: MemoryStore cleared
+19/01/13 21:09:07 INFO BlockManager: BlockManager stopped
+19/01/13 21:09:07 INFO BlockManagerMaster: BlockManagerMaster stopped
+19/01/13 21:09:07 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!
+19/01/13 21:09:07 INFO SparkContext: Successfully stopped SparkContext
+19/01/13 21:09:07 INFO ShutdownHookManager: Shutdown hook called
+19/01/13 21:09:07 INFO ShutdownHookManager: Deleting directory /private/var/folders/2b/j4qbc5qd0t3bttw9zbbv95q80000gn/T/spark-e9a31751-dd44-4765-8f76-60c156655c17
+19/01/13 21:09:07 INFO ShutdownHookManager: Deleting directory /private/var/folders/2b/j4qbc5qd0t3bttw9zbbv95q80000gn/T/spark-0ae9e4b7-cf2c-4e16-870d-8e1b1f2f5329

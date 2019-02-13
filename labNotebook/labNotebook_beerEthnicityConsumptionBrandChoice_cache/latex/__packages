@@ -5,3 +5,17 @@ bindrcpp
 xtable
 knitr
 kableExtra
+carData
+car
+zoo
+lmtest
+sandwich
+survival
+AER
+ucminf
+Rcpp
+mvQuad
+numDeriv
+rngWELL
+randtoolbox
+R.matlab

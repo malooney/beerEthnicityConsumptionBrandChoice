@@ -27,13 +27,25 @@ geometry: margin = 1.25in
 library(knitr)
 library(kableExtra)
 library(stargazer)
+
 library(AER)
+library(ucminf)
+library(Rcpp)
+library(mvQuad)
+library(numDeriv)
+library(randtoolbox)
+library(rngWELL)
+library(R.matlab)
+
 library(beerEthnicityConsumptionBrandChoice)
 
 path.local <- rprojroot::find_rstudio_root_file()
 
 #devtools::document()
 #devtools::use_package("data.tree", "Suggests")
+
+  old <- options(stringsAsFactors = FALSE)
+  on.exit(options(old), add = TRUE)
 
 ```
   
@@ -1001,15 +1013,20 @@ S7.printHierarchyTree(fileName='D6.treeStudy_2010_HOUSTON.rds')
 
 
 
+
+
+
+
+
 \newpage
 
 ```{r echo=F, cache=T, message=F, warning=F}
 
 
-hora <- S8.generate_aggregate_data_frame(nWeeks = 52,
+hora <- S8.2.generate_aggregate_data_frame(nWeeks = 52,
                                          nmkt = 52,
                                          city="CHICAGO",
-                                         saveAggregate_data_frame = T, 
+                                         saveAggregate_data_frame = T,
                                          out_algoRunTime = T)
 
 ```
@@ -1018,8 +1035,7 @@ Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).
 
 ```{r echo=F, cache=F, message=F, warning=F}
 
-
-# Load Data -------------------------------------------------------------------
+# Load Data ------------------------------------------------------------------
 
   path.local <- try(rprojroot::find_rstudio_root_file(), silent=TRUE)
 
@@ -1027,41 +1043,41 @@ Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).
     path.local <- getwd()
   } else{}
 
-  if(!file.exists(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D8.2010_aggregate_data.CHICAGO.rds", sep=""))) {
+  if(!file.exists(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D8.2_2010_aggregate_data.CHICAGO.rds", sep=""))) {
 
     stop("file does not exist in project directory.")
 
   } else{
 
-  D8.2010_aggregate_data.CHICAGO  <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D8.2010_aggregate_data.CHICAGO.rds", sep=""))
+  D8.2_2010_aggregate_data.CHICAGO  <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D8.2_2010_aggregate_data.CHICAGO.rds", sep=""))
 
   }
 
-  lm.Brands <- paste(colnames(D8.2010_aggregate_data.CHICAGO[[1]][32:81]), collapse=" + ")
+  lm.Brands <- paste(colnames(D8.2_2010_aggregate_data.CHICAGO[[1]][33:52]), collapse=" + ")
 
-  model.lm.Brands <- formula(paste("log(share) - log(outshr)~  0 + p2_Wmean +",
-                         lm.Brands, sep=""))
+  model.lm.Brands <- formula(paste("log(share) - log(outshr)~  0 + 
+                                   p2_Wmean +", lm.Brands, sep=""))
 
   summary(lm.results <- lm( model.lm.Brands,
-                          data= D8.2010_aggregate_data.CHICAGO[[1]]))
+                          data= D8.2_2010_aggregate_data.CHICAGO[[1]]))
 
 
-  summary(lm.results1 <- lm(log(share) - log(outshr) ~ 0 + p2_Wmean + 
-                              ABV + 
-                              prct_PR + 
-                              Calories_oz + 
-                              Carbs_oz + 
-                              USA + 
-                              Mexico, 
-                             data= D8.2010_aggregate_data.CHICAGO[[1]]))
+  summary(lm.results1 <- lm(log(share) - log(outshr) ~ 1 + p2_Wmean +
+                              ABV +
+                              prct_PR +
+                              Calories_oz +
+                              Carbs_oz +
+                              USA +
+                              Mexico,
+                             data= D8.2_2010_aggregate_data.CHICAGO[[1]]))
 
 ```
 
 ```{r echo=F, cache=F, message=F, warning=F, results='asis'}
 
-stargazer(D8.2010_aggregate_data.CHICAGO[[1]][,10:19], 
-          summary=T, 
-          type="latex", 
+stargazer::stargazer(D8.2_2010_aggregate_data.CHICAGO[[1]][,10:19],
+          summary=T,
+          type="latex",
           title=" Summary Statistics: CHICAGO")
 
 ```
@@ -1071,10 +1087,10 @@ stargazer(D8.2010_aggregate_data.CHICAGO[[1]][,10:19],
 ```{r echo=F, cache=T, message=F, warning=F}
 
 
-hora <- S8.generate_aggregate_data_frame(nWeeks = 52,
+hora <- S8.2.generate_aggregate_data_frame(nWeeks = 52,
                                          nmkt = 52,
                                          city="DALLAS, TX",
-                                         saveAggregate_data_frame = T, 
+                                         saveAggregate_data_frame = T,
                                          out_algoRunTime = T)
 
 ```
@@ -1091,39 +1107,39 @@ Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).
     path.local <- getwd()
   } else{}
 
-  if(!file.exists(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D8.2010_aggregate_data.DALLASTX.rds", sep=""))) {
+  if(!file.exists(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D8.2_2010_aggregate_data.DALLASTX.rds", sep=""))) {
 
     stop("file does not exist in project directory.")
 
   } else{
 
-  D8.2010_aggregate_data.DALLASTX  <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D8.2010_aggregate_data.DALLASTX.rds", sep=""))
+  D8.2_2010_aggregate_data.DALLASTX  <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D8.2_2010_aggregate_data.DALLASTX.rds", sep=""))
 
   }
 
-  lm.Brands <- paste(colnames(D8.2010_aggregate_data.DALLASTX[[1]][32:81]), collapse=" + ")
+  lm.Brands <- paste(colnames(D8.2_2010_aggregate_data.DALLASTX[[1]][33:52]), collapse=" + ")
 
-  model.lm.Brands <- formula(paste("log(share) - log(outshr)~  0 + p2_Wmean +",
-                         lm.Brands, sep=""))
+  model.lm.Brands <- formula(paste("log(share) - log(outshr)~  0 + 
+                                   p2_Wmean +", lm.Brands, sep=""))
 
   summary(lm.results <- lm( model.lm.Brands,
-                          data= D8.2010_aggregate_data.DALLASTX[[1]]))
+                          data= D8.2_2010_aggregate_data.DALLASTX[[1]]))
 
-  summary(lm.results1 <- lm(log(share) - log(outshr) ~ 0 + p2_Wmean + 
-                              ABV + 
-                              prct_PR + 
-                              Calories_oz + 
-                              Carbs_oz + 
-                              USA + 
-                              Mexico, 
-                            data= D8.2010_aggregate_data.DALLASTX[[1]]))
+  summary(lm.results1 <- lm(log(share) - log(outshr) ~ 1 + p2_Wmean +
+                              ABV +
+                              prct_PR +
+                              Calories_oz +
+                              Carbs_oz +
+                              USA +
+                              Mexico,
+                            data= D8.2_2010_aggregate_data.DALLASTX[[1]]))
 ```
 
 ```{r echo=F, cache=F, message=F, warning=F, results='asis'}
 
-stargazer(D8.2010_aggregate_data.DALLASTX[[1]][,10:19], 
-          summary=T, 
-          type="latex", 
+stargazer::stargazer(D8.2_2010_aggregate_data.DALLASTX[[1]][,10:19],
+          summary=T,
+          type="latex",
           title=" Summary Statistics: DALLAS, TX")
 
 ```
@@ -1133,10 +1149,10 @@ stargazer(D8.2010_aggregate_data.DALLASTX[[1]][,10:19],
 ```{r echo=F, cache=T, message=F, warning=F}
 
 
-hora <- S8.generate_aggregate_data_frame(nWeeks = 52,
+hora <- S8.2.generate_aggregate_data_frame(nWeeks = 52,
                                          nmkt = 52,
                                          city="LOS ANGELES",
-                                         saveAggregate_data_frame = T, 
+                                         saveAggregate_data_frame = T,
                                          out_algoRunTime = T)
 
 ```
@@ -1153,40 +1169,40 @@ Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).
     path.local <- getwd()
   } else{}
 
-  if(!file.exists(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D8.2010_aggregate_data.LOSANGELES.rds", sep=""))) {
+  if(!file.exists(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D8.2_2010_aggregate_data.LOSANGELES.rds", sep=""))) {
 
     stop("file does not exist in project directory.")
 
   } else{
 
-  D8.2010_aggregate_data.LOSANGELES  <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D8.2010_aggregate_data.LOSANGELES.rds", sep=""))
+  D8.2_2010_aggregate_data.LOSANGELES  <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D8.2_2010_aggregate_data.LOSANGELES.rds", sep=""))
 
   }
 
-  lm.Brands <- paste(colnames(D8.2010_aggregate_data.LOSANGELES[[1]][32:81]), collapse=" + ")
+  lm.Brands <- paste(colnames(D8.2_2010_aggregate_data.LOSANGELES[[1]][33:52]), collapse=" + ")
 
-  model.lm.Brands <- formula(paste("log(share) - log(outshr)~  0 + p2_Wmean +",
-                         lm.Brands, sep=""))
+  model.lm.Brands <- formula(paste("log(share) - log(outshr)~  0 + 
+                                   p2_Wmean +", lm.Brands, sep=""))
 
   summary(lm.results <- lm( model.lm.Brands,
-                          data= D8.2010_aggregate_data.LOSANGELES[[1]]))
+                          data= D8.2_2010_aggregate_data.LOSANGELES[[1]]))
 
-  
-  summary(lm.results1 <- lm(log(share) - log(outshr) ~ 0 + p2_Wmean + 
-                              ABV + 
+
+  summary(lm.results1 <- lm(log(share) - log(outshr) ~ 1 + p2_Wmean +
+                              ABV +
                               prct_PR +
-                              Calories_oz + 
-                              Carbs_oz + 
-                              USA + 
-                              Mexico, 
-                            data= D8.2010_aggregate_data.LOSANGELES[[1]]))
+                              Calories_oz +
+                              Carbs_oz +
+                              USA +
+                              Mexico,
+                            data= D8.2_2010_aggregate_data.LOSANGELES[[1]]))
 ```
 
 ```{r echo=F, cache=F, message=F, warning=F, results='asis'}
 
-stargazer(D8.2010_aggregate_data.LOSANGELES[[1]][,10:19], 
-          summary=T, 
-          type="latex", 
+stargazer::stargazer(D8.2_2010_aggregate_data.LOSANGELES[[1]][,10:19],
+          summary=T,
+          type="latex",
           title=" Summary Statistics: LOS ANGELES")
 
 ```
@@ -1196,10 +1212,10 @@ stargazer(D8.2010_aggregate_data.LOSANGELES[[1]][,10:19],
 ```{r echo=F, cache=T, message=F, warning=F}
 
 
-hora <- S8.generate_aggregate_data_frame(nWeeks = 52,
+hora <- S8.2.generate_aggregate_data_frame(nWeeks = 52,
                                          nmkt = 52,
                                          city="SPOKANE",
-                                         saveAggregate_data_frame = T, 
+                                         saveAggregate_data_frame = T,
                                          out_algoRunTime = T)
 
 ```
@@ -1216,40 +1232,40 @@ Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).
     path.local <- getwd()
   } else{}
 
-  if(!file.exists(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D8.2010_aggregate_data.SPOKANE.rds", sep=""))) {
+  if(!file.exists(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D8.2_2010_aggregate_data.SPOKANE.rds", sep=""))) {
 
     stop("file does not exist in project directory.")
 
   } else{
 
-  D8.2010_aggregate_data.SPOKANE  <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D8.2010_aggregate_data.SPOKANE.rds", sep=""))
+  D8.2_2010_aggregate_data.SPOKANE  <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D8.2_2010_aggregate_data.SPOKANE.rds", sep=""))
 
   }
 
-  lm.Brands <- paste(colnames(D8.2010_aggregate_data.SPOKANE[[1]][32:81]), collapse=" + ")
+  lm.Brands <- paste(colnames(D8.2_2010_aggregate_data.SPOKANE[[1]][33:52]), collapse=" + ")
 
-  model.lm.Brands <- formula(paste("log(share) - log(outshr)~  0 + p2_Wmean +",
-                         lm.Brands, sep=""))
+  model.lm.Brands <- formula(paste("log(share) - log(outshr)~  0 + 
+                                   p2_Wmean +", lm.Brands, sep=""))
 
   summary(lm.results <- lm( model.lm.Brands,
-                          data= D8.2010_aggregate_data.SPOKANE[[1]]))
+                          data= D8.2_2010_aggregate_data.SPOKANE[[1]]))
 
-  
-  summary(lm.results1 <- lm(log(share) - log(outshr) ~ 0 + p2_Wmean + 
-                              ABV + 
+
+  summary(lm.results1 <- lm(log(share) - log(outshr) ~ 1 + p2_Wmean +
+                              ABV +
                               prct_PR +
-                              Calories_oz + 
-                              Carbs_oz + 
-                              USA + 
-                              Mexico, 
-                            data= D8.2010_aggregate_data.SPOKANE[[1]]))
+                              Calories_oz +
+                              Carbs_oz +
+                              USA +
+                              Mexico,
+                            data= D8.2_2010_aggregate_data.SPOKANE[[1]]))
 ```
 
 ```{r echo=F, cache=F, message=F, warning=F, results='asis'}
 
-stargazer(D8.2010_aggregate_data.SPOKANE[[1]][,10:19], 
-          summary=T, 
-          type="latex", 
+stargazer::stargazer(D8.2_2010_aggregate_data.SPOKANE[[1]][,10:19],
+          summary=T,
+          type="latex",
           title=" Summary Statistics: SPOKANE")
 
 ```
@@ -1259,10 +1275,10 @@ stargazer(D8.2010_aggregate_data.SPOKANE[[1]][,10:19],
 ```{r echo=F, cache=T, message=F, warning=F}
 
 
-hora <- S8.generate_aggregate_data_frame(nWeeks = 52,
+hora <- S8.2.generate_aggregate_data_frame(nWeeks = 52,
                                          nmkt = 52,
                                          city="SYRACUSE",
-                                         saveAggregate_data_frame = T, 
+                                         saveAggregate_data_frame = T,
                                          out_algoRunTime = T)
 
 ```
@@ -1279,40 +1295,40 @@ Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).
     path.local <- getwd()
   } else{}
 
-  if(!file.exists(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D8.2010_aggregate_data.SYRACUSE.rds", sep=""))) {
+  if(!file.exists(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D8.2_2010_aggregate_data.SYRACUSE.rds", sep=""))) {
 
     stop("file does not exist in project directory.")
 
   } else{
 
-  D8.2010_aggregate_data.SYRACUSE  <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D8.2010_aggregate_data.SYRACUSE.rds", sep=""))
+  D8.2_2010_aggregate_data.SYRACUSE  <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D8.2_2010_aggregate_data.SYRACUSE.rds", sep=""))
 
   }
 
-  lm.Brands <- paste(colnames(D8.2010_aggregate_data.SYRACUSE[[1]][32:81]), collapse=" + ")
+  lm.Brands <- paste(colnames(D8.2_2010_aggregate_data.SYRACUSE[[1]][33:52]), collapse=" + ")
 
-  model.lm.Brands <- formula(paste("log(share) - log(outshr)~  0 + p2_Wmean +",
-                         lm.Brands, sep=""))
+  model.lm.Brands <- formula(paste("log(share) - log(outshr)~  0 + 
+                                   p2_Wmean +", lm.Brands, sep=""))
 
   summary(lm.results <- lm( model.lm.Brands,
-                          data= D8.2010_aggregate_data.SYRACUSE[[1]]))
+                          data= D8.2_2010_aggregate_data.SYRACUSE[[1]]))
 
-  
-  summary(lm.results1 <- lm(log(share) - log(outshr) ~ 0 + p2_Wmean + 
-                              ABV + 
+
+  summary(lm.results1 <- lm(log(share) - log(outshr) ~ 1 + p2_Wmean +
+                              ABV +
                               prct_PR +
-                              Calories_oz + 
-                              Carbs_oz + 
-                              USA + 
-                              Mexico, 
-                            data= D8.2010_aggregate_data.SYRACUSE[[1]]))
+                              Calories_oz +
+                              Carbs_oz +
+                              USA +
+                              Mexico,
+                            data= D8.2_2010_aggregate_data.SYRACUSE[[1]]))
 ```
 
 ```{r echo=F, cache=F, message=F, warning=F, results='asis'}
 
-stargazer(D8.2010_aggregate_data.SPOKANE[[1]][,10:19], 
-          summary=T, 
-          type="latex", 
+stargazer::stargazer(D8.2_2010_aggregate_data.SPOKANE[[1]][,10:19],
+          summary=T,
+          type="latex",
           title=" Summary Statistics: SYRACUSE")
 
 ```
@@ -1322,10 +1338,10 @@ stargazer(D8.2010_aggregate_data.SPOKANE[[1]][,10:19],
 ```{r echo=F, cache=T, message=F, warning=F}
 
 
-hora <- S8.generate_aggregate_data_frame(nWeeks = 52,
+hora <- S8.2.generate_aggregate_data_frame(nWeeks = 52,
                                          nmkt = 52,
                                          city="HOUSTON",
-                                         saveAggregate_data_frame = T, 
+                                         saveAggregate_data_frame = T,
                                          out_algoRunTime = T)
 
 ```
@@ -1342,176 +1358,99 @@ Algorithm run time: `r difftime(hora[[2]], hora[[1]], units="min") ` minute(s).
     path.local <- getwd()
   } else{}
 
-  if(!file.exists(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D8.2010_aggregate_data.HOUSTON.rds", sep=""))) {
+  if(!file.exists(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D8.2_2010_aggregate_data.HOUSTON.rds", sep=""))) {
 
     stop("file does not exist in project directory.")
 
   } else{
 
-  D8.2010_aggregate_data.HOUSTON  <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D8.2010_aggregate_data.HOUSTON.rds", sep=""))
+  D8.2_2010_aggregate_data.HOUSTON  <- readRDS(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D8.2_2010_aggregate_data.HOUSTON.rds", sep=""))
 
   }
 
-  lm.Brands <- paste(colnames(D8.2010_aggregate_data.HOUSTON[[1]][32:81]), collapse=" + ")
+  lm.Brands <- paste(colnames(D8.2_2010_aggregate_data.HOUSTON[[1]][33:52]), collapse=" + ")
 
-  model.lm.Brands <- formula(paste("log(share) - log(outshr)~  0 + p2_Wmean +",
-                         lm.Brands, sep=""))
+  model.lm.Brands <- formula(paste("log(share) - log(outshr)~  0 + 
+                                   p2_Wmean +", lm.Brands, sep=""))
 
   summary(lm.results <- lm( model.lm.Brands,
-                          data= D8.2010_aggregate_data.HOUSTON[[1]]))
+                          data= D8.2_2010_aggregate_data.HOUSTON[[1]]))
 
-  
-  summary(lm.results1 <- lm(log(share) - log(outshr) ~ 0 + p2_Wmean + 
-                              ABV + 
+
+  summary(lm.results1 <- lm(log(share) - log(outshr) ~ 1 + p2_Wmean +
+                              ABV +
                               prct_PR +
-                              Calories_oz + 
-                              Carbs_oz + 
-                              USA + 
-                              Mexico, 
-                            data= D8.2010_aggregate_data.HOUSTON[[1]]))
+                              Calories_oz +
+                              Carbs_oz +
+                              USA +
+                              Mexico,
+                            data= D8.2_2010_aggregate_data.HOUSTON[[1]]))
 ```
 
 ```{r echo=F, cache=F, message=F, warning=F, results='asis'}
 
-stargazer(D8.2010_aggregate_data.SPOKANE[[1]][,10:19], 
-          summary=T, 
-          type="latex", 
+stargazer::stargazer(D8.2_2010_aggregate_data.HOUSTON[[1]][,10:19],
+          summary=T,
+          type="latex",
           title=" Summary Statistics: HOUSTON")
 
 ```
 
 ```{r, echo=FALSE, cache=F, message=F, warning=F}
 
-budLight_Chicago <- dplyr::filter(D8.2010_aggregate_data.CHICAGO[[1]], 
-                           Brand=="BUD LIGHT")
+plot_Hausman_IV <- function(brand= "BUD LIGHT"){
+  
+  D8.2_2010_aggregate_data.CHICAGO <- readRDS("~/Google Drive/digitalLibrary/*beerEthnicityConsumptionBrandChoice/beerEthnicityConsumptionBrandChoice/data_beerEthnicityConsumptionBrandChoice/D8.2_2010_aggregate_data.CHICAGO.rds")
+D8.2_2010_aggregate_data.DALLASTX <- readRDS("~/Google Drive/digitalLibrary/*beerEthnicityConsumptionBrandChoice/beerEthnicityConsumptionBrandChoice/data_beerEthnicityConsumptionBrandChoice/D8.2_2010_aggregate_data.DALLASTX.rds")
+D8.2_2010_aggregate_data.HOUSTON <- readRDS("~/Google Drive/digitalLibrary/*beerEthnicityConsumptionBrandChoice/beerEthnicityConsumptionBrandChoice/data_beerEthnicityConsumptionBrandChoice/D8.2_2010_aggregate_data.HOUSTON.rds")
+D8.2_2010_aggregate_data.LOSANGELES <- readRDS("~/Google Drive/digitalLibrary/*beerEthnicityConsumptionBrandChoice/beerEthnicityConsumptionBrandChoice/data_beerEthnicityConsumptionBrandChoice/D8.2_2010_aggregate_data.LOSANGELES.rds")
+D8.2_2010_aggregate_data.SPOKANE <- readRDS("~/Google Drive/digitalLibrary/*beerEthnicityConsumptionBrandChoice/beerEthnicityConsumptionBrandChoice/data_beerEthnicityConsumptionBrandChoice/D8.2_2010_aggregate_data.SPOKANE.rds")
+D8.2_2010_aggregate_data.SYRACUSE <- readRDS("~/Google Drive/digitalLibrary/*beerEthnicityConsumptionBrandChoice/beerEthnicityConsumptionBrandChoice/data_beerEthnicityConsumptionBrandChoice/D8.2_2010_aggregate_data.SYRACUSE.rds")
+  
+budLight_Chicago <- dplyr::filter(D8.2_2010_aggregate_data.CHICAGO[[1]],
+                           Brand==brand)
 
-budLight_DallasTx <- dplyr::filter(D8.2010_aggregate_data.DALLASTX[[1]], 
-                           Brand=="BUD LIGHT")
+budLight_DallasTx <- dplyr::filter(D8.2_2010_aggregate_data.DALLASTX[[1]],
+                           Brand==brand)
 
-budLight_Houston <- dplyr::filter(D8.2010_aggregate_data.HOUSTON[[1]], 
-                           Brand=="BUD LIGHT")
+budLight_Houston <- dplyr::filter(D8.2_2010_aggregate_data.HOUSTON[[1]],
+                           Brand==brand)
 
-budLight_LosAngeles <- dplyr::filter(D8.2010_aggregate_data.LOSANGELES[[1]], 
-                           Brand=="BUD LIGHT")
+budLight_LosAngeles <- dplyr::filter(D8.2_2010_aggregate_data.LOSANGELES[[1]],
+                           Brand==brand)
 
-budLight_Spokane <- dplyr::filter(D8.2010_aggregate_data.SPOKANE[[1]], 
-                           Brand=="BUD LIGHT")
+budLight_Spokane <- dplyr::filter(D8.2_2010_aggregate_data.SPOKANE[[1]],
+                           Brand==brand)
 
-budLight_Syracuse <- dplyr::filter(D8.2010_aggregate_data.SYRACUSE[[1]], 
-                           Brand=="BUD LIGHT")
+budLight_Syracuse <- dplyr::filter(D8.2_2010_aggregate_data.SYRACUSE[[1]],
+                           Brand==brand)
 
-plot(budLight_Chicago$p2_Wmean_non_pr, 
-     type="l", 
-     col="black", 
-     ylim=c(8, 11))
+par(mfrow= c(1, 1), ps= 10, cex= 0.75, cex.main= 1.25)
+
+plot(budLight_Chicago$p2_Wmean_non_pr,
+     type="l",
+     col="black",
+     ylim=c(0, 20), 
+     xlab = "Week (1:52)", 
+     ylab = paste(brand, "($/Gallon)", sep=""), 
+     main = paste("Price of ", brand, " across Cities \n Non-price reduced", sep=""), 
+     sub="")
+
 lines(budLight_DallasTx$p2_Wmean_non_pr, type="l", col="blue")
 lines(budLight_Houston$p2_Wmean_non_pr, type="l", col="red")
 lines(budLight_LosAngeles$p2_Wmean_non_pr, type="l", col="green")
 lines(budLight_Spokane$p2_Wmean_non_pr, type="l", col="gold")
 lines(budLight_Syracuse$p2_Wmean_non_pr, type="l", col="purple")
 
-```
-
-
-```{r, echo=FALSE, cache=F, message=F, warning=F}
-
-ivs_Hausman <- data.frame( 
-  D8.2010_aggregate_data.CHICAGO[[1]]['Brand'],
-  D8.2010_aggregate_data.CHICAGO[[1]]['p2_Wmean_non_pr'], 
-  D8.2010_aggregate_data.DALLASTX[[1]]['p2_Wmean_non_pr'], 
-  D8.2010_aggregate_data.HOUSTON[[1]]['p2_Wmean_non_pr'], 
-  D8.2010_aggregate_data.SPOKANE[[1]]['p2_Wmean_non_pr'], 
-  D8.2010_aggregate_data.SYRACUSE[[1]]['p2_Wmean_non_pr']
-)
-
-
-colnames(ivs_Hausman) <- c("Brand", "z1_P_Chicago", "z2_P_DallasTx",
-                           "z3_P_Houston", "z4_P_Spokane", "z5_P_Syracuse")
-
-```
-
-
-```{r, echo=FALSE, cache=F, message=F, warning=F}
-
-constant <- data.frame(constant= 
-  matrix( 
-    rep(1, 
-        nrow(D8.2010_aggregate_data.LOSANGELES[[1]])), 
-    ncol=1
-    )
-  )
-
-beerLA.data <- D8.2010_aggregate_data.LOSANGELES[[1]][, c(1, 7, 12, 14, 16, 
-                                                          32:81)]
-
-beerLA.data <- cbind(constant, beerLA.data)
-
-beerLA.data <- cbind(beerLA.data, ivs_Hausman[,2:6])
-
-tmp_beerLA.data <- D8.2010_aggregate_data.LOSANGELES[[1]][, c(13, 17, 18, 19, 
-                                                              23, 24)]
-
-beerLA.data <- cbind(beerLA.data, tmp_beerLA.data)
-
-rm(constant, ivs_Hausman, tmp_beerLA.data)
-
-```
-
-
-```{r, echo=FALSE, cache=F, message=F, warning=F}
-
-  iv_lm.Brands <- paste(colnames(beerLA.data[7:56]), collapse=" + ")
-
-  iv_lm.ivs <- paste(colnames(beerLA.data[c(58:59)]), collapse=" + ")
-
-  model.iv_lm.Brands <- formula(paste("log(share) - log(outshr)~  0 + 
-                                      p2_Wmean +", iv_lm.Brands, " | ",
-                                      iv_lm.Brands, " + ", iv_lm.ivs,
-                                      sep=""))
-  
-summary( iv.simple.logit <- ivreg( model.iv_lm.Brands,
-                                   data= beerLA.data))
-
-  iv_lm.char <- paste(colnames(beerLA.data[62:67]), collapse=" + ")
-
-  iv_lm.ivs <- paste(colnames(beerLA.data[58:59]), collapse=" + ")
-
-  model.iv_lm.Brands <- formula(paste("log(share) - log(outshr)~  0 + 
-                                      p2_Wmean +", iv_lm.char, " | ",
-                                      iv_lm.char, " + ", iv_lm.ivs,
-                                      sep=""))
-  
-summary( iv.simple.logit <- ivreg( model.iv_lm.Brands,
-                                   data= beerLA.data))
-
-```
-
-
-```{r, echo=FALSE, cache=F, message=F, warning=F}
-
-MDE= TRUE
-
-if(MDE==TRUE){
-  
-Xlin = paste(colnames(beerLA.data[c(4, 7:56)]), sep="")
-} else {
-# Xlin = c("constant",
-#          "price",
-#          "sugar",
-#          "mushy")
-Xlin = paste(colnames(beerLA.data[c(4, 62:67)]), sep="")
+legend("bottomright",  c("Chicago", "Dallas", "Houston", "Los Angeles", 
+                         "Spokane", "Syracuse"), 
+       lty= c(1), col= c("black", "blue", "red", "green", "gold", "purple"))
 }
 
-Xrandom = paste(colnames(beerLA.data[c(1, 4, 62:67)]), sep="")
-
-if(MDE==TRUE){
-  
-Xexo =  paste(colnames(beerLA.data[c(7:56)]), sep="")
-} else {
-Xexo =  paste(colnames(beerLA.data[c(62:67)]), sep="")
-}
-instruments = paste(colnames(beerLA.data[58:59]), sep="")
-
 ```
 
 
+```{r, echo=FALSE, cache=F, message=F, warning=F}
+
+
+```
