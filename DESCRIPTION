@@ -16,7 +16,12 @@ Imports:
     readxl,
     stringr,
     feather,
-    devtools
+    devtools,
+    foreign,
+    car,
+    survival,
+    AER
 LinkingTo: Rcpp
 RoxygenNote: 6.1.0
-Suggests: data.tree
+Suggests: 
+    data.tree
