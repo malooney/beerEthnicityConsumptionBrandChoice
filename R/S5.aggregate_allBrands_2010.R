@@ -20,27 +20,27 @@ S5.aggregate_allBrands_2010 <- function( Market = 'CHICAGO',
     path.local <- getwd()
   } else{}
 
-if(!file.exists(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D4.allBrands_2010analysis_Markets.csv", sep=""))) {
+if(!file.exists(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D4.markets.csv", sep=""))) {
 
   stop("file does not exist in project directory. Run Script 4
        (S4.explore_2010marketData.R) to generate the file called:
-       D4.allBrands_2010analysis_Markets.csv")
+       D4.markets.csv")
 
 } else{
 
-  D4.allBrands_2010analysis_Markets <- read.csv(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D4.allBrands_2010analysis_Markets.csv", sep=""))
+  D4.markets <- read.csv(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D4.markets.csv", sep=""))
 
 }
 
-if(!file.exists(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D4.allBrands_2010analysis_Brands.csv", sep=""))) {
+if(!file.exists(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D4.brand_intersection_across_markets.csv", sep=""))) {
 
   stop("file does not exist in project directory. Run Script 4
        (S4.explore_2010marketData.R) to generate the file called:
-       D4.allBrands_2010analysis_Brands.csv")
+       D4.brand_intersection_across_markets.csv")
 
 } else{
 
-  D4.allBrands_2010analysis_Brands <- read.csv(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D4.allBrands_2010analysis_Brands.csv", sep=""))
+  D4.brand_intersection_across_markets <- read.csv(paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D4.brand_intersection_across_markets.csv", sep=""))
 
 }
 
@@ -122,13 +122,13 @@ uniqueConglomerates <- dplyr::arrange(uniqueConglomerates, desc(UNITS))
 #rm(uniqueBrands_Dol, uniqueBrands_U, uniqueBrands_TotGal)
 
 selectBrands <- subset(uniqueBrands, Brands %in%
-                         D4.allBrands_2010analysis_Brands[,1])
+                         D4.brand_intersection_across_markets[,1])
 selectFirms <- subset(dta_manip, Brands %in%
-                        D4.allBrands_2010analysis_Brands[,1])
+                        D4.brand_intersection_across_markets[,1])
 selectFirms <- subset(uniqueFirms, Firms %in%
                         unique(selectFirms$Firms))
 selectConglomerates <- subset(dta_manip, Brands %in%
-                        D4.allBrands_2010analysis_Brands[,1])
+                        D4.brand_intersection_across_markets[,1])
 selectConglomerates <- subset(uniqueConglomerates, Conglomerates %in%
                         unique(selectConglomerates$Conglomerates))
 

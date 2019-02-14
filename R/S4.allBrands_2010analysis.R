@@ -64,8 +64,8 @@ S4.allBrands_2010analysis <- function( city= c("CHICAGO",
     allBrands_2010analysis_main[[3]] <- allBrandsAllMarkets
     allBrands_2010analysis_main[[2]] <- allBrands_2010analysis
     allBrands_2010analysis_main[[1]] <- data.frame("Markets"=city)
-    names(allBrands_2010analysis_main) <- c("Markets",
-                                            "brand_intersection_across_Markets",
+    names(allBrands_2010analysis_main) <- c("markets",
+                                            "brand_intersection_across_markets",
                                             "allBrandsAllMarkets")
 
     allBrands_2010analysis <- allBrands_2010analysis_main
@@ -73,11 +73,14 @@ S4.allBrands_2010analysis <- function( city= c("CHICAGO",
     saveRDS(allBrands_2010analysis,
             paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D4.allBrands_2010analysis.rds", sep = ""))
 
+    write.csv(allBrands_2010analysis[[3]],
+              paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D4.allBrandsAllMarkets.csv", sep = ""), row.names = F)
+
     write.csv(allBrands_2010analysis[[2]],
-            paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D4.allBrands_2010analysis_Brands.csv", sep = ""), row.names = F)
+            paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D4.brand_intersection_across_markets.csv", sep = ""), row.names = F)
 
     write.csv(allBrands_2010analysis[[1]],
-              paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D4.allBrands_2010analysis_Markets.csv", sep = ""), row.names = F)
+              paste(path.local, "/data_beerEthnicityConsumptionBrandChoice/D4.markets.csv", sep = ""), row.names = F)
 
   }
 
