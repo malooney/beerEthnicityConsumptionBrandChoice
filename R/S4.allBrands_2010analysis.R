@@ -65,7 +65,7 @@ S4.allBrands_2010analysis <- function( city= c("CHICAGO",
     allBrands_2010analysis_main[[2]] <- allBrands_2010analysis
     allBrands_2010analysis_main[[1]] <- data.frame("Markets"=city)
     names(allBrands_2010analysis_main) <- c("Markets",
-                                            "Brand_name",
+                                            "brand_intersection_across_Markets",
                                             "allBrandsAllMarkets")
 
     allBrands_2010analysis <- allBrands_2010analysis_main
